@@ -1,8 +1,11 @@
 package standalone_view;
 
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,10 +13,9 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
-public class GUIController{
+public class GUIController implements Initializable{
 
 	private String userType = null;
-	private String stylePath = "/standalone_view/NewStyle.css";
 	
 	@FXML
 	private Button btnSignUp;
@@ -45,9 +47,9 @@ public class GUIController{
 			stage = (Stage) btnLogIn.getScene().getWindow();
 			root = FXMLLoader.load(getClass().getResource("/standalone_view/LogInScreen.fxml"));
 		}
-		
+				
 		Scene scene = new Scene(root, 700, 500);
-		scene.getStylesheets().add(stylePath);
+		scene.getStylesheets().add(getClass().getResource("NewStyle.css").toExternalForm());
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -67,7 +69,7 @@ public class GUIController{
 		}
 		
 		Scene scene = new Scene(root, 700, 500);
-		scene.getStylesheets().add(stylePath);
+		scene.getStylesheets().add(getClass().getResource("NewStyle.css").toExternalForm());
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -99,13 +101,13 @@ public class GUIController{
 		
 		if(userSelection.equals(Boolean.FALSE)) {
 			Scene scene = new Scene(root, 700, 500);
-			scene.getStylesheets().add(stylePath);
+			scene.getStylesheets().add(getClass().getResource("NewStyle.css").toExternalForm());
 			stage.setScene(scene);
 			stage.show();
 		}
 		else {
 			Scene scene = new Scene(root, 200, 100);
-			scene.getStylesheets().add(stylePath);
+			scene.getStylesheets().add(getClass().getResource("NewStyle.css").toExternalForm());
 			stage.setScene(scene);
 			stage.show();
 		}
@@ -130,5 +132,10 @@ public class GUIController{
 		}
 		
 		stage.close();
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		
 	}
 }

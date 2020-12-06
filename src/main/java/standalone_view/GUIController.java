@@ -1,5 +1,7 @@
 package standalone_view;
 
+import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +15,7 @@ import javafx.stage.Stage;
 public class GUIController {
 
 	private String userType = null;
+	private String appStyle = "NewStyle.css";
 	
 	@FXML
 	private Button btnSignUp;
@@ -32,7 +35,7 @@ public class GUIController {
 	private Button btnOk;
 	
 	@FXML
-	private void handleFirstScreenButtonAction(ActionEvent event) throws Exception {
+	private void handleFirstScreenButtonAction(ActionEvent event) throws IOException {
 		Stage stage = new Stage();
 		Parent root = null;
 		
@@ -46,13 +49,13 @@ public class GUIController {
 		}
 				
 		Scene scene = new Scene(root, 700, 500);
-		scene.getStylesheets().add(getClass().getResource("NewStyle.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
 		stage.setScene(scene);
 		stage.show();
 	}
 	
 	@FXML
-	private void handleLogInScreenButtonAction(ActionEvent event) throws Exception {
+	private void handleLogInScreenButtonAction(ActionEvent event) throws IOException {
 		Stage stage = new Stage();
 		Parent root = null;
 		
@@ -66,13 +69,13 @@ public class GUIController {
 		}
 		
 		Scene scene = new Scene(root, 700, 500);
-		scene.getStylesheets().add(getClass().getResource("NewStyle.css").toExternalForm());
+		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
 		stage.setScene(scene);
 		stage.show();
 	}
 	
 	@FXML
-	private void handleSignUpScreenButtonAction(ActionEvent event) throws Exception {
+	private void handleSignUpScreenButtonAction(ActionEvent event) throws IOException {
 		Stage stage = new Stage();
 		Parent root = null;
 		Boolean userSelection = false;
@@ -98,20 +101,20 @@ public class GUIController {
 		
 		if(userSelection.equals(Boolean.FALSE)) {
 			Scene scene = new Scene(root, 700, 500);
-			scene.getStylesheets().add(getClass().getResource("NewStyle.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
 			stage.setScene(scene);
 			stage.show();
 		}
 		else {
 			Scene scene = new Scene(root, 200, 100);
-			scene.getStylesheets().add(getClass().getResource("NewStyle.css").toExternalForm());
+			scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
 			stage.setScene(scene);
 			stage.show();
 		}
 	}
 	
 	@FXML
-	private void handleUserRadioButtonAction(ActionEvent event) throws Exception {
+	private void handleUserRadioButtonAction(ActionEvent event) {
 		if(event.getSource() == btnRadioGuest) {
 			userType = "Guest";
 		}

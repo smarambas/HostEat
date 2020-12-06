@@ -1,11 +1,8 @@
 package standalone_view;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,7 +10,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
-public class GUIController implements Initializable{
+public class GUIController {
 
 	private String userType = null;
 	
@@ -132,10 +129,5 @@ public class GUIController implements Initializable{
 		}
 		
 		stage.close();
-	}
-
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		
 	}
 }

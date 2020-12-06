@@ -1,0 +1,47 @@
+.root {
+	-fx-font-size: 10pt;
+	-fx-alignment: CENTER;
+	-fx-padding: 3 6 6 6;
+}
+
+#topLabel {
+	-fx-font-weight: bold;
+}
+
+#welcome1 {
+	-fx-alignment: CENTER;
+	-fx-font-size: 12pt;
+	-fx-pref-width: 250px;
+}
+
+#welcome2 {
+	-fx-alignment: CENTER;
+	-fx-font-size: 12pt;
+	-fx-pref-width: 400px;
+}
+
+#selError {
+	-fx-alignment: CENTER;
+	-fx-pref-width: 400px;
+}
+
+#login {
+	-fx-alignment: CENTER;
+	-fx-font-size: 12pt;
+}
+
+#signup {
+	-fx-alignment: CENTER;
+	-fx-font-size: 12pt;
+}
+
+.label {
+	-fx-pref-height: 25px;
+	-fx-pref-width: 100px;
+}
+
+.button {
+	-fx-pref-height: 25px;
+	-fx-pref-width: 120px;
+	-fx-padding: 10;
+}

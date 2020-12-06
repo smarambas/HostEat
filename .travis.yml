@@ -1,0 +1,17 @@
+language: java
+jdk:
+- openjdk14
+
+#before_install:
+#- sudo apt update
+#- sudo apt install openjfx
+
+addons:
+    sonarcloud:
+        organization: "smarambas"
+        token: "e713c37de6cb0bc0b4851229b14358f3343e2c99"
+        
+script: 
+#- sonar-scanner
+#- ./gradlew build --scan -s
+- ./gradlew sonarqube

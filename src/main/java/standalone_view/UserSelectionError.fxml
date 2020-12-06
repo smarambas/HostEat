@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="standalone_view.GUIController">
+	<center>
+		<VBox spacing="20" alignment="center">
+			<children>
+				<Label id="selError" text="Please, select a user type."/>
+				<Button fx:id="btnOk" text="Ok" onAction="#handleOkButtonAction"/>
+			</children>
+		</VBox>
+	</center>
+</BorderPane>
+

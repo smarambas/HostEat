@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.GUIController">
+	<top>
+		<VBox>
+			<children>
+				<Label id="topLabel" text="HostEat"/>
+				<Button fx:id="btnBack" text="Back" onAction="#handleLogInScreenButtonAction"/>
+			</children>
+		</VBox>
+	</top>
+	<center>
+		<VBox spacing="20" alignment="center">
+			<children>
+				<Label id="login" text="Log In"/>
+				<HBox spacing="20" alignment="center">
+					<children>
+						<Label text="Username:"/>
+						<TextField promptText="username"/>
+					</children>
+				</HBox>
+				<HBox spacing="20" alignment="center">
+					<children>
+						<Label text="Password:"/>
+						<PasswordField promptText="password"/>
+					</children>
+				</HBox>
+				<Button fx:id="btnSubmit" text="Submit" onAction="#handleLogInScreenButtonAction"/>
+			</children>
+		</VBox>
+	</center>
+</BorderPane>

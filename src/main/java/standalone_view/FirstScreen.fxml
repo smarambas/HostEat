@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.GUIController">
+	<top>
+		<Label id="topLabel" text="HostEat"/>
+	</top>
+	<center>
+		<VBox spacing="20" alignment="center">
+			<children>
+				<Label id="welcome1" text="Welcome to HostEat!"/>
+				<Label id="welcome2" text="The platform designed to share good home cooking"/>
+				<Button fx:id="btnSignUp" text="Sign Up" onAction="#handleFirstScreenButtonAction"/>
+				<Button fx:id="btnLogIn" text="Log In" onAction="#handleFirstScreenButtonAction"/>
+			</children>
+		</VBox>
+	</center>
+</BorderPane>

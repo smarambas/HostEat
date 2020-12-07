@@ -5,14 +5,14 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.GUIController">
 	<top>
-		<fx:include fx:id="header" source="GuestTop.fxml"/>
+		<fx:include source="HostTop.fxml"/>
 	</top>
 	<center>
 		<VBox spacing="20" alignment="center">
 			<children>
-				<Label id="titleLabel" text="Homepage"/>
-				<Button text="Search event"/>
+				<Label id="titleLabel" text="Account"/>
 <!-- 				<Label text="Events created:"/> -->
+<!-- 				<Button text="Modify account"/>	 -->
 			</children>
 		</VBox>
 	</center>

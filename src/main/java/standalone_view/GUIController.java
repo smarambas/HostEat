@@ -1,7 +1,6 @@
 package standalone_view;
 
 import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,22 +16,17 @@ public class GUIController {
 	private String userType = null;
 	private String appStyle = "NewStyle.css";
 	
-	@FXML
-	private Button btnSignUp;
-	@FXML
-	private Button btnLogIn;
-	@FXML
-	private Button btnBack;
-	@FXML
-	private Button btnSubmit;
-	@FXML
-	private RadioButton btnRadioHost;
-	@FXML
-	private RadioButton btnRadioGuest;
-	@FXML
-	private ToggleGroup radioGroup;
-	@FXML
-	private Button btnOk;
+	@FXML private Button btnSignUp;
+	@FXML private Button btnLogIn;
+	@FXML private Button btnBack;
+	@FXML private Button btnSubmit;
+	@FXML private RadioButton btnRadioHost;
+	@FXML private RadioButton btnRadioGuest;
+	@FXML private ToggleGroup radioGroup;
+	@FXML private Button btnOk;
+	
+	@FXML private HeaderController headerController;
+	
 	
 	@FXML
 	private void handleFirstScreenButtonAction(ActionEvent event) throws IOException {
@@ -132,5 +126,10 @@ public class GUIController {
 		}
 		
 		stage.close();
+	}
+	
+	@FXML
+	private void handleHomepageButtonAction() throws IOException {
+		headerController.handleHomepageButtonAction(null);
 	}
 }

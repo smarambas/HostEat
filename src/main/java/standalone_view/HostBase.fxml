@@ -3,8 +3,17 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.GUIController">
 	<top>
-		<fx:include source="HostTop.fxml"/>
+		<fx:include fx:id="header" source="HostTop.fxml"/>
 	</top>
+	<center>
+		<VBox spacing="20" alignment="center">
+			<children>
+				<Label id="titleLabel" text="Homepage"/>
+				<Button text="New event"/>
+<!-- 				<Label text="Events created:"/> -->
+			</children>
+		</VBox>
+	</center>
 </BorderPane>

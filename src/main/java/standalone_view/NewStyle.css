@@ -5,7 +5,11 @@
 }
 
 #topLabel {
+	-fx-font-size: 13pt;
 	-fx-font-weight: bold;
+	-fx-pref-width: 150px;
+	-fx-alignment: CENTER-LEFT;
+	-fx-padding: 5;
 }
 
 #welcome1 {
@@ -35,6 +39,11 @@
 	-fx-font-size: 12pt;
 }
 
+#titleLabel {
+	-fx-alignment: CENTER;
+	-fx-font-size: 12pt;
+}
+
 .label {
 	-fx-pref-height: 25px;
 	-fx-pref-width: 100px;
@@ -43,5 +52,5 @@
 .button {
 	-fx-pref-height: 25px;
 	-fx-pref-width: 120px;
-	-fx-padding: 10;
+	-fx-padding: 5;
 }

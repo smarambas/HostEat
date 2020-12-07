@@ -24,6 +24,7 @@ public class GUIController {
 	@FXML private RadioButton btnRadioGuest;
 	@FXML private ToggleGroup radioGroup;
 	@FXML private Button btnOk;
+	@FXML private Button btnEvent;
 	
 	@FXML private HeaderController headerController;
 	
@@ -131,5 +132,21 @@ public class GUIController {
 	@FXML
 	private void handleHomepageButtonAction() throws IOException {
 		headerController.handleHomepageButtonAction(null);
+	}
+	
+	@FXML
+	private void handleNewEventButtonAction(ActionEvent event) throws IOException {
+		Stage stage = new Stage();
+		Parent root = null;
+		
+		if(event.getSource() == btnEvent) {
+			stage = (Stage) btnEvent.getScene().getWindow();
+			root = FXMLLoader.load(getClass().getResource("/standalone_view/NewEventScreen.fxml"));
+		}
+		
+		Scene scene = new Scene(root, 700, 500);
+		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+		stage.setScene(scene);
+		stage.show();
 	}
 }

@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
 	
 	private Usertype type;
@@ -13,6 +16,9 @@ public class User {
 	private String region;
 	private String province;
 	private String city;
+	private String address;
+	private ArrayList<String> favCuisine;
+	private ArrayList<String> allergies;
 	
 	public User(Usertype type, String username, String password, String name, String surname, String email) {
 		this.type = type;
@@ -110,5 +116,29 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
+	public List<String> getFavCuisine() {
+		return favCuisine;
+	}
+
+	public void addCuisine(String cuisine) {
+		this.favCuisine.add(cuisine);
+	}
+	
+	public List<String> getAllergies() {
+		return allergies;
+	}
+
+	public void addAllergy(String allergy) {
+		this.allergies.add(allergy);
+	}	
 	
 }

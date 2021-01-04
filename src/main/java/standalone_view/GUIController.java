@@ -135,7 +135,7 @@ public class GUIController {
 	}
 	
 	@FXML
-	private void handleNewEventButtonAction(ActionEvent event) throws IOException {
+	private void handleHostBaseNewEventButtonAction(ActionEvent event) throws IOException {
 		Stage stage = new Stage();
 		Parent root = null;
 		
@@ -149,4 +149,21 @@ public class GUIController {
 		stage.setScene(scene);
 		stage.show();
 	}
+	
+	@FXML
+	private void handleNewEventScreenButtonAction(ActionEvent event) throws IOException {
+		Stage stage = new Stage();
+		Parent root = null;
+		
+		if(event.getSource() == btnBack) {
+			stage = (Stage) btnBack.getScene().getWindow();
+			root = FXMLLoader.load(getClass().getResource("/standalone_view/HostBase.fxml"));
+		}
+		
+		Scene scene = new Scene(root, 700, 500);
+		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+		stage.setScene(scene);
+		stage.show();
+	}
+	
 }

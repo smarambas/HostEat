@@ -5,7 +5,12 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.GUIController">
 	<top>
-		<fx:include fx:id="header" source="HostTop.fxml"/>
+		<VBox>
+			<children>
+				<fx:include fx:id="header" source="HostTop.fxml"/>
+				<Button fx:id="btnBack" text="Back" onAction="#handleNewEventScreenButtonAction"/>
+			</children>
+		</VBox>
 	</top>
 	<center>
 		<VBox spacing="20" alignment="center">

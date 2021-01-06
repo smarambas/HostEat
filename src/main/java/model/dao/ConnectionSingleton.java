@@ -39,7 +39,7 @@ public class ConnectionSingleton {
 			user = properties.getProperty("USER");
 			pswd = properties.getProperty("PSWD");
 			url = properties.getProperty("DB_URL");
-			driver = properties.getProperty("DRIVER_CLASS_NAME");			
+			driver = properties.getProperty("DRIVER_CLASS_NAME");					
 		} catch (IOException e) {
 			e.printStackTrace();	//NEED TO CHANGE THIS
 		} 

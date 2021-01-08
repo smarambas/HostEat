@@ -20,7 +20,7 @@ public class UserDAO {
 	
 	public static List<User> retrieveUserByUsername(String username) throws Exception {
 		Statement stm = null;
-		List<User> userList = new ArrayList<User>();
+		List<User> userList = new ArrayList<>();
 		
 		try {
 			cs = ConnectionSingleton.createConnection();
@@ -95,7 +95,7 @@ public class UserDAO {
 				stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 						ResultSet.CONCUR_READ_ONLY);
 				
-				int result = CRUDQueries.insertUser(stm, user);
+				CRUDQueries.insertUser(stm, user);
 			}
 		} finally {
 			try {
@@ -125,7 +125,7 @@ public class UserDAO {
 				stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 						ResultSet.CONCUR_READ_ONLY);
 				
-				int result = CRUDQueries.deleteUser(stm, user);
+				CRUDQueries.deleteUser(stm, user);
 			}
 			else {
 				throw new NoRecordFoundException("ERROR: no record found");

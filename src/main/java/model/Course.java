@@ -11,6 +11,14 @@ public class Course {
 		this.name = n;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public List<String> getDishes() {
 		return dishes;
 	}

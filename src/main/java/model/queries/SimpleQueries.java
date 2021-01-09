@@ -18,22 +18,32 @@ public class SimpleQueries {
 		return stmt.executeQuery(statement);
 	}
 	
+	public static ResultSet selectAllergy(Statement stmt, String username, String allergy) throws SQLException {
+		String statement = String.format("SELECT name FROM allergy WHERE user = %s AND name = %s;", username, allergy);
+		return stmt.executeQuery(statement);
+	}
+	
 	public static ResultSet selectCuisinesByUsername(Statement stmt, String username) throws SQLException {
 		String statement = String.format("SELECT name FROM cuisine WHERE user = %s;", username);
 		return stmt.executeQuery(statement);
 	}
 	
-	public static ResultSet selectEventByUsername(Statement stmt, String username) throws SQLException {
+	public static ResultSet selectCuisine(Statement stmt, String username, String cuisine) throws SQLException {
+		String statement = String.format("SELECT name FROM cuisine WHERE user = %s AND name = %s;", username, cuisine);
+		return stmt.executeQuery(statement);
+	}
+	
+	public static ResultSet selectEventsByUsername(Statement stmt, String username) throws SQLException {
 		String statement = String.format("SELECT * FROM event WHERE owner = %s;", username);
 		return stmt.executeQuery(statement);
 	}
 	
-	public static ResultSet selectEventByDate(Statement stmt, String username, String date) throws SQLException {
+	public static ResultSet selectEventsByUsernameDate(Statement stmt, String username, String date) throws SQLException {
 		String statement = String.format("SELECT * FROM event WHERE owner = %s AND date = %s;", username, date);
 		return stmt.executeQuery(statement);
 	}
 	
-	public static ResultSet selectEventByDateTime(Statement stmt, String username, String date, String time) throws SQLException {
+	public static ResultSet selectEventByUsernameDateTime(Statement stmt, String username, String date, String time) throws SQLException {
 		String statement = String.format("SELECT * FROM event WHERE owner = %s AND date = %s AND time = %s;", username, date, time);
 		return stmt.executeQuery(statement);
 	}

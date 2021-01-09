@@ -18,23 +18,21 @@ public class UserDAO {
 	
 	private UserDAO() {}
 	
-	public static List<User> retrieveUserByUsername(String username) throws Exception {
+	public static List<User> retrieveUserByUsername(User user) throws SQLException, ClassNotFoundException, NoRecordFoundException {
 		Statement stm = null;
 		List<User> userList = new ArrayList<>();
 		
-		try {
-			cs = ConnectionSingleton.createConnection();
-			
-			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
-			
-			ResultSet rs = SimpleQueries.selectUserByUsername(stm, username);
-			
-			if(!rs.first()) {
-				//throw new Exception("No user found matching username: " + username);
-				System.out.println("No user found matching username: " + username);
-			}
-									
+		cs = ConnectionSingleton.createConnection();
+		
+		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		
+		ResultSet rs = SimpleQueries.selectUserByUsername(stm, user.getUsername());
+		
+		if(!rs.first()) {
+			throw new NoRecordFoundException("ERROR: no record found");
+		}
+		else {			
 			rs.first();
 			do {
 				String usern = rs.getString("username");
@@ -59,86 +57,64 @@ public class UserDAO {
 				newUser.setAge(age);
 				
 				userList.add(newUser);
-			}while(rs.next());
-			
-			rs.close();
-		} finally {
-			try {
-				if(stm != null) {
-					stm.close();
-				}
-			} catch(SQLException sqle) {
-				
 			}
+			while(rs.next());
 		}
+		
+		rs.close();
+		stm.close();
 		
 		return userList;
 	}
 	
-	public static void saveUser(User user) throws Exception {
+	public static void saveUser(User user) throws SQLException, ClassNotFoundException, DuplicateRecordException {
 		Statement stm = null;
 		
-		try {
-			cs = ConnectionSingleton.createConnection();
-			
+		cs = ConnectionSingleton.createConnection();
+		
+		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		
+		ResultSet rs = SimpleQueries.selectUserByUsername(stm, user.getUsername());
+		
+		if(rs.first()) {
+			throw new DuplicateRecordException("ERROR: the user already exists");
+		}
+		else {
+			rs.close();
+			stm.close();
 			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			
-			ResultSet rs = SimpleQueries.selectUserByUsername(stm, user.getUsername());
-			
-			if(rs.next()) {
-				throw new DuplicateRecordException("ERROR: the user already exists");
-			}
-			else {
-				rs.close();
-				stm.close();
-				stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-						ResultSet.CONCUR_READ_ONLY);
-				
-				CRUDQueries.insertUser(stm, user);
-			}
-		} finally {
-			try {
-				if(stm != null) {
-					stm.close();
-				}
-			} catch(SQLException sqle) {
-				
-			}
+			CRUDQueries.insertUser(stm, user);
 		}
+		
+		stm.close();
 	}
 	
-	public static void removeUser(User user) throws Exception {
+	public static void removeUser(User user) throws SQLException, ClassNotFoundException, NoRecordFoundException {
 		Statement stm = null;
 		
-		try {
-			cs = ConnectionSingleton.createConnection();
-			
+		cs = ConnectionSingleton.createConnection();
+		
+		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		
+		ResultSet rs = SimpleQueries.selectUserByUsername(stm, user.getUsername());
+		
+		if(rs.first()) {
+			rs.close();
+			stm.close();
 			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			
-			ResultSet rs = SimpleQueries.selectUserByUsername(stm, user.getUsername());
-			
-			if(rs.next()) {
-				rs.close();
-				stm.close();
-				stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-						ResultSet.CONCUR_READ_ONLY);
-				
-				CRUDQueries.deleteUser(stm, user);
-			}
-			else {
-				throw new NoRecordFoundException("ERROR: no record found");
-			}
-		} finally {
-			try {
-				if(stm != null) {
-					stm.close();
-				}
-			} catch(SQLException sqle) {
-				
-			}
+			CRUDQueries.deleteUser(stm, user);
 		}
+		else {
+			throw new NoRecordFoundException("ERROR: no record found");
+		}
+		
+		stm.close();
 	}
 	
 }

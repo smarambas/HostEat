@@ -61,7 +61,7 @@ public class CuisineDAO {
 		ResultSet rs = SimpleQueries.selectCuisine(stm, user.getUsername(), cuisine.getCuisine());
 		
 		if(rs.first()) {
-			throw new DuplicateRecordException("ERROR: the user already exists");
+			throw new DuplicateRecordException("ERROR: the record already exists");
 		}
 		else {
 			rs.close();

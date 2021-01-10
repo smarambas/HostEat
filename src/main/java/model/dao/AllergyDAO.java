@@ -60,7 +60,7 @@ public class AllergyDAO {
 		ResultSet rs = SimpleQueries.selectAllergy(stm, user.getUsername(), allergy.getName());
 		
 		if(rs.first()) {
-			throw new DuplicateRecordException("ERROR: the user already exists");
+			throw new DuplicateRecordException("ERROR: the record already exists");
 		}
 		else {
 			rs.close();

@@ -16,7 +16,7 @@ public class EventDAO {
 	
 	private EventDAO() {}
 	
-	public static List<Event> retrieveEventListByUsername(User user) throws SQLException, ClassNotFoundException, NoRecordFoundException {
+	public static List<Event> retrieveEventsByUsername(User user) throws SQLException, ClassNotFoundException, NoRecordFoundException {
 		Statement stm = null;
 		List<Event> eventList = new ArrayList<>();
 		

@@ -78,7 +78,7 @@ public class UserDAO {
 		ResultSet rs = SimpleQueries.selectUserByUsername(stm, user.getUsername());
 		
 		if(rs.first()) {
-			throw new DuplicateRecordException("ERROR: the user already exists");
+			throw new DuplicateRecordException("ERROR: the record already exists");
 		}
 		else {
 			rs.close();

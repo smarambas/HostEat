@@ -35,10 +35,19 @@ public class MenuDAO {
 		else {
 			rs.first();
 			do {
-				Course newCourse = new Course(rs.getString("course"));
-				newCourse.addDish(rs.getString("name"));
+				String courseName = rs.getString("course");
+				String dishName = rs.getString("name");
+				Course newCourse;
 				
-				menu.addCourse(newCourse);
+				if((newCourse = menu.getCourse(courseName)) != null) {
+					//the menu already contains the course
+					newCourse.addDish(dishName);
+				}
+				else {
+					newCourse = new Course(courseName);
+					newCourse.addDish(dishName);
+					menu.addCourse(newCourse);
+				}
 			}
 			while(rs.next());			
 		}
@@ -60,9 +69,10 @@ public class MenuDAO {
 		ResultSet rs = SimpleQueries.selectMenuByUsernameDateTime(stm, user.getUsername(), date, time);
 		
 		if(rs.first()) {
-			throw new DuplicateRecordException("ERROR: the user already exists");
+			throw new DuplicateRecordException("ERROR: the record already exists");
 		}
 		else {
+			rs.close();
 			List<Course> courses = menu.getCourses();
 			int coursesSize = courses.size();
 			
@@ -71,7 +81,6 @@ public class MenuDAO {
 				int dishSize = courses.get(i).getDishes().size();
 				
 				for(int j = 0; j < dishSize; j++) {
-					rs.close();
 					stm.close();
 					stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 							ResultSet.CONCUR_READ_ONLY);
@@ -82,9 +91,6 @@ public class MenuDAO {
 		}
 	
 		stm.close();
-	
 	}
-	
-	
 	
 }

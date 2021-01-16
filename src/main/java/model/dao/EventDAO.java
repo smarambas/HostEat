@@ -127,61 +127,45 @@ public class EventDAO {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		Statement stm = null;
 		List<Event> eventList = new ArrayList<>();
-		boolean field1 = false; 
-		boolean field2 = false;
-		boolean field3 = false; 
 		ResultSet rs;
+		boolean[] fields = new boolean[3];
+		int searchType;
 		
-		if(region.length() > 0) {
-			field1 = true;
-		}
-		if(province.length() > 0) {
-			field2 = true;
-		}
-		if(city.length() > 0) {
-			field3 = true;
-		}
+		setFields(region, province, city, fields);
+		searchType = calcFields(fields);
 		
 		cs = ConnectionSingleton.createConnection();
 		
 		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
 		
-		if(field1) {
-			if(field2) {
-				if(field3) {	//111
-					rs = NestedQueries.selectEventsByRegionProvinceCity(stm, region, province, city, sdf.format(dateTime));
-				}
-				else {	//110
-					rs = NestedQueries.selectEventsByRegionProvince(stm, region, province, sdf.format(dateTime));
-				}
-			}
-			else {
-				if(field3) {	//101
-					rs = NestedQueries.selectEventsByRegionCity(stm, region, city, sdf.format(dateTime));
-				}
-				else {	//100
-					rs = NestedQueries.selectEventsByRegion(stm, region, sdf.format(dateTime));
-				}
-			}
-		}
-		else {
-			if(field2) {
-				if(field3) {	//011
-					rs = NestedQueries.selectEventsByProvinceCity(stm, province, city, sdf.format(dateTime));
-				}
-				else {	//010
-					rs = NestedQueries.selectEventsByProvince(stm, province, sdf.format(dateTime));
-				}
-			}
-			else {
-				if(field3) {	//001
-					rs = NestedQueries.selectEventsByCity(stm, city, sdf.format(dateTime));
-				}
-				else {	//000
-					rs = NestedQueries.selectEventsByDate(stm, sdf.format(dateTime));
-				}
-			}
+		switch (searchType) {
+		case 0: 
+			rs = NestedQueries.selectEventsByDate(stm, sdf.format(dateTime));
+			break;
+		case 1:
+			rs = NestedQueries.selectEventsByCity(stm, city, sdf.format(dateTime));
+			break;
+		case 10:
+			rs = NestedQueries.selectEventsByProvince(stm, province, sdf.format(dateTime));
+			break;
+		case 11:
+			rs = NestedQueries.selectEventsByProvinceCity(stm, province, city, sdf.format(dateTime));
+			break;
+		case 100:
+			rs = NestedQueries.selectEventsByRegion(stm, region, sdf.format(dateTime));
+			break;
+		case 101:
+			rs = NestedQueries.selectEventsByRegionCity(stm, region, city, sdf.format(dateTime));
+			break;
+		case 110:
+			rs = NestedQueries.selectEventsByRegionProvince(stm, region, province, sdf.format(dateTime));
+			break;
+		case 111:
+			rs = NestedQueries.selectEventsByRegionProvinceCity(stm, region, province, city, sdf.format(dateTime));
+			break;
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + searchType);
 		}
 				
 		if(!rs.first()) {
@@ -209,6 +193,45 @@ public class EventDAO {
 		stm.close();
 		
 		return eventList;
+	}
+	
+	private static void setFields(String r, String p, String c, boolean[] f) {
+		if(r.length() > 0) {
+			f[0] = true;
+		}
+		else {
+			f[0] = false;
+		}
+		
+		if(p.length() > 0) {
+			f[1] = true;
+		}
+		else {
+			f[1] = false;
+		}
+		
+		if(c.length() > 0) {
+			f[2] = true;
+		}
+		else {
+			f[2] = false;
+		}
+	}
+	
+	private static int calcFields(boolean[] f) {
+		int result = 0;
+		
+		if(f[2]) {
+			result += 1;
+		}
+		if(f[1]) {
+			result += 10;
+		}
+		if(f[0]) {
+			result += 100;
+		}
+		
+		return result;
 	}
 	
 }

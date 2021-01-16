@@ -2,18 +2,18 @@ package model;
 
 public class Cuisine {
 
-	private String cuisine;
+	private String cuisineName;
 	
 	public Cuisine(String c) {
-		this.cuisine = c;
+		this.cuisineName = c;
 	}
 
 	public String getCuisine() {
-		return cuisine;
+		return cuisineName;
 	}
 
-	public void setCuisine(String cuisine) {
-		this.cuisine = cuisine;
+	public void setCuisine(String name) {
+		this.cuisineName = name;
 	}
 	
 }

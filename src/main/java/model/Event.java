@@ -1,31 +1,48 @@
 package model;
 
+import java.util.GregorianCalendar;
+
 public class Event {
 
-	private String date;
-	private String time;
+	private User owner;
+	private int maxGuestsNumber;
 	private int guestsNumber;
+	private GregorianCalendar dateTime;
+	private GuestStatus guestStatus;
+	private PaymentStatus payStatus;
+	private int bill;
+	private boolean payRequired;
 		
-	public Event(String d, String t, int gnum) {
-		this.date = d;
-		this.time = t;
-		this.guestsNumber = gnum;
+	public Event(User owner, GregorianCalendar dateTime, int maxGuests, int bill) {
+		this.owner = owner;
+		this.dateTime = dateTime;
+		this.bill = bill;
+		this.maxGuestsNumber = maxGuests;
+		
+		if(bill > 0) {
+			this.payRequired = true;
+			this.payStatus = PaymentStatus.UNPAID;
+		}
+		else {
+			this.payRequired = false;
+			this.payStatus = PaymentStatus.NOSET;
+		}
 	}
 
-	public String getDate() {
-		return date;
+	public User getOwner() {
+		return owner;
 	}
 
-	public void setDate(String date) {
-		this.date = date;
+	public void setOwner(User owner) {
+		this.owner = owner;
 	}
 
-	public String getTime() {
-		return time;
+	public int getMaxGuestsNumber() {
+		return maxGuestsNumber;
 	}
 
-	public void setTime(String time) {
-		this.time = time;
+	public void setMaxGuestsNumber(int maxGuestsNumber) {
+		this.maxGuestsNumber = maxGuestsNumber;
 	}
 
 	public int getGuestsNumber() {
@@ -34,6 +51,50 @@ public class Event {
 
 	public void setGuestsNumber(int guestsNumber) {
 		this.guestsNumber = guestsNumber;
+	}
+
+	public GregorianCalendar getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(GregorianCalendar dateTime) {
+		this.dateTime = dateTime;
+	}
+	
+	public int emptySpots() {
+		return this.maxGuestsNumber - this.guestsNumber;
+	}
+
+	public GuestStatus getGuestStatus() {
+		return guestStatus;
+	}
+
+	public void setGuestStatus(GuestStatus guestStatus) {
+		this.guestStatus = guestStatus;
+	}
+
+	public PaymentStatus getPayStatus() {
+		return payStatus;
+	}
+
+	public void setPayStatus(PaymentStatus payStatus) {
+		this.payStatus = payStatus;
+	}
+
+	public int getBill() {
+		return bill;
+	}
+
+	public void setBill(int bill) {
+		this.bill = bill;
+	}
+
+	public boolean isPayRequired() {
+		return payRequired;
+	}
+
+	public void setPayRequired(boolean payRequired) {
+		this.payRequired = payRequired;
 	}
 	
 }

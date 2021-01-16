@@ -1,5 +1,5 @@
 package model;
 
-public enum Usertype {
+public enum UserType {
 	HOST, GUEST
 }

@@ -100,14 +100,14 @@ public class CRUDQueries {
 	/*
 	 * Event statements
 	 */
-	public static int insertEvent(Statement stmt, User user, String date, String time, String type, int guestsNum) throws SQLException {
-		String statement = String.format("INSERT INTO event (owner, date, time, type, num_guests) VALUES (%s, %s, %s, %s, %d);",
-				user.getUsername(), date, time, type, guestsNum);
+	public static int insertEvent(Statement stmt, User user, String date, int maxGuestsNum, int bill) throws SQLException {
+		String statement = String.format("INSERT INTO event (owner, date, max_num_guests, payment_bill) VALUES (%s, %s, %d, %d);",
+				user.getUsername(), date, maxGuestsNum, bill);
 		return stmt.executeUpdate(statement);
 	}
 	
-	public static int deleteEvent(Statement stmt, User user, String date, String time) throws SQLException {
-		String statement = String.format("DELETE FROM event WHERE owner = %s AND date = %s AND time = %s;", user.getUsername(), date, time);
+	public static int deleteEvent(Statement stmt, User user, String date) throws SQLException {
+		String statement = String.format("DELETE FROM event WHERE owner = %s AND date = %s;", user.getUsername(), date);
 		return stmt.executeUpdate(statement);
 	}
 	
@@ -116,13 +116,8 @@ public class CRUDQueries {
 		return stmt.executeUpdate(statement);
 	}
 	
-	public static int updateEventDate(Statement stmt, User user, String newDate) throws SQLException {
-		String statement = String.format("UPDATE event SET date = %s WHERE owner = %s;", newDate, user.getUsername());
-		return stmt.executeUpdate(statement);
-	}
-	
-	public static int updateEventTime(Statement stmt, User user, String newTime) throws SQLException {
-		String statement = String.format("UPDATE event SET time = %s WHERE owner = %s;", newTime, user.getUsername());
+	public static int updateEventDate(Statement stmt, User user, String oldDate, String newDate) throws SQLException {
+		String statement = String.format("UPDATE event SET date = %s WHERE owner = %s AND date = %s;", newDate, user.getUsername(), oldDate);
 		return stmt.executeUpdate(statement);
 	}
 	

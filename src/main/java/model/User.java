@@ -5,7 +5,7 @@ import java.util.List;
 
 public class User {
 	
-	private Usertype type;
+	private UserType type;
 	private String username;
 	private String password;
 	private String name;
@@ -20,7 +20,7 @@ public class User {
 	private ArrayList<String> favCuisine;
 	private ArrayList<String> allergies;
 	
-	public User(Usertype type, String username, String password, String name, String surname, String email) {
+	public User(UserType type, String username, String password, String name, String surname, String email) {
 		this.type = type;
 		this.username = username;
 		this.password = password;
@@ -29,11 +29,11 @@ public class User {
 		this.email = email;
 	}
 	
-	public Usertype getType() {
+	public UserType getType() {
 		return type;
 	}
 
-	public void setType(Usertype type) {
+	public void setType(UserType type) {
 		this.type = type;
 	}
 

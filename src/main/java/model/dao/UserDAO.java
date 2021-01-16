@@ -3,68 +3,63 @@ package model.dao;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
 import exceptions.DuplicateRecordException;
 import exceptions.NoRecordFoundException;
 import model.User;
 import model.queries.CRUDQueries;
 import model.queries.SimpleQueries;
-import model.Usertype;
+import model.UserType;
 
 public class UserDAO {
 
 	private static ConnectionSingleton cs;
+	private static String norecord = "ERROR: no record found";
 	
 	private UserDAO() {}
 	
-	public static List<User> retrieveUserByUsername(User user) throws SQLException, ClassNotFoundException, NoRecordFoundException {
+	public static User retrieveUserByUsername(String username) throws SQLException, ClassNotFoundException, NoRecordFoundException {
 		Statement stm = null;
-		List<User> userList = new ArrayList<>();
+		User newUser;
 		
 		cs = ConnectionSingleton.createConnection();
 		
 		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
 		
-		ResultSet rs = SimpleQueries.selectUserByUsername(stm, user.getUsername());
+		ResultSet rs = SimpleQueries.selectUserByUsername(stm, username);
 		
 		if(!rs.first()) {
-			throw new NoRecordFoundException("ERROR: no record found");
+			throw new NoRecordFoundException(norecord);
 		}
 		else {			
 			rs.first();
-			do {
-				String usern = rs.getString("username");
-				String passw = rs.getString("password");
-				String email = rs.getString("email");
-				String name = rs.getString("name");
-				String surname = rs.getString("surname");
-				String sex = rs.getString("sex");
-				String region = rs.getString("region");
-				String province = rs.getString("province");
-				String city = rs.getString("city");
-				String address = rs.getString("address");
-				int age = rs.getInt("age");
-				Usertype type = Usertype.valueOf(rs.getString("type").toUpperCase());
-				
-				User newUser = new User(type, usern, passw, name, surname, email);
-				newUser.setSex(sex);
-				newUser.setRegion(region);
-				newUser.setProvince(province);
-				newUser.setCity(city);
-				newUser.setAddress(address);
-				newUser.setAge(age);
-				
-				userList.add(newUser);
-			}
-			while(rs.next());
+			
+			String usern = rs.getString("username");
+			String passw = rs.getString("password");
+			String email = rs.getString("email");
+			String name = rs.getString("name");
+			String surname = rs.getString("surname");
+			String sex = rs.getString("sex");
+			String region = rs.getString("region");
+			String province = rs.getString("province");
+			String city = rs.getString("city");
+			String address = rs.getString("address");
+			int age = rs.getInt("age");
+			UserType type = UserType.valueOf(rs.getString("type").toUpperCase());
+			
+			newUser = new User(type, usern, passw, name, surname, email);
+			newUser.setSex(sex);
+			newUser.setRegion(region);
+			newUser.setProvince(province);
+			newUser.setCity(city);
+			newUser.setAddress(address);
+			newUser.setAge(age);
 		}
 		
 		rs.close();
 		stm.close();
 		
-		return userList;
+		return newUser;
 	}
 	
 	public static void saveUser(User user) throws SQLException, ClassNotFoundException, DuplicateRecordException {
@@ -111,7 +106,157 @@ public class UserDAO {
 			CRUDQueries.deleteUser(stm, user);
 		}
 		else {
-			throw new NoRecordFoundException("ERROR: no record found");
+			throw new NoRecordFoundException(norecord);
+		}
+		
+		stm.close();
+	}
+	
+	public static void updateUserEmail(User user, String newEmail)throws SQLException, ClassNotFoundException, NoRecordFoundException {
+		Statement stm = null;
+		
+		cs = ConnectionSingleton.createConnection();
+		
+		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		
+		ResultSet rs = SimpleQueries.selectUserByUsername(stm, user.getUsername());
+		
+		if(rs.first()) {
+			rs.close();
+			stm.close();
+			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			
+			CRUDQueries.updateUserEmail(stm, user, newEmail);
+		}
+		else {
+			throw new NoRecordFoundException(norecord);
+		}
+		
+		stm.close();
+	}
+	
+	public static void updateUserPassword(User user, String newPassword)throws SQLException, ClassNotFoundException, NoRecordFoundException {
+		Statement stm = null;
+		
+		cs = ConnectionSingleton.createConnection();
+		
+		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		
+		ResultSet rs = SimpleQueries.selectUserByUsername(stm, user.getUsername());
+		
+		if(rs.first()) {
+			rs.close();
+			stm.close();
+			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			
+			CRUDQueries.updateUserEmail(stm, user, newPassword);
+		}
+		else {
+			throw new NoRecordFoundException(norecord);
+		}
+		
+		stm.close();
+	}
+	
+	public static void updateUserRegion(User user, String newRegion)throws SQLException, ClassNotFoundException, NoRecordFoundException {
+		Statement stm = null;
+		
+		cs = ConnectionSingleton.createConnection();
+		
+		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		
+		ResultSet rs = SimpleQueries.selectUserByUsername(stm, user.getUsername());
+		
+		if(rs.first()) {
+			rs.close();
+			stm.close();
+			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			
+			CRUDQueries.updateUserEmail(stm, user, newRegion);
+		}
+		else {
+			throw new NoRecordFoundException(norecord);
+		}
+		
+		stm.close();
+	}
+	
+	public static void updateUserProvince(User user, String newProvince)throws SQLException, ClassNotFoundException, NoRecordFoundException {
+		Statement stm = null;
+		
+		cs = ConnectionSingleton.createConnection();
+		
+		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		
+		ResultSet rs = SimpleQueries.selectUserByUsername(stm, user.getUsername());
+		
+		if(rs.first()) {
+			rs.close();
+			stm.close();
+			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			
+			CRUDQueries.updateUserEmail(stm, user, newProvince);
+		}
+		else {
+			throw new NoRecordFoundException(norecord);
+		}
+		
+		stm.close();
+	}
+	
+	public static void updateUserCity(User user, String newCity)throws SQLException, ClassNotFoundException, NoRecordFoundException {
+		Statement stm = null;
+		
+		cs = ConnectionSingleton.createConnection();
+		
+		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		
+		ResultSet rs = SimpleQueries.selectUserByUsername(stm, user.getUsername());
+		
+		if(rs.first()) {
+			rs.close();
+			stm.close();
+			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			
+			CRUDQueries.updateUserEmail(stm, user, newCity);
+		}
+		else {
+			throw new NoRecordFoundException(norecord);
+		}
+		
+		stm.close();
+	}
+	
+	public static void updateUserAddress(User user, String newAddress)throws SQLException, ClassNotFoundException, NoRecordFoundException {
+		Statement stm = null;
+		
+		cs = ConnectionSingleton.createConnection();
+		
+		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		
+		ResultSet rs = SimpleQueries.selectUserByUsername(stm, user.getUsername());
+		
+		if(rs.first()) {
+			rs.close();
+			stm.close();
+			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			
+			CRUDQueries.updateUserEmail(stm, user, newAddress);
+		}
+		else {
+			throw new NoRecordFoundException(norecord);
 		}
 		
 		stm.close();

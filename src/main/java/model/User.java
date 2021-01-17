@@ -1,7 +1,6 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.GregorianCalendar;
 
 public class User {
 	
@@ -11,14 +10,14 @@ public class User {
 	private String name;
 	private String surname;
 	private String email;
-	private int age;
+	private GregorianCalendar age;
 	private String sex;
 	private String region;
 	private String province;
 	private String city;
 	private String address;
-	private ArrayList<String> favCuisine;
-	private ArrayList<String> allergies;
+	private double rating;
+	private int ratingsNum;
 	
 	public User(UserType type, String username, String password, String name, String surname, String email) {
 		this.type = type;
@@ -37,12 +36,16 @@ public class User {
 		this.type = type;
 	}
 
-	public int getAge() {
+	public GregorianCalendar getAge() {
 		return age;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public void setAge(int year, int month, int day) {
+		this.age = new GregorianCalendar(year, month, day);
+	}
+	
+	public void setAge(GregorianCalendar date) {
+		this.age = date;
 	}
 
 	public String getSex() {
@@ -124,21 +127,21 @@ public class User {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
-	public List<String> getFavCuisine() {
-		return favCuisine;
+
+	public double getRating() {
+		return rating;
 	}
 
-	public void addCuisine(String cuisine) {
-		this.favCuisine.add(cuisine);
-	}
-	
-	public List<String> getAllergies() {
-		return allergies;
+	public void setRating(double rating) {
+		this.rating = rating;
 	}
 
-	public void addAllergy(String allergy) {
-		this.allergies.add(allergy);
+	public int getRatingsNum() {
+		return ratingsNum;
+	}
+
+	public void setRatingsNum(int ratingsNum) {
+		this.ratingsNum = ratingsNum;
 	}	
 	
 }

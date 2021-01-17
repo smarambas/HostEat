@@ -10,10 +10,10 @@ public class Event {
 	private GregorianCalendar dateTime;
 	private GuestStatus guestStatus;
 	private PaymentStatus payStatus;
-	private int bill;
+	private double bill;
 	private boolean payRequired;
 		
-	public Event(User owner, GregorianCalendar dateTime, int maxGuests, int bill) {
+	public Event(User owner, GregorianCalendar dateTime, int maxGuests, double bill) {
 		this.owner = owner;
 		this.dateTime = dateTime;
 		this.bill = bill;
@@ -21,7 +21,6 @@ public class Event {
 		
 		if(bill > 0) {
 			this.payRequired = true;
-			this.payStatus = PaymentStatus.UNPAID;
 		}
 		else {
 			this.payRequired = false;
@@ -81,11 +80,11 @@ public class Event {
 		this.payStatus = payStatus;
 	}
 
-	public int getBill() {
+	public double getBill() {
 		return bill;
 	}
 
-	public void setBill(int bill) {
+	public void setBill(double bill) {
 		this.bill = bill;
 	}
 

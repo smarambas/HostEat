@@ -54,4 +54,9 @@ public class SimpleQueries {
 		String statement = String.format("SELECT COUNT(*) FROM joined_event WHERE event_owner = %s AND event_date = %s;", username, dateTime);
 		return stmt.executeQuery(statement);
 	}
+	
+	public static ResultSet selectJoinedEventsByUsername(Statement stmt, String username) throws SQLException {
+		String statement = String.format("SELECT * FROM joined_event WHERE guest = %s;", username);
+		return stmt.executeQuery(statement);
+	}
 }

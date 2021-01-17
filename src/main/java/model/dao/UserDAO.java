@@ -3,6 +3,8 @@ package model.dao;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.GregorianCalendar;
+
 import exceptions.DuplicateRecordException;
 import exceptions.NoRecordFoundException;
 import model.User;
@@ -44,8 +46,11 @@ public class UserDAO {
 			String province = rs.getString("province");
 			String city = rs.getString("city");
 			String address = rs.getString("address");
-			int age = rs.getInt("age");
+			GregorianCalendar age = new GregorianCalendar();
+			age.setTime(rs.getTimestamp("age"));
 			UserType type = UserType.valueOf(rs.getString("type").toUpperCase());
+			double rating = rs.getDouble("rating");
+			int ratingsNum = rs.getInt("ratings_num");
 			
 			newUser = new User(type, usern, passw, name, surname, email);
 			newUser.setSex(sex);
@@ -54,6 +59,8 @@ public class UserDAO {
 			newUser.setCity(city);
 			newUser.setAddress(address);
 			newUser.setAge(age);
+			newUser.setRating(rating);
+			newUser.setRatingsNum(ratingsNum);
 		}
 		
 		rs.close();

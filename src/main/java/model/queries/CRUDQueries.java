@@ -11,8 +11,8 @@ public class CRUDQueries {
 	 * User statements
 	 */
 	public static int insertUser(Statement stmt, User user) throws SQLException {
-		String statement = String.format("INSERT INTO user (username, email, password, type, name, surname, sex, region, province, city, address, age) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %d);", 
-		user.getUsername(), user.getEmail(), user.getPassword(), user.getType().toString(), user.getName(), user.getSurname(), user.getSex(), user.getRegion(), user.getProvince(), user.getCity(), user.getAddress(), user.getAge());
+		String statement = String.format("INSERT INTO user (username, email, password, type, name, surname, sex, region, province, city, address, age, rating, ratings_num) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %f, %d);", 
+		user.getUsername(), user.getEmail(), user.getPassword(), user.getType().toString(), user.getName(), user.getSurname(), user.getSex(), user.getRegion(), user.getProvince(), user.getCity(), user.getAddress(), user.getAge(), user.getRating(), user.getRatingsNum());
 		return stmt.executeUpdate(statement);
 	}
 	
@@ -100,14 +100,14 @@ public class CRUDQueries {
 	/*
 	 * Event statements
 	 */
-	public static int insertEvent(Statement stmt, User user, String date, int maxGuestsNum, int bill) throws SQLException {
-		String statement = String.format("INSERT INTO event (owner, date, max_num_guests, payment_bill) VALUES (%s, %s, %d, %d);",
-				user.getUsername(), date, maxGuestsNum, bill);
+	public static int insertEvent(Statement stmt, String username, String date, int maxGuestsNum, double bill) throws SQLException {
+		String statement = String.format("INSERT INTO event (owner, date, max_num_guests, payment_bill) VALUES (%s, %s, %d, %f);",
+				username, date, maxGuestsNum, bill);
 		return stmt.executeUpdate(statement);
 	}
 	
-	public static int deleteEvent(Statement stmt, User user, String date) throws SQLException {
-		String statement = String.format("DELETE FROM event WHERE owner = %s AND date = %s;", user.getUsername(), date);
+	public static int deleteEvent(Statement stmt, String username, String date) throws SQLException {
+		String statement = String.format("DELETE FROM event WHERE owner = %s AND date = %s;", username, date);
 		return stmt.executeUpdate(statement);
 	}
 	
@@ -120,6 +120,11 @@ public class CRUDQueries {
 		String statement = String.format("UPDATE event SET date = %s WHERE owner = %s AND date = %s;", newDate, user.getUsername(), oldDate);
 		return stmt.executeUpdate(statement);
 	}
+	
+	/*
+	 * Joined Event statements
+	 */
+	
 	
 	/*
 	 * Dish statements

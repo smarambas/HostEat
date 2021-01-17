@@ -91,7 +91,7 @@ public class EventDAO {
 			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			
-			CRUDQueries.insertEvent(stm, user, sdf.format(event.getDateTime()), event.getMaxGuestsNumber(), event.getBill());
+			CRUDQueries.insertEvent(stm, user.getUsername(), sdf.format(event.getDateTime()), event.getMaxGuestsNumber(), event.getBill());
 		}
 		
 		stm.close();
@@ -114,7 +114,7 @@ public class EventDAO {
 			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			
-			CRUDQueries.deleteEvent(stm, user, sdf.format(event.getDateTime()));
+			CRUDQueries.deleteEvent(stm, user.getUsername(), sdf.format(event.getDateTime()));
 		}
 		else {
 			throw new NoRecordFoundException(norecord);
@@ -196,6 +196,10 @@ public class EventDAO {
 	}
 	
 	private static void setFields(String r, String p, String c, boolean[] f) {
+		/*
+		 * Check input strings to select the right search method
+		 */
+		
 		if(r.length() > 0) {
 			f[0] = true;
 		}

@@ -9,8 +9,8 @@ import exceptions.NoRecordFoundException;
 import model.Course;
 import model.Menu;
 import model.User;
-import model.queries.CRUDQueries;
-import model.queries.SimpleQueries;
+import model.dao.queries.CRUDQueries;
+import model.dao.queries.SimpleQueries;
 
 public class MenuDAO {
 
@@ -85,7 +85,7 @@ public class MenuDAO {
 					stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 							ResultSet.CONCUR_READ_ONLY);
 					
-					CRUDQueries.insertDish(stm, user, date, time, courses.get(i).getDishes().get(j), courseName);
+					CRUDQueries.insertDish(stm, user.getUsername(), date, time, courses.get(i).getDishes().get(j), courseName);
 				}
 			}
 		}

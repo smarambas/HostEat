@@ -9,8 +9,8 @@ import exceptions.DuplicateRecordException;
 import exceptions.NoRecordFoundException;
 import model.Cuisine;
 import model.User;
-import model.queries.CRUDQueries;
-import model.queries.SimpleQueries;
+import model.dao.queries.CRUDQueries;
+import model.dao.queries.SimpleQueries;
 
 public class CuisineDAO {
 
@@ -67,7 +67,7 @@ public class CuisineDAO {
 			rs.close();
 			stm.close();
 			
-			CRUDQueries.insertCuisine(stm, user, cuisine.getCuisine());
+			CRUDQueries.insertCuisine(stm, user.getUsername(), cuisine.getCuisine());
 		}
 		
 		stm.close();
@@ -89,7 +89,7 @@ public class CuisineDAO {
 			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			
-			CRUDQueries.deleteCuisine(stm, user, cuisine.getCuisine());
+			CRUDQueries.deleteCuisine(stm, user.getUsername(), cuisine.getCuisine());
 		}
 		else {
 			throw new NoRecordFoundException("ERROR: no record found");

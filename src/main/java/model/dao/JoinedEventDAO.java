@@ -7,12 +7,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
+import exceptions.DuplicateRecordException;
 import exceptions.NoRecordFoundException;
 import model.Event;
 import model.GuestStatus;
 import model.PaymentStatus;
 import model.User;
-import model.queries.SimpleQueries;
+import model.dao.queries.CRUDQueries;
+import model.dao.queries.SimpleQueries;
 
 public class JoinedEventDAO {
 
@@ -22,7 +24,7 @@ public class JoinedEventDAO {
 	
 	private JoinedEventDAO() {}
 	
-	public List<Event> retrieveJoinedEventsByUsername(User user) throws SQLException, ClassNotFoundException, NoRecordFoundException {
+	public static List<Event> retrieveJoinedEventsByUsername(User user) throws SQLException, ClassNotFoundException, NoRecordFoundException {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		Statement stm = null;
 		List<Event> eventList = new ArrayList<>();
@@ -70,4 +72,57 @@ public class JoinedEventDAO {
 		
 		return eventList;
 	}
+	
+	public static void saveJoinedEvent(User user, Event event) throws SQLException, ClassNotFoundException, DuplicateRecordException {
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		Statement stm = null;
+		
+		cs = ConnectionSingleton.createConnection();
+		
+		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		
+		ResultSet rs = SimpleQueries.selectJoinedEventsByUsername(stm, user.getUsername());
+		
+		if(rs.first()) {
+			throw new DuplicateRecordException("ERROR: the record already exists");
+		}
+		else {
+			rs.close();
+			stm.close();
+			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			
+			CRUDQueries.insertJoinedEvent(stm, user.getUsername(), event.getOwner().getUsername(), sdf.format(event.getDateTime()), event.getGuestStatus().toString(), event.getPayStatus().toString());
+		}
+		
+		stm.close();
+	}
+	
+	public static void removeJoinedEvent(User user, Event event) throws SQLException, ClassNotFoundException, NoRecordFoundException {
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		Statement stm = null;
+		
+		cs = ConnectionSingleton.createConnection();
+		
+		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		
+		ResultSet rs = SimpleQueries.selectJoinedEventByDateTime(stm, user.getUsername(), sdf.format(event.getDateTime()));
+				
+		if(rs.first()) {
+			rs.close();
+			stm.close();
+			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			
+			CRUDQueries.deleteJoinedEvent(stm, user.getUsername(), event.getOwner().getUsername(), sdf.format(event.getDateTime()));
+		}
+		else {
+			throw new NoRecordFoundException(norecord);
+		}
+		
+		stm.close();
+	}
+	
 }

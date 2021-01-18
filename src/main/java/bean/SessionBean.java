@@ -1,12 +1,11 @@
 package bean;
 
 import java.util.List;
-import model.Event;
 
 public class SessionBean {
 
 	private String username;
-	private List<Event> eventList;
+	private List<EventBean> eventBeanList;
 	
 	public String getUsername() {
 		return username;
@@ -15,13 +14,13 @@ public class SessionBean {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	
-	public List<Event> getEventList() {
-		return eventList;
+
+	public List<EventBean> getEventBeans() {
+		return eventBeanList;
 	}
-	
-	public void setEventList(List<Event> eventList) {
-		this.eventList = eventList;
+
+	public void setEventBeans(List<EventBean> eventBeans) {
+		this.eventBeanList = eventBeans;
 	}
 	
 }

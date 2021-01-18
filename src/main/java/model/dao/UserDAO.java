@@ -8,9 +8,9 @@ import java.util.GregorianCalendar;
 import exceptions.DuplicateRecordException;
 import exceptions.NoRecordFoundException;
 import model.User;
-import model.queries.CRUDQueries;
-import model.queries.SimpleQueries;
 import model.UserType;
+import model.dao.queries.CRUDQueries;
+import model.dao.queries.SimpleQueries;
 
 public class UserDAO {
 
@@ -110,7 +110,7 @@ public class UserDAO {
 			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			
-			CRUDQueries.deleteUser(stm, user);
+			CRUDQueries.deleteUser(stm, user.getUsername());
 		}
 		else {
 			throw new NoRecordFoundException(norecord);
@@ -135,7 +135,7 @@ public class UserDAO {
 			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			
-			CRUDQueries.updateUserEmail(stm, user, newEmail);
+			CRUDQueries.updateUserEmail(stm, user.getUsername(), newEmail);
 		}
 		else {
 			throw new NoRecordFoundException(norecord);
@@ -160,7 +160,7 @@ public class UserDAO {
 			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			
-			CRUDQueries.updateUserEmail(stm, user, newPassword);
+			CRUDQueries.updateUserEmail(stm, user.getUsername(), newPassword);
 		}
 		else {
 			throw new NoRecordFoundException(norecord);
@@ -185,7 +185,7 @@ public class UserDAO {
 			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			
-			CRUDQueries.updateUserEmail(stm, user, newRegion);
+			CRUDQueries.updateUserEmail(stm, user.getUsername(), newRegion);
 		}
 		else {
 			throw new NoRecordFoundException(norecord);
@@ -210,7 +210,7 @@ public class UserDAO {
 			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			
-			CRUDQueries.updateUserEmail(stm, user, newProvince);
+			CRUDQueries.updateUserEmail(stm, user.getUsername(), newProvince);
 		}
 		else {
 			throw new NoRecordFoundException(norecord);
@@ -235,7 +235,7 @@ public class UserDAO {
 			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			
-			CRUDQueries.updateUserEmail(stm, user, newCity);
+			CRUDQueries.updateUserEmail(stm, user.getUsername(), newCity);
 		}
 		else {
 			throw new NoRecordFoundException(norecord);
@@ -260,7 +260,7 @@ public class UserDAO {
 			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			
-			CRUDQueries.updateUserEmail(stm, user, newAddress);
+			CRUDQueries.updateUserEmail(stm, user.getUsername(), newAddress);
 		}
 		else {
 			throw new NoRecordFoundException(norecord);

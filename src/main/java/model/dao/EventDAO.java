@@ -11,9 +11,9 @@ import exceptions.DuplicateRecordException;
 import exceptions.NoRecordFoundException;
 import model.Event;
 import model.User;
-import model.queries.CRUDQueries;
-import model.queries.NestedQueries;
-import model.queries.SimpleQueries;
+import model.dao.queries.CRUDQueries;
+import model.dao.queries.NestedQueries;
+import model.dao.queries.SimpleQueries;
 
 public class EventDAO {
 

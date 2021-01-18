@@ -7,12 +7,14 @@ public class UserBean {
 	private String name;
 	private String surname;
 	private String email;
-	
+	private String age;
 	private String sex;
 	private String region;
 	private String province;
 	private String city;
 	private String address;
+	private double rating;
+	private int ratingsNum;
 	
 	public String getUsername() {
 		return username;
@@ -93,6 +95,29 @@ public class UserBean {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
+
+	public String getAge() {
+		return age;
+	}
+
+	public void setAge(String age) {
+		this.age = age;
+	}
+
+	public double getRating() {
+		return rating;
+	}
+
+	public void setRating(double rating) {
+		this.rating = rating;
+	}
+
+	public int getRatingsNum() {
+		return ratingsNum;
+	}
+
+	public void setRatingsNum(int ratingsNum) {
+		this.ratingsNum = ratingsNum;
+	}
 	
 }

@@ -9,8 +9,8 @@ import exceptions.DuplicateRecordException;
 import exceptions.NoRecordFoundException;
 import model.Allergy;
 import model.User;
-import model.queries.CRUDQueries;
-import model.queries.SimpleQueries;
+import model.dao.queries.CRUDQueries;
+import model.dao.queries.SimpleQueries;
 
 public class AllergyDAO {
 
@@ -66,7 +66,7 @@ public class AllergyDAO {
 			rs.close();
 			stm.close();
 			
-			CRUDQueries.insertAllergy(stm, user, allergy.getName());
+			CRUDQueries.insertAllergy(stm, user.getUsername(), allergy.getName());
 		}
 		
 		stm.close();
@@ -88,7 +88,7 @@ public class AllergyDAO {
 			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			
-			CRUDQueries.deleteAllergy(stm, user, allergy.getName());
+			CRUDQueries.deleteAllergy(stm, user.getUsername(), allergy.getName());
 		}
 		else {
 			throw new NoRecordFoundException("ERROR: no record found");

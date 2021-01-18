@@ -1,5 +1,6 @@
 package model.dao;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -24,7 +25,7 @@ public class JoinedEventDAO {
 	
 	private JoinedEventDAO() {}
 	
-	public static List<Event> retrieveJoinedEventsByUsername(User user) throws SQLException, ClassNotFoundException, NoRecordFoundException {
+	public static List<Event> retrieveJoinedEventsByUsername(User user) throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		Statement stm = null;
 		List<Event> eventList = new ArrayList<>();
@@ -73,7 +74,7 @@ public class JoinedEventDAO {
 		return eventList;
 	}
 	
-	public static void saveJoinedEvent(User user, Event event) throws SQLException, ClassNotFoundException, DuplicateRecordException {
+	public static void saveJoinedEvent(User user, Event event) throws SQLException, ClassNotFoundException, DuplicateRecordException, IOException {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		Statement stm = null;
 		
@@ -99,7 +100,7 @@ public class JoinedEventDAO {
 		stm.close();
 	}
 	
-	public static void removeJoinedEvent(User user, Event event) throws SQLException, ClassNotFoundException, NoRecordFoundException {
+	public static void removeJoinedEvent(User user, Event event) throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		Statement stm = null;
 		

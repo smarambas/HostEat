@@ -28,7 +28,7 @@ public class LogInController {
 		try {
 			user = UserDAO.retrieveUserByUsername(userBean.getUsername());
 			
-			if(!(userBean.getPassword().equals(user.getPassword()))) {
+			if(!(userBean.getPassw().equals(user.getPassword()))) {
 				throw new WrongPasswordException("Wrong password");
 			}
 			

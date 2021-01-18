@@ -1,20 +1,23 @@
 package bean;
 
+import java.util.List;
+
 public class UserBean {
 
 	private String username;
-	private String password;
+	private String passw;
 	private String name;
 	private String surname;
 	private String email;
-	private String age;
+	private String birthDay;
 	private String sex;
-	private String region;
-	private String province;
+	private String reg;
+	private String prov;
 	private String city;
-	private String address;
-	private double rating;
-	private int ratingsNum;
+	private String addr;
+	private double ratings;
+	private List<String> favCuisines;
+	private List<String> allergies;
 	
 	public String getUsername() {
 		return username;
@@ -24,12 +27,12 @@ public class UserBean {
 		this.username = username;
 	}
 	
-	public String getPassword() {
-		return password;
+	public String getPassw() {
+		return passw;
 	}
 	
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPassw(String passw) {
+		this.passw = passw;
 	}
 	
 	public String getName() {
@@ -56,6 +59,14 @@ public class UserBean {
 		this.email = email;
 	}
 	
+	public String getBirthDay() {
+		return birthDay;
+	}
+	
+	public void setBirthDay(String birthDay) {
+		this.birthDay = birthDay;
+	}
+	
 	public String getSex() {
 		return sex;
 	}
@@ -64,20 +75,20 @@ public class UserBean {
 		this.sex = sex;
 	}
 	
-	public String getRegion() {
-		return region;
+	public String getReg() {
+		return reg;
 	}
 	
-	public void setRegion(String region) {
-		this.region = region;
+	public void setReg(String reg) {
+		this.reg = reg;
 	}
 	
-	public String getProvince() {
-		return province;
+	public String getProv() {
+		return prov;
 	}
 	
-	public void setProvince(String province) {
-		this.province = province;
+	public void setProv(String prov) {
+		this.prov = prov;
 	}
 	
 	public String getCity() {
@@ -88,36 +99,36 @@ public class UserBean {
 		this.city = city;
 	}
 	
-	public String getAddress() {
-		return address;
+	public String getAddr() {
+		return addr;
 	}
 	
-	public void setAddress(String address) {
-		this.address = address;
+	public void setAddr(String addr) {
+		this.addr = addr;
 	}
-
-	public String getAge() {
-		return age;
+	
+	public double getRatings() {
+		return ratings;
 	}
-
-	public void setAge(String age) {
-		this.age = age;
+	
+	public void setRatings(double ratings) {
+		this.ratings = ratings;
 	}
-
-	public double getRating() {
-		return rating;
+	
+	public List<String> getFavCuisines() {
+		return favCuisines;
 	}
-
-	public void setRating(double rating) {
-		this.rating = rating;
+	
+	public void setFavCuisines(List<String> favCuisines) {
+		this.favCuisines = favCuisines;
 	}
-
-	public int getRatingsNum() {
-		return ratingsNum;
+	
+	public List<String> getAllergies() {
+		return allergies;
 	}
-
-	public void setRatingsNum(int ratingsNum) {
-		this.ratingsNum = ratingsNum;
+	
+	public void setAllergies(List<String> allergies) {
+		this.allergies = allergies;
 	}
 	
 }

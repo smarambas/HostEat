@@ -18,7 +18,7 @@ public class ConnectionSingleton {
 	
 	private ConnectionSingleton() {}
 	
-	public static ConnectionSingleton createConnection( ) throws ClassNotFoundException, SQLException {
+	public static ConnectionSingleton createConnection( ) throws ClassNotFoundException, SQLException, IOException {
 		if(instance == null) {	
 			instance = new ConnectionSingleton();
 			getConfig();
@@ -31,18 +31,14 @@ public class ConnectionSingleton {
 		return instance;
 	}
 	
-	private static void getConfig() {
-		try {
-			InputStream is = ConnectionSingleton.class.getClassLoader().getResourceAsStream("database.config");
-			Properties properties = new Properties();
-			properties.load(is);
-			user = properties.getProperty("USER");
-			pswd = properties.getProperty("PSWD");
-			url = properties.getProperty("DB_URL");
-			driver = properties.getProperty("DRIVER_CLASS_NAME");					
-		} catch (IOException e) {
-			e.printStackTrace();	//NEED TO CHANGE THIS
-		} 
+	private static void getConfig() throws IOException {
+		InputStream is = ConnectionSingleton.class.getClassLoader().getResourceAsStream("database.config");
+		Properties properties = new Properties();
+		properties.load(is);
+		user = properties.getProperty("USER");
+		pswd = properties.getProperty("PSWD");
+		url = properties.getProperty("DB_URL");
+		driver = properties.getProperty("DRIVER_CLASS_NAME");					
 	}
 	
 	public Connection getConnection() {

@@ -1,5 +1,6 @@
 package model.dao;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,7 +19,7 @@ public class CuisineDAO {
 	
 	private CuisineDAO() {}
 	
-	public static List<Cuisine> retrieveCuisinesByUsername(User user) throws SQLException, ClassNotFoundException, NoRecordFoundException {
+	public static List<Cuisine> retrieveCuisinesByUsername(User user) throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
 		Statement stm = null;
 		List<Cuisine> cuisineList = new ArrayList<>();
 		
@@ -50,7 +51,7 @@ public class CuisineDAO {
 		return cuisineList;		
 	}
 	
-	public static void saveCuisine(User user, Cuisine cuisine) throws SQLException, ClassNotFoundException, DuplicateRecordException {
+	public static void saveCuisine(User user, Cuisine cuisine) throws SQLException, ClassNotFoundException, DuplicateRecordException, IOException {
 		Statement stm = null;
 		
 		cs = ConnectionSingleton.createConnection();
@@ -73,7 +74,7 @@ public class CuisineDAO {
 		stm.close();
 	}
 	
-	public static void removeCuisine(User user, Cuisine cuisine) throws SQLException, ClassNotFoundException, NoRecordFoundException {
+	public static void removeCuisine(User user, Cuisine cuisine) throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
 		Statement stm = null;
 		
 		cs = ConnectionSingleton.createConnection();

@@ -1,5 +1,6 @@
 package model.dao;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,7 +19,7 @@ public class MenuDAO {
 	
 	private MenuDAO() {}
 	
-	public static Menu retrieveMenu(User user, String date, String time) throws SQLException, ClassNotFoundException, NoRecordFoundException {
+	public static Menu retrieveMenu(User user, String date, String time) throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
 		Statement stm = null;
 		Menu menu = new Menu();
 		
@@ -58,7 +59,7 @@ public class MenuDAO {
 		return menu;
 	}
 	
-	public static void saveMenu(User user, Menu menu, String date, String time) throws SQLException, ClassNotFoundException, DuplicateRecordException {
+	public static void saveMenu(User user, Menu menu, String date, String time) throws SQLException, ClassNotFoundException, DuplicateRecordException, IOException {
 		Statement stm = null;
 		
 		cs = ConnectionSingleton.createConnection();

@@ -1,5 +1,6 @@
 package model.dao;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,7 +19,7 @@ public class AllergyDAO {
 	
 	private AllergyDAO() {}
 	
-	public static List<Allergy> retrieveAllergiesByUsername(User user) throws SQLException, ClassNotFoundException, NoRecordFoundException {
+	public static List<Allergy> retrieveAllergiesByUsername(User user) throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
 		Statement stm = null;
 		List<Allergy> allergyList = new ArrayList<>();
 		
@@ -49,7 +50,7 @@ public class AllergyDAO {
 		return allergyList;
 	}
 	
-	public static void saveAllergy(User user, Allergy allergy) throws SQLException, ClassNotFoundException, DuplicateRecordException {
+	public static void saveAllergy(User user, Allergy allergy) throws SQLException, ClassNotFoundException, DuplicateRecordException, IOException {
 		Statement stm = null;
 		
 		cs = ConnectionSingleton.createConnection();
@@ -72,7 +73,7 @@ public class AllergyDAO {
 		stm.close();
 	}
 	
-	public static void removeAllergy(User user, Allergy allergy) throws SQLException, ClassNotFoundException, NoRecordFoundException {
+	public static void removeAllergy(User user, Allergy allergy) throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
 		Statement stm = null;
 		
 		cs = ConnectionSingleton.createConnection();

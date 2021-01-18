@@ -1,10 +1,10 @@
 package model.dao;
 
 import java.sql.SQLException;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.GregorianCalendar;
-
 import exceptions.DuplicateRecordException;
 import exceptions.NoRecordFoundException;
 import model.User;
@@ -19,7 +19,7 @@ public class UserDAO {
 	
 	private UserDAO() {}
 	
-	public static User retrieveUserByUsername(String username) throws SQLException, ClassNotFoundException, NoRecordFoundException {
+	public static User retrieveUserByUsername(String username) throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
 		Statement stm = null;
 		User newUser;
 		
@@ -69,7 +69,7 @@ public class UserDAO {
 		return newUser;
 	}
 	
-	public static void saveUser(User user) throws SQLException, ClassNotFoundException, DuplicateRecordException {
+	public static void saveUser(User user) throws SQLException, ClassNotFoundException, DuplicateRecordException, IOException {
 		Statement stm = null;
 		
 		cs = ConnectionSingleton.createConnection();
@@ -94,7 +94,7 @@ public class UserDAO {
 		stm.close();
 	}
 	
-	public static void removeUser(User user) throws SQLException, ClassNotFoundException, NoRecordFoundException {
+	public static void removeUser(User user) throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
 		Statement stm = null;
 		
 		cs = ConnectionSingleton.createConnection();
@@ -119,7 +119,7 @@ public class UserDAO {
 		stm.close();
 	}
 	
-	public static void updateUserEmail(User user, String newEmail)throws SQLException, ClassNotFoundException, NoRecordFoundException {
+	public static void updateUserEmail(User user, String newEmail)throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
 		Statement stm = null;
 		
 		cs = ConnectionSingleton.createConnection();
@@ -144,7 +144,7 @@ public class UserDAO {
 		stm.close();
 	}
 	
-	public static void updateUserPassword(User user, String newPassword)throws SQLException, ClassNotFoundException, NoRecordFoundException {
+	public static void updateUserPassword(User user, String newPassword)throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
 		Statement stm = null;
 		
 		cs = ConnectionSingleton.createConnection();
@@ -169,7 +169,7 @@ public class UserDAO {
 		stm.close();
 	}
 	
-	public static void updateUserRegion(User user, String newRegion)throws SQLException, ClassNotFoundException, NoRecordFoundException {
+	public static void updateUserRegion(User user, String newRegion)throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
 		Statement stm = null;
 		
 		cs = ConnectionSingleton.createConnection();
@@ -194,7 +194,7 @@ public class UserDAO {
 		stm.close();
 	}
 	
-	public static void updateUserProvince(User user, String newProvince)throws SQLException, ClassNotFoundException, NoRecordFoundException {
+	public static void updateUserProvince(User user, String newProvince)throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
 		Statement stm = null;
 		
 		cs = ConnectionSingleton.createConnection();
@@ -219,7 +219,7 @@ public class UserDAO {
 		stm.close();
 	}
 	
-	public static void updateUserCity(User user, String newCity)throws SQLException, ClassNotFoundException, NoRecordFoundException {
+	public static void updateUserCity(User user, String newCity)throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
 		Statement stm = null;
 		
 		cs = ConnectionSingleton.createConnection();
@@ -244,7 +244,7 @@ public class UserDAO {
 		stm.close();
 	}
 	
-	public static void updateUserAddress(User user, String newAddress)throws SQLException, ClassNotFoundException, NoRecordFoundException {
+	public static void updateUserAddress(User user, String newAddress)throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
 		Statement stm = null;
 		
 		cs = ConnectionSingleton.createConnection();

@@ -29,6 +29,11 @@
 	-fx-pref-width: 400px;
 }
 
+#CredentialsError {
+	-fx-alignment: CENTER;
+	-fx-pref-width: 400px;
+}
+
 #login {
 	-fx-alignment: CENTER;
 	-fx-font-size: 12pt;

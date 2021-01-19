@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import exceptions.DuplicateRecordException;
@@ -24,7 +26,7 @@ public class EventDAO {
 	
 	private EventDAO() {}
 	
-	public static List<Event> retrieveEventsByUsername(User user) throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
+	public static List<Event> retrieveEventsByUsername(User user) throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException, ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		Statement stm = null;
 		List<Event> eventList = new ArrayList<>();
@@ -42,8 +44,10 @@ public class EventDAO {
 		else {
 			rs.first();
 			do {
-				GregorianCalendar date = new GregorianCalendar();
+				int guestsNum = 0;
+				GregorianCalendar date = new GregorianCalendar();	
 				date.setTime(rs.getTimestamp("date"));
+								
 				int maxGuestsNum = rs.getInt("max_num_guests");
 				int bill = rs.getInt("payment_bill");
 				
@@ -51,10 +55,16 @@ public class EventDAO {
 				
 				Statement tempStatement = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 						ResultSet.CONCUR_READ_ONLY);
-				
-				ResultSet tempResultSet = SimpleQueries.countGuestsNumberForEvent(tempStatement, user.getUsername(), sdf.format(date));
-				
-				int guestsNum = tempResultSet.getInt(1);
+								
+				ResultSet tempResultSet = SimpleQueries.countGuestsNumberForEvent(tempStatement, user.getUsername(), sdf.format(date.getTime()));
+								
+				if(tempResultSet.first()) {
+					tempResultSet.first();
+					guestsNum = tempResultSet.getInt(1);
+				}
+				else {
+					guestsNum = 0;
+				}
 				
 				newEvent.setGuestsNumber(guestsNum);
 				

@@ -26,7 +26,7 @@ public class LogInController {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		
 		try {
-			user = UserDAO.retrieveUserByUsername(userBean.getUsername());
+			user = UserDAO.retrieveUserByUsername(userBean.getUsername());			
 			
 			if(!(userBean.getPassw().equals(user.getPassword()))) {
 				throw new WrongPasswordException("Wrong password");
@@ -45,18 +45,32 @@ public class LogInController {
 				EventBean eventBean = new EventBean();
 				
 				eventBean.setEventOwner(eventList.get(i).getOwner().toString());
-				eventBean.setDateTime(sdf.format(eventList.get(i).getDateTime()));
+				eventBean.setDateTime(sdf.format(eventList.get(i).getDateTime().getTime()));
 				eventBean.setGuestsNumber(eventList.get(i).getGuestsNumber());
 				eventBean.setMaxGuestsNumber(eventList.get(i).getMaxGuestsNumber());
-				eventBean.setGuestStatus(eventList.get(i).getGuestStatus().toString());
-				eventBean.setPayStatus(eventList.get(i).getPayStatus().toString());
+				
+				if(eventList.get(i).getGuestStatus() == null) {
+					eventBean.setGuestStatus("NOSET");
+				}
+				else {
+					eventBean.setGuestStatus(eventList.get(i).getGuestStatus().toString());
+				}
+				
+				if(eventList.get(i).getPayStatus() == null) {
+					eventBean.setPayStatus("NOSET");
+				}
+				else {
+					eventBean.setPayStatus(eventList.get(i).getPayStatus().toString());
+				}
+				
 				eventBean.setBill(eventList.get(i).getBill());
 				
 				eventBeanList.add(eventBean);
 			}
 			
+			result.setUserType(userType.toString().toUpperCase());
 			result.setUsername(user.getUsername());
-			result.setEventBeans(eventBeanList);
+			result.setEventBeanList(eventBeanList);
 		} catch (Exception e) {
 			result = null;
 		}

@@ -1,13 +1,19 @@
 package standalone_view;
 
 import java.io.IOException;
+import bean.SessionBean;
+import bean.UserBean;
+import control.LogInController;
+import exceptions.WrongPasswordException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
@@ -15,6 +21,8 @@ public class GUIController {
 
 	private String userType = null;
 	private String appStyle = "NewStyle.css";
+	private SessionBean sessionBean;
+	private UserBean userBean;
 	
 	@FXML private Button btnSignUp;
 	@FXML private Button btnLogIn;
@@ -25,6 +33,8 @@ public class GUIController {
 	@FXML private ToggleGroup radioGroup;
 	@FXML private Button btnOk;
 	@FXML private Button btnEvent;
+	@FXML private TextField usernameTextField;
+	@FXML private PasswordField passwordField;
 	
 	@FXML private HeaderController headerController;
 	
@@ -59,8 +69,37 @@ public class GUIController {
 			root = FXMLLoader.load(getClass().getResource("/standalone_view/FirstScreen.fxml"));
 		}
 		else if(event.getSource() == btnSubmit) {
-			stage = (Stage) btnSubmit.getScene().getWindow();
-			root = FXMLLoader.load(getClass().getResource("/standalone_view/LogInScreen.fxml"));
+			String username = usernameTextField.getText();
+			String password = passwordField.getText();
+			
+			userBean = new UserBean();
+			userBean.setUsername(username);
+			userBean.setPassw(password);
+			
+			LogInController logInController = new LogInController();
+			try {
+				sessionBean = logInController.logIn(userBean);
+			} catch (WrongPasswordException e) {
+				sessionBean = null;
+			}
+			
+			if(sessionBean == null) {
+				root = FXMLLoader.load(getClass().getResource("/standalone_view/UserCredentialsError.fxml"));
+				Scene scene = new Scene(root, 350, 100);
+				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+				stage.setScene(scene);
+				stage.show();
+			}
+			else {
+				if(sessionBean.getUserType().equals("HOST")) {
+					stage = (Stage) btnSubmit.getScene().getWindow();
+					root = FXMLLoader.load(getClass().getResource("/standalone_view/HostBase.fxml"));
+				}
+				else if(sessionBean.getUserType().equals("GUEST")) {
+					stage = (Stage) btnSubmit.getScene().getWindow();
+					root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestBase.fxml"));
+				}
+			}
 		}
 		
 		Scene scene = new Scene(root, 700, 500);

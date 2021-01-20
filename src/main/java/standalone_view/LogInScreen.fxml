@@ -28,7 +28,6 @@
 						<PasswordField fx:id="passwordField" promptText="password"/>
 					</children>
 				</HBox>
-				<CheckBox text="remember credentials"/>
 				<Button fx:id="btnSubmit" text="Submit" onAction="#handleLogInScreenButtonAction"/>
 			</children>
 		</VBox>

@@ -5,14 +5,17 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.GUIController">
 	<top>
-		<fx:include fx:id="header" source="GuestTop.fxml"/>
+		<VBox>
+			<children>
+				<fx:include fx:id="header" source="GuestTop.fxml"/>
+				<Button fx:id="btnBack" text="Back" onAction="#handleSearchEventPageButtonAction"/>
+			</children>
+		</VBox>
 	</top>
 	<center>
 		<VBox spacing="20" alignment="center">
 			<children>
-				<Label id="titleLabel" text="Homepage"/>
-				<Button fx:id="btnEvent" text="Search event" onAction="#handleGuestBaseSearchEventButtonAction"/>
-<!-- 				<Label text="Events joined:"/> -->
+				<Label id="titleLabel" text="Search events"/>
 			</children>
 		</VBox>
 	</center>

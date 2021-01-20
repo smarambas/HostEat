@@ -1,7 +1,6 @@
 package standalone_view;
 
 import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,18 +22,44 @@ public class HeaderController {
 	public void handleHomepageButtonAction(ActionEvent event) throws IOException {
 		Stage stage = new Stage();
 		Parent root = null;
+		
+		boolean isHost;
+		if(GUIController.getSessionBean().getUserType().equals("HOST")) {
+			isHost = true;
+		}
+		else {
+			isHost = false;
+		}
 				
 		if(event.getSource() == btnHome) {
-			stage = (Stage) btnHome.getScene().getWindow();
-			root = FXMLLoader.load(getClass().getResource("/standalone_view/HostBase.fxml"));
+			if(isHost) {
+				stage = (Stage) btnHome.getScene().getWindow();
+				root = FXMLLoader.load(getClass().getResource("/standalone_view/HostBase.fxml"));
+			}
+			else {
+				stage = (Stage) btnHome.getScene().getWindow();
+				root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestBase.fxml"));
+			}
 		}
 		else if(event.getSource() == btnUser) {
-			stage = (Stage) btnUser.getScene().getWindow();
-			root = FXMLLoader.load(getClass().getResource("/standalone_view/UserPage.fxml"));
+			if(isHost) {
+				stage = (Stage) btnUser.getScene().getWindow();
+				root = FXMLLoader.load(getClass().getResource("/standalone_view/HostUserPage.fxml"));
+			}
+			else {
+				stage = (Stage) btnUser.getScene().getWindow();
+				root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestUserPage.fxml"));
+			}
 		}
 		else if(event.getSource() == btnNotifications) {
-			stage = (Stage) btnNotifications.getScene().getWindow();
-			root = FXMLLoader.load(getClass().getResource("/standalone_view/NotificationsPage.fxml"));
+			if(isHost) {
+				stage = (Stage) btnNotifications.getScene().getWindow();
+				root = FXMLLoader.load(getClass().getResource("/standalone_view/HostNotificationsPage.fxml"));
+			}
+			else {
+				stage = (Stage) btnNotifications.getScene().getWindow();
+				root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestNotificationsPage.fxml"));
+			}
 		}
 		else if(event.getSource() == btnFavorites) {
 			stage = (Stage) btnNotifications.getScene().getWindow();

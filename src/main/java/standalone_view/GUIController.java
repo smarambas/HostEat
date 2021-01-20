@@ -21,8 +21,8 @@ public class GUIController {
 
 	private String userType = null;
 	private String appStyle = "NewStyle.css";
-	private SessionBean sessionBean;
-	private UserBean userBean;
+	
+	private static SessionBean sessionBean;
 	
 	@FXML private Button btnSignUp;
 	@FXML private Button btnLogIn;
@@ -38,7 +38,14 @@ public class GUIController {
 	
 	@FXML private HeaderController headerController;
 	
-	
+	public static SessionBean getSessionBean() {
+		return sessionBean;
+	}
+
+	public static void setSessionBean(SessionBean sessionBean) {
+		GUIController.sessionBean = sessionBean;
+	}
+
 	@FXML
 	private void handleFirstScreenButtonAction(ActionEvent event) throws IOException {
 		Stage stage = new Stage();
@@ -63,6 +70,7 @@ public class GUIController {
 	private void handleLogInScreenButtonAction(ActionEvent event) throws IOException {
 		Stage stage = new Stage();
 		Parent root = null;
+		UserBean userBean;
 		
 		if(event.getSource() == btnBack) {
 			stage = (Stage) btnBack.getScene().getWindow();
@@ -78,12 +86,12 @@ public class GUIController {
 			
 			LogInController logInController = new LogInController();
 			try {
-				sessionBean = logInController.logIn(userBean);
+				setSessionBean(logInController.logIn(userBean));
 			} catch (WrongPasswordException e) {
-				sessionBean = null;
+				setSessionBean(null);
 			}
 			
-			if(sessionBean == null) {
+			if(getSessionBean() == null) {
 				root = FXMLLoader.load(getClass().getResource("/standalone_view/UserCredentialsError.fxml"));
 				Scene scene = new Scene(root, 350, 100);
 				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
@@ -91,11 +99,11 @@ public class GUIController {
 				stage.show();
 			}
 			else {
-				if(sessionBean.getUserType().equals("HOST")) {
+				if(getSessionBean().getUserType().equals("HOST")) {
 					stage = (Stage) btnSubmit.getScene().getWindow();
 					root = FXMLLoader.load(getClass().getResource("/standalone_view/HostBase.fxml"));
 				}
-				else if(sessionBean.getUserType().equals("GUEST")) {
+				else if(getSessionBean().getUserType().equals("GUEST")) {
 					stage = (Stage) btnSubmit.getScene().getWindow();
 					root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestBase.fxml"));
 				}
@@ -180,7 +188,7 @@ public class GUIController {
 		
 		if(event.getSource() == btnEvent) {
 			stage = (Stage) btnEvent.getScene().getWindow();
-			root = FXMLLoader.load(getClass().getResource("/standalone_view/NewEventScreen.fxml"));
+			root = FXMLLoader.load(getClass().getResource("/standalone_view/NewEventPage.fxml"));
 		}
 		
 		Scene scene = new Scene(root, 700, 500);
@@ -190,7 +198,7 @@ public class GUIController {
 	}
 	
 	@FXML
-	private void handleNewEventScreenButtonAction(ActionEvent event) throws IOException {
+	private void handleNewEventPageButtonAction(ActionEvent event) throws IOException {
 		Stage stage = new Stage();
 		Parent root = null;
 		
@@ -205,4 +213,35 @@ public class GUIController {
 		stage.show();
 	}
 	
+	@FXML
+	private void handleGuestBaseSearchEventButtonAction(ActionEvent event) throws IOException {
+		Stage stage = new Stage();
+		Parent root = null;
+		
+		if(event.getSource() == btnEvent) {
+			stage = (Stage) btnEvent.getScene().getWindow();
+			root = FXMLLoader.load(getClass().getResource("/standalone_view/SearchEventPage.fxml"));
+		}
+		
+		Scene scene = new Scene(root, 700, 500);
+		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+		stage.setScene(scene);
+		stage.show();
+	}
+	
+	@FXML
+	private void handleSearchEventPageButtonAction(ActionEvent event) throws IOException {
+		Stage stage = new Stage();
+		Parent root = null;
+		
+		if(event.getSource() == btnBack) {
+			stage = (Stage) btnBack.getScene().getWindow();
+			root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestBase.fxml"));
+		}
+		
+		Scene scene = new Scene(root, 700, 500);
+		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+		stage.setScene(scene);
+		stage.show();
+	}
 }

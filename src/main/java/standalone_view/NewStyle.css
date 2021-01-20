@@ -47,6 +47,7 @@
 #titleLabel {
 	-fx-alignment: CENTER;
 	-fx-font-size: 12pt;
+	-fx-pref-width: 150px;
 }
 
 .label {

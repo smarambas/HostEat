@@ -1,9 +1,13 @@
 package bean;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class UserBean {
-
+	
 	private String username;
 	private String passw;
 	private String name;
@@ -39,32 +43,57 @@ public class UserBean {
 		return name;
 	}
 	
-	public void setName(String name) {
-		this.name = name;
+	public boolean setName(String name) {
+		if(validateString(name)) {
+			this.name = name;
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	public String getEmailAddr() {
 		return emailAddr;
 	}
 	
-	public void setEmailAddr(String email) {
-		this.emailAddr = email;
+	public boolean setEmailAddr(String email) {
+		if(validateEmail(email)) {
+			this.emailAddr = email;
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	public String getSurname() {
 		return surname;
 	}
 	
-	public void setSurname(String surname) {
-		this.surname = surname;
+	public boolean setSurname(String surname) {
+		if(validateString(surname)) {
+			this.surname = surname;
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	public String getBirthDay() {
 		return birthDay;
 	}
 	
-	public void setBirthDay(String birthDay) {
-		this.birthDay = birthDay;
+	public boolean setBirthDay(String birthDay) {
+		if(validateBirthday(birthDay)) {
+			this.birthDay = birthDay;
+			return true;
+		}
+		else {
+			return false;
+		}
+		
 	}
 	
 	public String getSex() {
@@ -131,4 +160,54 @@ public class UserBean {
 		this.allergies = allergies;
 	}
 	
+	private boolean validateString(String string) {
+		if(string == null || string.equals("")) {
+			return false;
+		}
+		
+		char[] chars = string.toCharArray();
+		
+		for(char c : chars) {
+			if(!Character.isLetter(c)) {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	private boolean validateEmail(String email) {
+		String emailRegex = ".+@.+\\..+";
+                  
+		Pattern pat = Pattern.compile(emailRegex); 
+		
+		if (email == null) {
+			return false; 
+		}
+		
+		return pat.matcher(email).matches(); 
+	}
+	
+	private boolean validateBirthday(String date) {
+		String format = "yyyy-MM-dd HH:mm";
+		boolean isValid;
+		GregorianCalendar now = new GregorianCalendar();
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		GregorianCalendar dateCalendar = new GregorianCalendar();
+		
+		try {
+			dateCalendar.setTime(sdf.parse(date));
+			
+			if(dateCalendar.getTime().compareTo(now.getTime()) <= 0) {
+				isValid = false;
+			}
+			else {
+				isValid = true;
+			}
+		} catch (ParseException e) {
+			isValid = false;
+		}
+		
+		return isValid;
+	}
 }

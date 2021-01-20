@@ -2,41 +2,29 @@ package standalone_view;
 
 import java.io.IOException;
 import bean.SessionBean;
-import bean.UserBean;
-import control.LogInController;
-import exceptions.WrongPasswordException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
 public class GUIController {
 
-	private String userType = null;
 	private String appStyle = "NewStyle.css";
 	
 	private static SessionBean sessionBean;
 	
 	@FXML private Button btnSignUp;
 	@FXML private Button btnLogIn;
-	@FXML private Button btnBack;
-	@FXML private Button btnSubmit;
-	@FXML private RadioButton btnRadioHost;
-	@FXML private RadioButton btnRadioGuest;
-	@FXML private ToggleGroup radioGroup;
 	@FXML private Button btnOk;
-	@FXML private Button btnEvent;
-	@FXML private TextField usernameTextField;
-	@FXML private PasswordField passwordField;
 	
 	@FXML private HeaderController headerController;
+	@FXML private LogInPageController logInPageController;
+	@FXML private SignUpPageController signUpPageController;
+	@FXML private HostNewEventController hostNewEventController;
+	@FXML private GuestSearchEventController guestSearchEventController;
 	
 	public static SessionBean getSessionBean() {
 		return sessionBean;
@@ -67,105 +55,6 @@ public class GUIController {
 	}
 	
 	@FXML
-	private void handleLogInScreenButtonAction(ActionEvent event) throws IOException {
-		Stage stage = new Stage();
-		Parent root = null;
-		UserBean userBean;
-		
-		if(event.getSource() == btnBack) {
-			stage = (Stage) btnBack.getScene().getWindow();
-			root = FXMLLoader.load(getClass().getResource("/standalone_view/FirstScreen.fxml"));
-		}
-		else if(event.getSource() == btnSubmit) {
-			String username = usernameTextField.getText();
-			String password = passwordField.getText();
-			
-			userBean = new UserBean();
-			userBean.setUsername(username);
-			userBean.setPassw(password);
-			
-			LogInController logInController = new LogInController();
-			try {
-				setSessionBean(logInController.logIn(userBean));
-			} catch (WrongPasswordException e) {
-				setSessionBean(null);
-			}
-			
-			if(getSessionBean() == null) {
-				root = FXMLLoader.load(getClass().getResource("/standalone_view/UserCredentialsError.fxml"));
-				Scene scene = new Scene(root, 350, 100);
-				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-				stage.setScene(scene);
-				stage.show();
-			}
-			else {
-				if(getSessionBean().getUserType().equals("HOST")) {
-					stage = (Stage) btnSubmit.getScene().getWindow();
-					root = FXMLLoader.load(getClass().getResource("/standalone_view/HostBase.fxml"));
-				}
-				else if(getSessionBean().getUserType().equals("GUEST")) {
-					stage = (Stage) btnSubmit.getScene().getWindow();
-					root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestBase.fxml"));
-				}
-			}
-		}
-		
-		Scene scene = new Scene(root, 700, 500);
-		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-		stage.setScene(scene);
-		stage.show();
-	}
-	
-	@FXML
-	private void handleSignUpScreenButtonAction(ActionEvent event) throws IOException {
-		Stage stage = new Stage();
-		Parent root = null;
-		Boolean userSelection = false;
-		
-		if(event.getSource() == btnBack) {
-			stage = (Stage) btnBack.getScene().getWindow();
-			root = FXMLLoader.load(getClass().getResource("/standalone_view/FirstScreen.fxml"));
-		}
-		else if(event.getSource() == btnSubmit) {
-			if(userType == null) {
-				userSelection = true;
-				root = FXMLLoader.load(getClass().getResource("/standalone_view/UserSelectionError.fxml"));
-			}
-			else if(userType.equals("Guest")) {
-				stage = (Stage) btnSubmit.getScene().getWindow();
-				root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestBase.fxml"));
-			}
-			else if(userType.equals("Host")) {
-				stage = (Stage) btnSubmit.getScene().getWindow();
-				root = FXMLLoader.load(getClass().getResource("/standalone_view/HostBase.fxml"));
-			}
-		}
-		
-		if(userSelection.equals(Boolean.FALSE)) {
-			Scene scene = new Scene(root, 700, 500);
-			scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-			stage.setScene(scene);
-			stage.show();
-		}
-		else {
-			Scene scene = new Scene(root, 200, 100);
-			scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-			stage.setScene(scene);
-			stage.show();
-		}
-	}
-	
-	@FXML
-	private void handleUserRadioButtonAction(ActionEvent event) {
-		if(event.getSource() == btnRadioGuest) {
-			userType = "Guest";
-		}
-		else if(event.getSource() == btnRadioHost) {
-			userType = "Host";
-		}
-	}
-	
-	@FXML
 	private void handleOkButtonAction(ActionEvent event) {
 		Stage stage = new Stage();
 		
@@ -177,71 +66,42 @@ public class GUIController {
 	}
 	
 	@FXML
+	private void handleLogInScreenButtonAction() throws IOException {
+		logInPageController.handleLogInScreenButtonAction(null);
+	}
+	
+	@FXML
+	private void handleSignUpScreenButtonAction() throws IOException {
+		signUpPageController.handleSignUpScreenButtonAction(null);
+	}
+	
+	@FXML
+	private void handleUserRadioButtonAction() {
+		signUpPageController.handleUserRadioButtonAction(null);
+	}
+	
+	@FXML
 	private void handleHomepageButtonAction() throws IOException {
 		headerController.handleHomepageButtonAction(null);
 	}
 	
 	@FXML
-	private void handleHostBaseNewEventButtonAction(ActionEvent event) throws IOException {
-		Stage stage = new Stage();
-		Parent root = null;
-		
-		if(event.getSource() == btnEvent) {
-			stage = (Stage) btnEvent.getScene().getWindow();
-			root = FXMLLoader.load(getClass().getResource("/standalone_view/NewEventPage.fxml"));
-		}
-		
-		Scene scene = new Scene(root, 700, 500);
-		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-		stage.setScene(scene);
-		stage.show();
+	private void handleHostBaseNewEventButtonAction() throws IOException {
+		hostNewEventController.handleHostBaseNewEventButtonAction(null);
 	}
 	
 	@FXML
-	private void handleNewEventPageButtonAction(ActionEvent event) throws IOException {
-		Stage stage = new Stage();
-		Parent root = null;
-		
-		if(event.getSource() == btnBack) {
-			stage = (Stage) btnBack.getScene().getWindow();
-			root = FXMLLoader.load(getClass().getResource("/standalone_view/HostBase.fxml"));
-		}
-		
-		Scene scene = new Scene(root, 700, 500);
-		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-		stage.setScene(scene);
-		stage.show();
+	private void handleNewEventPageButtonAction() throws IOException {
+		hostNewEventController.handleNewEventPageButtonAction(null);
 	}
 	
 	@FXML
-	private void handleGuestBaseSearchEventButtonAction(ActionEvent event) throws IOException {
-		Stage stage = new Stage();
-		Parent root = null;
-		
-		if(event.getSource() == btnEvent) {
-			stage = (Stage) btnEvent.getScene().getWindow();
-			root = FXMLLoader.load(getClass().getResource("/standalone_view/SearchEventPage.fxml"));
-		}
-		
-		Scene scene = new Scene(root, 700, 500);
-		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-		stage.setScene(scene);
-		stage.show();
+	private void handleGuestBaseSearchEventButtonAction() throws IOException {
+		guestSearchEventController.handleGuestBaseSearchEventButtonAction(null);
 	}
 	
 	@FXML
-	private void handleSearchEventPageButtonAction(ActionEvent event) throws IOException {
-		Stage stage = new Stage();
-		Parent root = null;
-		
-		if(event.getSource() == btnBack) {
-			stage = (Stage) btnBack.getScene().getWindow();
-			root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestBase.fxml"));
-		}
-		
-		Scene scene = new Scene(root, 700, 500);
-		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-		stage.setScene(scene);
-		stage.show();
+	private void handleSearchEventPageButtonAction() throws IOException {
+		guestSearchEventController.handleSearchEventPageButtonAction(null);
 	}
 }

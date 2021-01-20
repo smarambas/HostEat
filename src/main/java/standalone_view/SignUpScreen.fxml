@@ -2,8 +2,10 @@
 
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.collections.*?>
+<?import java.lang.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.GUIController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.SignUpPageController">
 	<top>
 		<VBox>
 			<children>
@@ -13,50 +15,98 @@
 		</VBox>
 	</top>
 	<center>
-		<VBox spacing="20" alignment="center">
-			<children>
-				<Label id="signup" text="Sign Up"/>
-				<HBox spacing="20" alignment="center">
+		<ScrollPane fitToWidth="true">
+			<content>
+				<VBox spacing="20" alignment="center">
 					<children>
-						<Label text="Username:"/>
-						<TextField promptText="username"/>
+						<Label id="signup" text="Sign Up"/>
+						<HBox spacing="20" alignment="center">
+							<children>
+								<Label text="Username:"/>
+								<TextField fx:id="usernameField" promptText="username"/>
+							</children>
+						</HBox>
+						<HBox spacing="20" alignment="center">
+							<children>
+								<Label text="Password:"/>
+								<PasswordField fx:id="passwordField" promptText="password"/>
+							</children>
+						</HBox>
+						<HBox spacing="20" alignment="center">
+							<children>
+								<Label text="Name:"/>
+								<TextField fx:id="nameField" promptText="name"/>
+							</children>
+						</HBox>
+						<HBox spacing="20" alignment="center">
+							<children>
+								<Label text="Surname:"/>
+								<TextField fx:id="surnameField" promptText="surname"/>
+							</children>
+						</HBox>
+						<HBox spacing="20" alignment="center">
+							<children>
+								<Label text="Email:"/>
+								<TextField fx:id="emailField" promptText="email"/>
+							</children>
+						</HBox>
+						<HBox spacing="20" alignment="center">
+							<children>
+								<Label text="Birthday:"/>
+								<DatePicker fx:id="birthdayField" promptText="birthday"/>
+							</children>
+						</HBox>
+						<HBox spacing="20" alignment="center">
+							<children>
+								<Label text="Sex:"/>
+								<ChoiceBox fx:id="sexChoice">
+									<items>
+								        <FXCollections fx:factory="observableArrayList">
+								            <String fx:value="M" />
+								            <String fx:value="F" />
+								            <String fx:value="Other" />
+								        </FXCollections>
+								    </items>
+							    </ChoiceBox>
+							</children>
+						</HBox>
+						<HBox spacing="20" alignment="center">
+							<children>
+								<Label text="Region:"/>
+								<TextField fx:id="regionField" promptText="region"/>
+							</children>
+						</HBox>
+						<HBox spacing="20" alignment="center">
+							<children>
+								<Label text="Province:"/>
+								<TextField fx:id="provinceField" promptText="province"/>
+							</children>
+						</HBox>
+						<HBox spacing="20" alignment="center">
+							<children>
+								<Label text="City:"/>
+								<TextField fx:id="cityField" promptText="city"/>
+							</children>
+						</HBox>
+						<HBox spacing="20" alignment="center">
+							<children>
+								<Label text="Address:"/>
+								<TextField fx:id="addressField" promptText="address"/>
+							</children>
+						</HBox>
+						<HBox spacing="20" alignment="center">
+							<fx:define>
+						        <ToggleGroup fx:id="radioGroup" />
+						    </fx:define>
+							<children>
+								<RadioButton fx:id="btnRadioHost" Text="Host" toggleGroup="$radioGroup" onAction="#handleUserRadioButtonAction"/>
+								<RadioButton fx:id="btnRadioGuest" Text="Guest" toggleGroup="$radioGroup" onAction="#handleUserRadioButtonAction"/>
+							</children>
+						</HBox>
+						<Button fx:id="btnSubmit" text="Submit" onAction="#handleSignUpScreenButtonAction"/>
 					</children>
-				</HBox>
-				<HBox spacing="20" alignment="center">
-					<children>
-						<Label text="Password:"/>
-						<PasswordField promptText="password"/>
-					</children>
-				</HBox>
-				<HBox spacing="20" alignment="center">
-					<children>
-						<Label text="Name:"/>
-						<TextField promptText="name"/>
-					</children>
-				</HBox>
-				<HBox spacing="20" alignment="center">
-					<children>
-						<Label text="Surname:"/>
-						<TextField promptText="surname"/>
-					</children>
-				</HBox>
-				<HBox spacing="20" alignment="center">
-					<children>
-						<Label text="Email:"/>
-						<TextField promptText="email"/>
-					</children>
-				</HBox>
-				<HBox spacing="20" alignment="center">
-					<fx:define>
-				        <ToggleGroup fx:id="radioGroup" />
-				    </fx:define>
-					<children>
-						<RadioButton fx:id="btnRadioHost" Text="Host" toggleGroup="$radioGroup" onAction="#handleUserRadioButtonAction"/>
-						<RadioButton fx:id="btnRadioGuest" Text="Guest" toggleGroup="$radioGroup" onAction="#handleUserRadioButtonAction"/>
-					</children>
-				</HBox>
-				<Button fx:id="btnSubmit" text="Submit" onAction="#handleSignUpScreenButtonAction"/>
-			</children>
-		</VBox>
+				</VBox>
+			</content>
+		</ScrollPane>
 	</center>
 </BorderPane>

@@ -46,9 +46,12 @@ public class UserDAO {
 			String province = rs.getString("province");
 			String city = rs.getString("city");
 			String address = rs.getString("address");
+			
 			GregorianCalendar age = new GregorianCalendar();
 			age.setTime(rs.getTimestamp("age"));
+			
 			UserType type = UserType.valueOf(rs.getString("type").toUpperCase());
+			
 			double rating = rs.getDouble("rating");
 			int ratingsNum = rs.getInt("ratings_num");
 			

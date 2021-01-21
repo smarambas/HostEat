@@ -1,7 +1,9 @@
 package standalone_view;
 
 import java.io.IOException;
+import bean.SessionBean;
 import bean.UserBean;
+import control.SignUpController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -50,36 +52,76 @@ public class SignUpPageController {
 	public void handleSignUpScreenButtonAction(ActionEvent event) throws IOException {
 		Stage stage = new Stage();
 		Parent root = null;
-		Boolean userSelection = false;
-		UserBean userBean;
+		boolean inputError = false;
+		boolean checkInput = false;
+		UserBean userBean = new UserBean();
+		SignUpController signUpController = new SignUpController();
+		SessionBean sessionBean = new SessionBean();
 		
 		if(event.getSource() == btnBack) {
 			stage = (Stage) btnBack.getScene().getWindow();
 			root = FXMLLoader.load(getClass().getResource("/standalone_view/FirstScreen.fxml"));
 		}
 		else if(event.getSource() == btnSubmit) {
-			if(userType == null) {
-				userSelection = true;
-				root = FXMLLoader.load(getClass().getResource("/standalone_view/UserSelectionError.fxml"));
+			if(userBean.setName(nameField.getText()) &&
+			   userBean.setSurname(surnameField.getText()) &&
+			   userBean.setEmailAddr(emailField.getText()) &&
+			   userBean.setBirthDay(birthdayField.getValue().toString() + " 00:00")) {
+				
+				checkInput = true;
+				userBean.setUsername(usernameField.getText());
+				userBean.setPassw(passwordField.getText());
+				userBean.setSex(sexChoice.getValue());
+				userBean.setReg(regionField.getText());
+				userBean.setProv(provinceField.getText());
+				userBean.setCity(cityField.getText());
+				userBean.setAddr(addressField.getText());		
 			}
-			else if(userType.equals("GUEST")) {
-				stage = (Stage) btnSubmit.getScene().getWindow();
-				root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestBase.fxml"));
+			
+			if(checkInput) {
+				if(userType == null) {
+					inputError = true;
+					root = FXMLLoader.load(getClass().getResource("/standalone_view/UserSelectionError.fxml"));
+				}
+				else if(userType.equals("GUEST")) {
+					userBean.setUserType(userType);
+					stage = (Stage) btnSubmit.getScene().getWindow();
+					root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestBase.fxml"));
+					sessionBean = signUpController.signUp(userBean);
+				}
+				else if(userType.equals("HOST")) {
+					userBean.setUserType(userType);
+					stage = (Stage) btnSubmit.getScene().getWindow();
+					root = FXMLLoader.load(getClass().getResource("/standalone_view/HostBase.fxml"));
+					sessionBean = signUpController.signUp(userBean);
+				}
 			}
-			else if(userType.equals("HOST")) {
-				stage = (Stage) btnSubmit.getScene().getWindow();
-				root = FXMLLoader.load(getClass().getResource("/standalone_view/HostBase.fxml"));
+			else {
+				inputError = true;
+				root = FXMLLoader.load(getClass().getResource("/standalone_view/SignUpInputError.fxml"));
 			}
 		}
 		
-		if(userSelection.equals(Boolean.FALSE)) {
-			Scene scene = new Scene(root, 700, 500);
-			scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-			stage.setScene(scene);
-			stage.show();
+		if(!inputError) {
+			if(sessionBean == null) {
+				GUIController.setSessionBean(null);
+				stage = (Stage) btnSubmit.getScene().getWindow();
+				root = FXMLLoader.load(getClass().getResource("/standalone_view/SignUpError.fxml"));
+				Scene scene = new Scene(root, 300, 300);
+				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+				stage.setScene(scene);
+				stage.show();
+			}
+			else {
+				GUIController.setSessionBean(sessionBean);
+				Scene scene = new Scene(root, 700, 500);
+				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+				stage.setScene(scene);
+				stage.show();
+			}
 		}
 		else {
-			Scene scene = new Scene(root, 200, 100);
+			Scene scene = new Scene(root, 300, 300);
 			scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
 			stage.setScene(scene);
 			stage.show();

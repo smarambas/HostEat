@@ -1,6 +1,8 @@
 package model.dao.queries;
 
 import java .sql.*;
+import java.text.SimpleDateFormat;
+
 import model.User;
 
 public class CRUDQueries {
@@ -11,8 +13,12 @@ public class CRUDQueries {
 	 * User statements
 	 */
 	public static int insertUser(Statement stmt, User user) throws SQLException {
+		String format = "yyyy-MM-dd HH:mm";
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		
 		String statement = String.format("INSERT INTO user (username, email, password, type, name, surname, sex, region, province, city, address, age, rating, ratings_num) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %f, %d);", 
-		user.getUsername(), user.getEmail(), user.getPassword(), user.getType().toString(), user.getName(), user.getSurname(), user.getSex(), user.getRegion(), user.getProvince(), user.getCity(), user.getAddress(), user.getAge(), user.getRating(), user.getRatingsNum());
+		user.getUsername(), user.getEmail(), user.getPassword(), user.getType().toString(), user.getName(), user.getSurname(), user.getSex(), user.getRegion(), user.getProvince(), user.getCity(), user.getAddress(), sdf.format(user.getAge().getTime()), user.getRating(), user.getRatingsNum());
+		
 		return stmt.executeUpdate(statement);
 	}
 	

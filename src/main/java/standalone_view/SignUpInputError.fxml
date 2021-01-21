@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="standalone_view.GUIController">
+	<center>
+		<VBox spacing="20" alignment="center">
+			<children>
+				<VBox spacing="20" alignment="center">
+					<children>
+						<Label id="selError" text="Please, check that:"/>
+						<Label id="selError" text="- your name contains only characters"/>
+						<Label id="selError" text="- your surname contains only characters"/>
+						<Label id="selError" text="- your birthday is set correctly"/>
+						<Label id="selError" text="- your email address has the correct format"/>
+					</children>
+				</VBox>
+				<Button fx:id="btnOk" text="Ok" onAction="#handleOkButtonAction"/>
+			</children>
+		</VBox>
+	</center>
+</BorderPane>

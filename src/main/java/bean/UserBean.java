@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 public class UserBean {
 	
+	private String userType;
 	private String username;
 	private String passw;
 	private String name;
@@ -23,6 +24,14 @@ public class UserBean {
 	private List<String> favCuisines;
 	private List<String> allergies;
 	
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+
 	public String getUsername() {
 		return username;
 	}
@@ -198,13 +207,14 @@ public class UserBean {
 		try {
 			dateCalendar.setTime(sdf.parse(date));
 			
-			if(dateCalendar.getTime().compareTo(now.getTime()) <= 0) {
+			if(dateCalendar.getTime().compareTo(now.getTime()) >= 0) {
 				isValid = false;
 			}
 			else {
 				isValid = true;
 			}
 		} catch (ParseException e) {
+			e.printStackTrace();
 			isValid = false;
 		}
 		

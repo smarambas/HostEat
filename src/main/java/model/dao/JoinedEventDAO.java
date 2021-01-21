@@ -37,10 +37,11 @@ public class JoinedEventDAO {
 		
 		ResultSet rs = SimpleQueries.selectJoinedEventsByUsername(stm, user.getUsername());
 		
-		if(!rs.first()) {
-			throw new NoRecordFoundException(norecord);
-		}
-		else {
+//		if(!rs.first()) {
+//			throw new NoRecordFoundException(norecord);
+//		}
+//		else {
+		if(rs.first()) {
 			rs.first();
 			do {
 				Event newEvent;

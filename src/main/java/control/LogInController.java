@@ -15,14 +15,13 @@ import model.dao.JoinedEventDAO;
 import model.dao.UserDAO;
 
 public class LogInController {
-	
-	private static String format = "yyyy-MM-dd HH:mm";
-	
+		
 	public SessionBean logIn(UserBean userBean) throws WrongPasswordException {
 		User user;
-		SessionBean result = new SessionBean();
+		SessionBean sessionBean = new SessionBean();
 		List<Event> eventList;
 		List<EventBean> eventBeanList = new ArrayList<>();
+		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		
 		try {
@@ -68,13 +67,14 @@ public class LogInController {
 				eventBeanList.add(eventBean);
 			}
 			
-			result.setUserType(userType.toString().toUpperCase());
-			result.setUsername(user.getUsername());
-			result.setEventBeanList(eventBeanList);
+			sessionBean.setUserType(userType.toString().toUpperCase());
+			sessionBean.setUsername(user.getUsername());
+			sessionBean.setEventBeanList(eventBeanList);
 		} catch (Exception e) {
-			result = null;
+			sessionBean = null;
+			e.printStackTrace();
 		}
 		
-		return result;
+		return sessionBean;
 	}
 }

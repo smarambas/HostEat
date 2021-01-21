@@ -35,11 +35,12 @@ public class EventDAO {
 				ResultSet.CONCUR_READ_ONLY);
 		
 		ResultSet rs = SimpleQueries.selectEventsByUsername(stm, user.getUsername());
-		
-		if(!rs.first()) {
-			throw new NoRecordFoundException(norecord);
-		}
-		else {
+//		
+//		if(!rs.first()) {
+//			throw new NoRecordFoundException(norecord);
+//		}
+//		else {
+		if(rs.first()) {
 			rs.first();
 			do {
 				int guestsNum = 0;

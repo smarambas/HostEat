@@ -63,6 +63,7 @@ public class LogInController {
 				}
 				
 				eventBean.setBill(eventList.get(i).getBill());
+				eventBean.setActualGuests(eventBean.getGuestsNumber() + "/" + eventBean.getMaxGuestsNumber());
 				
 				eventBeanList.add(eventBean);
 			}
@@ -72,7 +73,6 @@ public class LogInController {
 			sessionBean.setEventBeanList(eventBeanList);
 		} catch (Exception e) {
 			sessionBean = null;
-			e.printStackTrace();
 		}
 		
 		return sessionBean;

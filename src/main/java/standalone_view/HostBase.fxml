@@ -3,16 +3,15 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.HostNewEventController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.HostBaseController">
 	<top>
 		<fx:include fx:id="header" source="HostTop.fxml"/>
 	</top>
 	<center>
-		<VBox spacing="20" alignment="center">
+		<VBox fx:id="centralVBox" spacing="20" alignment="center">
 			<children>
 				<Label id="titleLabel" text="Homepage"/>
 				<Button fx:id="btnEvent" text="New event" onAction="#handleHostBaseNewEventButtonAction"/>
-<!-- 				<Label text="Events created:"/> -->
 			</children>
 		</VBox>
 	</center>

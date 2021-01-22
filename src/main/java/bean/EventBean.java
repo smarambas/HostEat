@@ -9,6 +9,7 @@ public class EventBean {
 	private String guestStatus;
 	private String payStatus;
 	private double bill;
+	private String actualGuests;
 	
 	public String getEventOwner() {
 		return eventOwner;
@@ -64,6 +65,14 @@ public class EventBean {
 	
 	public void setBill(double bill) {
 		this.bill = bill;
+	}
+	
+	public String getActualGuests() {
+		return actualGuests;
+	}
+	
+	public void setActualGuests(String actualGuests) {
+		this.actualGuests = actualGuests;
 	}
 	
 }

@@ -214,7 +214,6 @@ public class UserBean {
 				isValid = true;
 			}
 		} catch (ParseException e) {
-			e.printStackTrace();
 			isValid = false;
 		}
 		

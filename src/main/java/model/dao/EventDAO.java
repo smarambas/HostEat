@@ -81,6 +81,55 @@ public class EventDAO {
 		return eventList;
 	}
 	
+	public static Event retrieveEventByUsernameDateTime(User user, GregorianCalendar dateTime) throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		Statement stm = null;
+		Event event = null;
+		
+		cs = ConnectionSingleton.createConnection();
+		
+		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		
+		ResultSet rs = SimpleQueries.selectEventByUsernameDateTime(stm, user.getUsername(), sdf.format(dateTime.getTime()));
+		
+		if(rs.first()) {
+			rs.first();
+			
+			int guestsNum = 0;
+			GregorianCalendar date = new GregorianCalendar();	
+			date.setTime(rs.getTimestamp("date"));
+			
+			int maxGuestsNum = rs.getInt("max_num_guests");
+			int bill = rs.getInt("payment_bill");
+			
+			event = new Event(user, date, maxGuestsNum, bill);
+			
+			Statement tempStatement = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+							
+			ResultSet tempResultSet = SimpleQueries.countGuestsNumberForEvent(tempStatement, user.getUsername(), sdf.format(date.getTime()));
+							
+			if(tempResultSet.first()) {
+				tempResultSet.first();
+				guestsNum = tempResultSet.getInt(1);
+			}
+			else {
+				guestsNum = 0;
+			}
+			
+			event.setGuestsNumber(guestsNum);
+			
+			tempStatement.close();
+			tempResultSet.close();
+		}
+		
+		rs.close();
+		stm.close();
+		
+		return event;
+	}
+	
 	public static void saveEvent(User user, Event event) throws SQLException, ClassNotFoundException, DuplicateRecordException, IOException {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		Statement stm = null;

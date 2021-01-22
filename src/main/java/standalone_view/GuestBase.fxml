@@ -3,16 +3,15 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.GuestSearchEventController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.GuestBaseController">
 	<top>
 		<fx:include fx:id="header" source="GuestTop.fxml"/>
 	</top>
 	<center>
-		<VBox spacing="20" alignment="center">
+		<VBox fx:id="centralVBox" spacing="20" alignment="center">
 			<children>
 				<Label id="titleLabel" text="Homepage"/>
 				<Button fx:id="btnEvent" text="Search event" onAction="#handleGuestBaseSearchEventButtonAction"/>
-<!-- 				<Label text="Events joined:"/> -->
 			</children>
 		</VBox>
 	</center>

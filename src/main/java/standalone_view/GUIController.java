@@ -23,8 +23,10 @@ public class GUIController {
 	@FXML private HeaderController headerController;
 	@FXML private LogInPageController logInPageController;
 	@FXML private SignUpPageController signUpPageController;
-	@FXML private HostNewEventController hostNewEventController;
-	@FXML private GuestSearchEventController guestSearchEventController;
+	@FXML private HostBaseController hostBaseController;
+	@FXML private NewEventPageController newEventPageController;
+	@FXML private GuestBaseController guestBaseController;
+	@FXML private SearchEventController searchEventController;
 	
 	public static SessionBean getSessionBean() {
 		return sessionBean;
@@ -51,6 +53,7 @@ public class GUIController {
 		Scene scene = new Scene(root, 700, 500);
 		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
 		stage.setScene(scene);
+		//stage.setMaximized(true);
 		stage.show();
 	}
 	
@@ -87,21 +90,21 @@ public class GUIController {
 	
 	@FXML
 	private void handleHostBaseNewEventButtonAction() throws IOException {
-		hostNewEventController.handleHostBaseNewEventButtonAction(null);
+		hostBaseController.handleHostBaseNewEventButtonAction(null);
 	}
 	
 	@FXML
 	private void handleNewEventPageButtonAction() throws IOException {
-		hostNewEventController.handleNewEventPageButtonAction(null);
+		newEventPageController.handleNewEventPageButtonAction(null);
 	}
 	
 	@FXML
 	private void handleGuestBaseSearchEventButtonAction() throws IOException {
-		guestSearchEventController.handleGuestBaseSearchEventButtonAction(null);
+		guestBaseController.handleGuestBaseSearchEventButtonAction(null);
 	}
 	
 	@FXML
 	private void handleSearchEventPageButtonAction() throws IOException {
-		guestSearchEventController.handleSearchEventPageButtonAction(null);
+		searchEventController.handleSearchEventPageButtonAction(null);
 	}
 }

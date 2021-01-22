@@ -54,26 +54,28 @@ public class JoinedEventDAO {
 				
 				User ownerUser = UserDAO.retrieveUserByUsername(owner);
 				
-				Statement tempStatement = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-						ResultSet.CONCUR_READ_ONLY);
+//				Statement tempStatement = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+//						ResultSet.CONCUR_READ_ONLY);
+//				
+//				ResultSet tempResultSet = SimpleQueries.selectEventByUsernameDateTime(tempStatement, owner, sdf.format(date.getTime()));
+//				
+//				if(tempResultSet.first()) {
+//					tempResultSet.first();
+//					newEvent = new Event(ownerUser, date, tempResultSet.getInt("max_num_guests"), tempResultSet.getDouble("payment_bill"));
+//				}
+//				else {
+//					newEvent = new Event(ownerUser, date, 0, 0);
+//				}
 				
-				ResultSet tempResultSet = SimpleQueries.selectEventByUsernameDateTime(tempStatement, owner, sdf.format(date.getTime()));
-				
-				if(tempResultSet.first()) {
-					tempResultSet.first();
-					newEvent = new Event(ownerUser, date, tempResultSet.getInt("max_num_guests"), tempResultSet.getDouble("payment_bill"));
-				}
-				else {
-					newEvent = new Event(ownerUser, date, 0, 0);
-				}
+				newEvent = EventDAO.retrieveEventByUsernameDateTime(ownerUser, date);
 				
 				newEvent.setGuestStatus(GuestStatus.valueOf(guestStatus.toUpperCase()));
 				newEvent.setPayStatus(PaymentStatus.valueOf(paymentStatus.toUpperCase()));
 				
 				eventList.add(newEvent);
 				
-				tempStatement.close();
-				tempResultSet.close();
+//				tempStatement.close();
+//				tempResultSet.close();
 			}
 			while(rs.next());
 		}

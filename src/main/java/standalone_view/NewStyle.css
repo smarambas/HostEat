@@ -46,8 +46,13 @@
 
 #titleLabel {
 	-fx-alignment: CENTER;
+	-fx-font-weight: bold;
 	-fx-font-size: 12pt;
 	-fx-pref-width: 150px;
+}
+
+#eventLabel {
+	-fx-pref-width: 200px;
 }
 
 .label {

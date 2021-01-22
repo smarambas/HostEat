@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.GuestSearchEventController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.SearchEventController">
 	<top>
 		<VBox>
 			<children>

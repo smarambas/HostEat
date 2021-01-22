@@ -22,7 +22,7 @@ public class LogInPageController {
 	@FXML private Button btnSubmit;
 	@FXML private TextField usernameTextField;
 	@FXML private PasswordField passwordField;
-
+	
 	public void handleLogInScreenButtonAction(ActionEvent event) throws IOException {
 		Stage stage = new Stage();
 		Parent root = null;
@@ -71,4 +71,5 @@ public class LogInPageController {
 		stage.setScene(scene);
 		stage.show();
 	}
+	
 }

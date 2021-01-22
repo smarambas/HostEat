@@ -24,7 +24,6 @@ public class SignUpController {
 				sessionBean.setEventBeanList(null);
 			} catch (Exception e) {
 				sessionBean = null;
-				e.printStackTrace();
 			}
 		}
 		

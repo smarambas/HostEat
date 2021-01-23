@@ -68,8 +68,15 @@ public class LogInController {
 				eventBeanList.add(eventBean);
 			}
 			
-			sessionBean.setUserType(userType.toString().toUpperCase());
-			sessionBean.setUsername(user.getUsername());
+//			sessionBean.setUserType(userType.toString().toUpperCase());
+//			sessionBean.setUsername(user.getUsername());
+			userBean.setUserType(userType.toString().toUpperCase());
+			userBean.setReg(user.getRegion());
+			userBean.setProv(user.getProvince());
+			userBean.setCity(user.getCity());
+			userBean.setAddr(user.getAddress());
+			
+			sessionBean.setUserBean(userBean);
 			sessionBean.setEventBeanList(eventBeanList);
 		} catch (Exception e) {
 			sessionBean = null;

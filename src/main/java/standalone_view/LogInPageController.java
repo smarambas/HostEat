@@ -46,7 +46,7 @@ public class LogInPageController {
 			} catch (WrongPasswordException e) {
 				GUIController.setSessionBean(null);
 			}
-			
+						
 			if(GUIController.getSessionBean() == null) {
 				root = FXMLLoader.load(getClass().getResource("/standalone_view/UserCredentialsError.fxml"));
 				Scene scene = new Scene(root, 350, 100);
@@ -55,11 +55,11 @@ public class LogInPageController {
 				stage.show();
 			}
 			else {
-				if(GUIController.getSessionBean().getUserType().equals("HOST")) {
+				if(GUIController.getSessionBean().getUserBean().getUserType().equalsIgnoreCase("HOST")) {
 					stage = (Stage) btnSubmit.getScene().getWindow();
 					root = FXMLLoader.load(getClass().getResource("/standalone_view/HostBase.fxml"));
 				}
-				else if(GUIController.getSessionBean().getUserType().equals("GUEST")) {
+				else if(GUIController.getSessionBean().getUserBean().getUserType().equalsIgnoreCase("GUEST")) {
 					stage = (Stage) btnSubmit.getScene().getWindow();
 					root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestBase.fxml"));
 				}

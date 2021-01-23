@@ -53,7 +53,6 @@ public class GUIController {
 		Scene scene = new Scene(root, 700, 500);
 		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
 		stage.setScene(scene);
-		//stage.setMaximized(true);
 		stage.show();
 	}
 	

@@ -24,7 +24,7 @@ public class HeaderController {
 		Parent root = null;
 		
 		boolean isHost;
-		if(GUIController.getSessionBean().getUserType().equals("HOST")) {
+		if(GUIController.getSessionBean().getUserBean().getUserType().equalsIgnoreCase("HOST")) {
 			isHost = true;
 		}
 		else {

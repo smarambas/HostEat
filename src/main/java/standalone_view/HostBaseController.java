@@ -23,6 +23,8 @@ public class HostBaseController {
 	@FXML private Button btnEvent;
 	@FXML private VBox centralVBox;
 	
+	private static EventBean selectedEvent;
+	
 	public void handleHostBaseNewEventButtonAction(ActionEvent event) throws IOException {
 		Stage stage = new Stage();
 		Parent root = null;
@@ -58,6 +60,20 @@ public class HostBaseController {
 				Label guestsLabel = new Label("Guests:  " + e.getActualGuests());
 				Button openButton = new Button("Open event");
 				
+				openButton.setOnAction((ActionEvent event) -> {
+					Stage stage = (Stage) btnEvent.getScene().getWindow();
+					setSelectedEvent(e);
+					try {
+						Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/HostEventPage.fxml"));
+						Scene scene = new Scene(root, 700, 500);
+						scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+						stage.setScene(scene);
+						stage.show();
+					} catch(IOException ioe) {
+						ioe.printStackTrace();
+					}
+				});
+				
 				hbox.getChildren().addAll(dateLabel, timeLabel, guestsLabel, openButton);
 				hbox.setAlignment(Pos.CENTER);
 				
@@ -66,6 +82,14 @@ public class HostBaseController {
 				centralVBox.getChildren().addAll(hbox, separator);
 			}
 		}
+	}
+
+	public static EventBean getSelectedEvent() {
+		return selectedEvent;
+	}
+
+	public static void setSelectedEvent(EventBean selectedEvent) {
+		HostBaseController.selectedEvent = selectedEvent;
 	}
 
 }

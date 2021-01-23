@@ -55,6 +55,17 @@
 	-fx-pref-width: 200px;
 }
 
+#descriptionLabel {
+	-fx-pref-height: 25px;
+	-fx-pref-width: 100px;
+	-fx-font-weight: bold;
+}
+
+#dataLabel {
+	-fx-pref-height: 25px;
+	-fx-pref-width: 150px;
+}
+
 .label {
 	-fx-pref-height: 25px;
 	-fx-pref-width: 100px;

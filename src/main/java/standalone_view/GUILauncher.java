@@ -19,7 +19,6 @@ public class GUILauncher extends Application{
 		scene.getStylesheets().add(getClass().getResource("NewStyle.css").toExternalForm());
 		stage.setTitle("HostEat");
         stage.setScene(scene);
-        //stage.setMaximized(true);
         stage.show();          
 	}
 }

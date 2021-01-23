@@ -71,6 +71,10 @@ public class JoinedEventDAO {
 				
 				newEvent.setGuestStatus(GuestStatus.valueOf(guestStatus.toUpperCase()));
 				newEvent.setPayStatus(PaymentStatus.valueOf(paymentStatus.toUpperCase()));
+				newEvent.setRegion(ownerUser.getRegion());
+				newEvent.setProvince(ownerUser.getProvince());
+				newEvent.setCity(ownerUser.getCity());
+				newEvent.setAddress(ownerUser.getAddress());
 				
 				eventList.add(newEvent);
 				

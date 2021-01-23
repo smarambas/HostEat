@@ -10,6 +10,10 @@ public class EventBean {
 	private String payStatus;
 	private double bill;
 	private String actualGuests;
+	private String regionString;
+	private String provinceString;
+	private String cityString;
+	private String addressString;
 	
 	public String getEventOwner() {
 		return eventOwner;
@@ -73,6 +77,38 @@ public class EventBean {
 	
 	public void setActualGuests(String actualGuests) {
 		this.actualGuests = actualGuests;
+	}
+
+	public String getRegionString() {
+		return regionString;
+	}
+
+	public void setRegionString(String regionString) {
+		this.regionString = regionString;
+	}
+
+	public String getProvinceString() {
+		return provinceString;
+	}
+
+	public void setProvinceString(String provinceString) {
+		this.provinceString = provinceString;
+	}
+
+	public String getCityString() {
+		return cityString;
+	}
+
+	public void setCityString(String cityString) {
+		this.cityString = cityString;
+	}
+
+	public String getAddressString() {
+		return addressString;
+	}
+
+	public void setAddressString(String addressString) {
+		this.addressString = addressString;
 	}
 	
 }

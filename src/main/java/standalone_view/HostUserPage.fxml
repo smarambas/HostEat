@@ -3,16 +3,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.GUIController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.UserPageController">
 	<top>
 		<fx:include source="HostTop.fxml"/>
 	</top>
 	<center>
-		<VBox spacing="20" alignment="center">
+		<VBox fx:id="centralVBox" spacing="20" alignment="center">
 			<children>
 				<Label id="titleLabel" text="Account"/>
-<!-- 				<Label text="Events created:"/> -->
-<!-- 				<Button text="Modify account"/>	 -->
 			</children>
 		</VBox>
 	</center>

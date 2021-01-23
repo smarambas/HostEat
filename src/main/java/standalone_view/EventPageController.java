@@ -1,7 +1,8 @@
 package standalone_view;
 
 import java.io.IOException;
-
+import java.util.ArrayList;
+import java.util.List;
 import bean.EventBean;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -51,134 +52,109 @@ public class EventPageController {
 		if(GUIController.getSessionBean().getUserBean().getUserType().equalsIgnoreCase("HOST")) {
 			eventBean = HostBaseController.getSelectedEvent();
 			
-			HBox hBox = new HBox();
-			Label label = new Label("Date:");
-			label.setId(descriptionString);
-			Label dataLabel = new Label(eventBean.getDateTime().substring(0, 10));
-			dataLabel.setId(dataString);
-			hBox.getChildren().addAll(label, dataLabel);
-			hBox.setAlignment(Pos.CENTER);
-			centralVBox.getChildren().add(hBox);
+			centralVBox.getChildren().addAll(
+				addHBox("Date:", eventBean.getDateTime().substring(0, 10)),
+				addHBox("Time:", eventBean.getDateTime().substring(11)),
+				addHBox("Guests:", eventBean.getActualGuests()),
+				addHBox("Region:", GUIController.getSessionBean().getUserBean().getReg()),
+				addHBox("Province:", GUIController.getSessionBean().getUserBean().getProv()),
+				addHBox("City:", GUIController.getSessionBean().getUserBean().getCity()),
+				addHBox("Address:", GUIController.getSessionBean().getUserBean().getAddr())
+			);
 			
-			hBox = new HBox();
-			label = new Label("Time:");
-			label.setId(descriptionString);
-			dataLabel = new Label(eventBean.getDateTime().substring(11));
-			dataLabel.setId(dataString);
-			hBox.getChildren().addAll(label, dataLabel);
-			hBox.setAlignment(Pos.CENTER);
-			centralVBox.getChildren().add(hBox);
+			List<Button> buttonList = new ArrayList<>();
 			
-			hBox = new HBox();
-			label = new Label("Guests:");
-			label.setId(descriptionString);
-			dataLabel = new Label(eventBean.getActualGuests());
-			dataLabel.setId(dataString);
-			hBox.getChildren().addAll(label, dataLabel);
-			hBox.setAlignment(Pos.CENTER);
-			centralVBox.getChildren().add(hBox);
-			
-			hBox = new HBox();
-			label = new Label("Region:");
-			label.setId(descriptionString);
-			dataLabel = new Label(GUIController.getSessionBean().getUserBean().getReg());
-			dataLabel.setId(dataString);
-			hBox.getChildren().addAll(label, dataLabel);
-			hBox.setAlignment(Pos.CENTER);
-			centralVBox.getChildren().add(hBox);
-			
-			hBox = new HBox();
-			label = new Label("Province:");
-			label.setId(descriptionString);
-			dataLabel = new Label(GUIController.getSessionBean().getUserBean().getProv());
-			dataLabel.setId(dataString);
-			hBox.getChildren().addAll(label, dataLabel);
-			hBox.setAlignment(Pos.CENTER);
-			centralVBox.getChildren().add(hBox);
-			
-			hBox = new HBox();
-			label = new Label("City:");
-			label.setId(descriptionString);
-			dataLabel = new Label(GUIController.getSessionBean().getUserBean().getCity());
-			dataLabel.setId(dataString);
-			hBox.getChildren().addAll(label, dataLabel);
-			hBox.setAlignment(Pos.CENTER);
-			centralVBox.getChildren().add(hBox);
-			
-			hBox = new HBox();
-			label = new Label("Address:");
-			label.setId(descriptionString);
-			dataLabel = new Label(GUIController.getSessionBean().getUserBean().getAddr());
-			dataLabel.setId(dataString);
-			hBox.getChildren().addAll(label, dataLabel);
-			hBox.setAlignment(Pos.CENTER);
-			centralVBox.getChildren().add(hBox);
-			
-			hBox = new HBox();
 			Button openMenuButton = new Button("Open menu");
+			buttonList.add(openMenuButton);
 			Button deleteEventButton = new Button("Delete event");
-			hBox.getChildren().addAll(openMenuButton, deleteEventButton);
-			hBox.setAlignment(Pos.CENTER);
-			hBox.setSpacing(20);
-			centralVBox.getChildren().add(hBox);
+			buttonList.add(deleteEventButton);
+			
+			centralVBox.getChildren().add(addButtons(buttonList));
 		}
 		else {
 			eventBean = GuestBaseController.getSelectedEvent();
+			boolean isAccepted = false;
+			boolean isPaymentRequired = false;
 			
-			HBox hBox = new HBox();
-			Label label = new Label("Date:");
-			label.setId(descriptionString);
-			Label dataLabel = new Label(eventBean.getDateTime().substring(0, 10));
-			dataLabel.setId(dataString);
-			hBox.getChildren().addAll(label, dataLabel);
-			hBox.setAlignment(Pos.CENTER);
-			centralVBox.getChildren().add(hBox);
+			centralVBox.getChildren().addAll(
+					addHBox("Date:", eventBean.getDateTime().substring(0, 10)),
+					addHBox("Time:", eventBean.getDateTime().substring(11)),
+					addHBox("Guests:", eventBean.getActualGuests()),
+					addHBox("State:", eventBean.getGuestStatus())
+			);
 			
-			hBox = new HBox();
-			label = new Label("Time:");
-			label.setId(descriptionString);
-			dataLabel = new Label(eventBean.getDateTime().substring(11));
-			dataLabel.setId(dataString);
-			hBox.getChildren().addAll(label, dataLabel);
-			hBox.setAlignment(Pos.CENTER);
-			centralVBox.getChildren().add(hBox);
+			isPaymentRequired = !(eventBean.getPayStatus().equalsIgnoreCase("NOSET"));
+			if(isPaymentRequired) {
+				centralVBox.getChildren().add(addHBox("Payment:", eventBean.getPayStatus()));
+			}
 			
-			hBox = new HBox();
-			label = new Label("Guests:");
-			label.setId(descriptionString);
-			dataLabel = new Label(eventBean.getActualGuests());
-			dataLabel.setId(dataString);
-			hBox.getChildren().addAll(label, dataLabel);
-			hBox.setAlignment(Pos.CENTER);
-			centralVBox.getChildren().add(hBox);
+			isAccepted = eventBean.getGuestStatus().equalsIgnoreCase("ACCEPTED");
+			if(isAccepted) {
+				centralVBox.getChildren().addAll(
+					addHBox("Region:", eventBean.getRegionString()),
+					addHBox("Province:", eventBean.getProvinceString()),
+					addHBox("City:", eventBean.getCityString()),
+					addHBox("Address:", eventBean.getAddressString())
+				);
+			}
 			
-			hBox = new HBox();
-			label = new Label("State:");
-			label.setId(descriptionString);
-			dataLabel = new Label(eventBean.getGuestStatus());
-			dataLabel.setId(dataString);
-			hBox.getChildren().addAll(label, dataLabel);
-			hBox.setAlignment(Pos.CENTER);
-			centralVBox.getChildren().add(hBox);
+			isPaymentRequired = !(eventBean.getPayStatus().equalsIgnoreCase("NOSET") || 
+					  			  eventBean.getPayStatus().equalsIgnoreCase("PAID"));
 			
-			hBox = new HBox();
-			label = new Label("Payment:");
-			label.setId(descriptionString);
-			dataLabel = new Label(eventBean.getPayStatus());
-			dataLabel.setId(dataString);
-			hBox.getChildren().addAll(label, dataLabel);
-			hBox.setAlignment(Pos.CENTER);
-			centralVBox.getChildren().add(hBox);
+			List<Button> buttonList = new ArrayList<>();
 			
-			hBox = new HBox();
-			Button payHostButton = new Button("Pay host");
-			Button openMenuButton = new Button("Open menu");
-			Button deleteEventButton = new Button("Delete event");
-			hBox.getChildren().addAll(payHostButton, openMenuButton, deleteEventButton);
-			hBox.setAlignment(Pos.CENTER);
-			hBox.setSpacing(20);
-			centralVBox.getChildren().add(hBox);
+			if(isPaymentRequired && !isAccepted) {
+				Button payHostButton = new Button("Pay host");
+				buttonList.add(payHostButton);
+				Button openMenuButton = new Button("Open menu");
+				buttonList.add(openMenuButton);
+				Button deleteEventButton = new Button("Delete event");
+				buttonList.add(deleteEventButton);
+				
+				centralVBox.getChildren().add(addButtons(buttonList));
+			}
+			else if(!isPaymentRequired && !isAccepted) {
+				Button openMenuButton = new Button("Open menu");
+				buttonList.add(openMenuButton);
+				Button deleteEventButton = new Button("Delete event");
+				buttonList.add(deleteEventButton);
+
+				centralVBox.getChildren().add(addButtons(buttonList));
+			}
+			else {
+				Button viewLocationButton = new Button("View location");
+				buttonList.add(viewLocationButton);
+				Button openMenuButton = new Button("Open menu");
+				buttonList.add(openMenuButton);
+				Button deleteEventButton = new Button("Delete event");
+				buttonList.add(deleteEventButton);
+
+				centralVBox.getChildren().add(addButtons(buttonList));
+			}
+		}
+	}
+	
+	private HBox addHBox(String s, String data) {
+		HBox hBox = new HBox();
+		Label label = new Label(s);
+		label.setId(descriptionString);
+		Label dataLabel = new Label(data);
+		dataLabel.setId(dataString);
+		hBox.getChildren().addAll(label, dataLabel);
+		hBox.setAlignment(Pos.CENTER);
+		return hBox;
+	}
+	
+	private HBox addButtons(List<Button> buttonsList) {
+		HBox hBox = new HBox();
+		
+		for(Button b : buttonsList) {
+			hBox.getChildren().add(b);
 		}
 		
+		hBox.setAlignment(Pos.CENTER);
+		hBox.setSpacing(20);
+		
+		return hBox;
 	}
 }

@@ -67,43 +67,4 @@ public class GUIController {
 		stage.close();
 	}
 	
-	@FXML
-	private void handleLogInScreenButtonAction() throws IOException {
-		logInPageController.handleLogInScreenButtonAction(null);
-	}
-	
-	@FXML
-	private void handleSignUpScreenButtonAction() throws IOException {
-		signUpPageController.handleSignUpScreenButtonAction(null);
-	}
-	
-	@FXML
-	private void handleUserRadioButtonAction() {
-		signUpPageController.handleUserRadioButtonAction(null);
-	}
-	
-	@FXML
-	private void handleHomepageButtonAction() throws IOException {
-		headerController.handleHomepageButtonAction(null);
-	}
-	
-	@FXML
-	private void handleHostBaseNewEventButtonAction() throws IOException {
-		hostBaseController.handleHostBaseNewEventButtonAction(null);
-	}
-	
-	@FXML
-	private void handleNewEventPageButtonAction() throws IOException {
-		newEventPageController.handleNewEventPageButtonAction(null);
-	}
-	
-	@FXML
-	private void handleGuestBaseSearchEventButtonAction() throws IOException {
-		guestBaseController.handleGuestBaseSearchEventButtonAction(null);
-	}
-	
-	@FXML
-	private void handleSearchEventPageButtonAction() throws IOException {
-		searchEventController.handleSearchEventPageButtonAction(null);
-	}
 }

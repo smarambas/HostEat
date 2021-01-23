@@ -66,6 +66,10 @@ public class EventDAO {
 				}
 				
 				newEvent.setGuestsNumber(guestsNum);
+				newEvent.setRegion(user.getRegion());
+				newEvent.setProvince(user.getProvince());
+				newEvent.setCity(user.getCity());
+				newEvent.setAddress(user.getAddress());
 				
 				eventList.add(newEvent);
 				
@@ -119,6 +123,10 @@ public class EventDAO {
 			}
 			
 			event.setGuestsNumber(guestsNum);
+			event.setRegion(user.getRegion());
+			event.setProvince(user.getProvince());
+			event.setCity(user.getCity());
+			event.setAddress(user.getAddress());
 			
 			tempStatement.close();
 			tempResultSet.close();

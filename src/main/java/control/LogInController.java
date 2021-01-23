@@ -64,12 +64,21 @@ public class LogInController {
 				
 				eventBean.setBill(eventList.get(i).getBill());
 				eventBean.setActualGuests(eventBean.getGuestsNumber() + "/" + eventBean.getMaxGuestsNumber());
+				eventBean.setRegionString(eventList.get(i).getRegion());
+				eventBean.setProvinceString(eventList.get(i).getProvince());
+				eventBean.setCityString(eventList.get(i).getCity());
+				eventBean.setAddressString(eventList.get(i).getAddress());
 				
 				eventBeanList.add(eventBean);
 			}
 			
 //			sessionBean.setUserType(userType.toString().toUpperCase());
 //			sessionBean.setUsername(user.getUsername());
+			userBean.setName(user.getName());
+			userBean.setSurname(user.getSurname());
+			userBean.setBirthDay(sdf.format(user.getAge().getTime()));
+			userBean.setSex(user.getSex());
+			userBean.setEmailAddr(user.getEmail());
 			userBean.setUserType(userType.toString().toUpperCase());
 			userBean.setReg(user.getRegion());
 			userBean.setProv(user.getProvince());

@@ -57,13 +57,20 @@
 
 #descriptionLabel {
 	-fx-pref-height: 25px;
-	-fx-pref-width: 100px;
+	-fx-pref-width: 120px;
 	-fx-font-weight: bold;
 }
 
 #dataLabel {
 	-fx-pref-height: 25px;
 	-fx-pref-width: 150px;
+}
+
+#errorLabel {
+	-fx-pref-height: 25px;
+	-fx-pref-width: 200px;
+	-fx-font-weight: bold;
+	-fx-text-fill: red;
 }
 
 .label {

@@ -169,7 +169,7 @@ public class UserBean {
 		this.allergies = allergies;
 	}
 	
-	private boolean validateString(String string) {
+	public boolean validateString(String string) {
 		if(string == null || string.equals("")) {
 			return false;
 		}
@@ -185,7 +185,7 @@ public class UserBean {
 		return true;
 	}
 	
-	private boolean validateEmail(String email) {
+	public boolean validateEmail(String email) {
 		String emailRegex = ".+@.+\\..+";
                   
 		Pattern pat = Pattern.compile(emailRegex); 
@@ -197,7 +197,7 @@ public class UserBean {
 		return pat.matcher(email).matches(); 
 	}
 	
-	private boolean validateBirthday(String date) {
+	public boolean validateBirthday(String date) {
 		String format = "yyyy-MM-dd HH:mm";
 		boolean isValid;
 		GregorianCalendar now = new GregorianCalendar();

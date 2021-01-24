@@ -24,7 +24,7 @@ public class SearchEventController {
 			root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestBase.fxml"));
 		}
 		
-		Scene scene = new Scene(root, 700, 500);
+		Scene scene = new Scene(root, 1080, 720);
 		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
 		stage.setScene(scene);
 		stage.show();

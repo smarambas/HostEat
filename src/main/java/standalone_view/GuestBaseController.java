@@ -2,7 +2,6 @@ package standalone_view;
 
 import java.io.IOException;
 import java.util.List;
-
 import bean.EventBean;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,7 +34,7 @@ public class GuestBaseController {
 			root = FXMLLoader.load(getClass().getResource("/standalone_view/SearchEventPage.fxml"));
 		}
 		
-		Scene scene = new Scene(root, 700, 500);
+		Scene scene = new Scene(root, 1080, 720);
 		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
 		stage.setScene(scene);
 		stage.show();
@@ -46,7 +45,11 @@ public class GuestBaseController {
 		/*
 		 * Print the list of created events, if it's not empty
 		 */
-		List<EventBean> eventBeanList = GUIController.getSessionBean().getEventBeanList();
+		List<EventBean> eventBeanList = null;
+		
+		if(GUIController.getSessionBean() != null) {
+			eventBeanList = GUIController.getSessionBean().getEventBeanList();
+		}
 		
 		if(eventBeanList != null && !(eventBeanList.isEmpty())) {
 			Label newLabel = new Label("Events joined");
@@ -67,7 +70,7 @@ public class GuestBaseController {
 					setSelectedEvent(e);
 					try {
 						Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestEventPage.fxml"));
-						Scene scene = new Scene(root, 700, 500);
+						Scene scene = new Scene(root, 1080, 720);
 						scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
 						stage.setScene(scene);
 						stage.show();

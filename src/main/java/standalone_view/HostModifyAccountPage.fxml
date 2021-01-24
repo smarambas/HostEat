@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.ModifyAccountPageController">
+	<top>
+		<VBox>
+			<children>
+				<fx:include fx:id="header" source="HostTop.fxml"/>
+				<Button fx:id="btnBack" text="Back" onAction="#handleBackButtonAction"/>
+			</children>
+		</VBox>
+	</top>
+	<center>
+		<VBox fx:id="centralVBox" spacing="20" alignment="center">
+			<children>
+				<Label id="titleLabel" text="Modify account"/>
+			</children>
+		</VBox>
+	</center>
+</BorderPane>

@@ -25,7 +25,7 @@ public class NewEventPageController {
 			root = FXMLLoader.load(getClass().getResource("/standalone_view/HostBase.fxml"));
 		}
 		
-		Scene scene = new Scene(root, 700, 500);
+		Scene scene = new Scene(root, 1080, 720);
 		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
 		stage.setScene(scene);
 		stage.show();

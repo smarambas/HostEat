@@ -15,7 +15,7 @@ public class GUILauncher extends Application{
 	@Override
     public void start(Stage stage) throws Exception {
 		Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/FirstScreen.fxml"));
-		Scene scene = new Scene(root, 750, 500);
+		Scene scene = new Scene(root, 1080, 720);
 		scene.getStylesheets().add(getClass().getResource("NewStyle.css").toExternalForm());
 		stage.setTitle("HostEat");
         stage.setScene(scene);

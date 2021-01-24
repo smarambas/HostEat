@@ -8,7 +8,7 @@
 		<VBox>
 			<children>
 				<fx:include fx:id="header" source="GuestTop.fxml"/>
-				<Button fx:id="btnBack" text="Back" onAction="#handleSearchEventPageButtonAction"/>
+				<Button fx:id="btnBack" text="Back" onAction="#handleBackButtonAction"/>
 			</children>
 		</VBox>
 	</top>

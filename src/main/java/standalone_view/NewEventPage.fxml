@@ -8,12 +8,12 @@
 		<VBox>
 			<children>
 				<fx:include fx:id="header" source="HostTop.fxml"/>
-				<Button fx:id="btnBack" text="Back" onAction="#handleNewEventPageButtonAction"/>
+				<Button fx:id="btnBack" text="Back" onAction="#handleBackButtonAction"/>
 			</children>
 		</VBox>
 	</top>
 	<center>
-		<VBox spacing="20" alignment="center">
+		<VBox fx:id="centralVBox" spacing="20" alignment="center">
 			<children>
 				<Label id="titleLabel" text="New event"/>
 			</children>

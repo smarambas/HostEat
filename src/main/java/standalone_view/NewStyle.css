@@ -68,7 +68,7 @@
 
 #errorLabel {
 	-fx-pref-height: 25px;
-	-fx-pref-width: 200px;
+	-fx-pref-width: 300px;
 	-fx-font-weight: bold;
 	-fx-text-fill: red;
 }

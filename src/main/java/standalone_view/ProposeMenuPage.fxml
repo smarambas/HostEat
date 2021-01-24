@@ -8,19 +8,19 @@
 		<VBox>
 			<children>
 				<fx:include fx:id="header" source="HostTop.fxml"/>
-				<HBox>
-					<children>
-						<Region HBox.hgrow="ALWAYS"/>
-						<Button fx:id="btnRefresh" text="Refresh" onAction="#handleRefreshButtonAction"/>
-					</children>
-				</HBox>
+<!-- 				<HBox> -->
+<!-- 					<children> -->
+<!-- 						<Region HBox.hgrow="ALWAYS"/> -->
+<!-- 						<Button fx:id="btnRefresh" text="Refresh" onAction="#handleRefreshButtonAction"/> -->
+<!-- 					</children> -->
+<!-- 				</HBox> -->
 			</children>
 		</VBox>
 	</top>
 	<center>
 		<VBox spacing="20" alignment="center">
 			<children>
-				<Label id="titleLabel" text="Notifications"/>
+				<Label id="titleLabel" text="Menu"/>
 			</children>
 		</VBox>
 	</center>

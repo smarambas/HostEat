@@ -1,8 +1,6 @@
 package standalone_view;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import bean.UserBean;
 import control.ModifyAccountController;
 import javafx.event.ActionEvent;
@@ -51,27 +49,30 @@ public class ModifyAccountPageController {
 	@FXML
 	protected void initialize() {
 		Button submitButton = new Button("Submit");
-		
-		List<TextField> list = new ArrayList<>();
-		
+				
 		TextField emailField = new TextField();
 		emailField.setPromptText("email");
-		list.add(emailField);
 		TextField passwField = new TextField();
 		passwField.setPromptText("password");
-		list.add(passwField);
 		TextField regionField = new TextField();
 		regionField.setPromptText("region");
-		list.add(regionField);
 		TextField provinceField = new TextField();
 		provinceField.setPromptText("province");
-		list.add(provinceField);
 		TextField cityField = new TextField();
 		cityField.setPromptText("city");
-		list.add(cityField);
 		TextField addressField = new TextField();
 		addressField.setPromptText("address");
-		list.add(addressField);
+		
+		centralVBox.getChildren().addAll(
+			new Separator(),
+			addHBox("New email:", emailField),
+			addHBox("New password:", passwField),
+			addHBox("New region:", regionField),
+			addHBox("New province:", provinceField),
+			addHBox("New city:", cityField),
+			addHBox("New address:", addressField),
+			submitButton
+		);
 		
 		submitButton.setOnAction((ActionEvent event) -> {
 			UserBean userBean = new UserBean();
@@ -106,17 +107,6 @@ public class ModifyAccountPageController {
 				centralVBox.getChildren().add(errorLabel);
 			}
 		});
-		
-		centralVBox.getChildren().addAll(
-			new Separator(),
-			addHBox("New email:", list.get(0)),
-			addHBox("New password:", list.get(1)),
-			addHBox("New region:", list.get(2)),
-			addHBox("New province:", list.get(3)),
-			addHBox("New city:", list.get(4)),
-			addHBox("New address:", list.get(5)),
-			submitButton
-		);
 	}
 	
 	private HBox addHBox(String s, TextField field) {

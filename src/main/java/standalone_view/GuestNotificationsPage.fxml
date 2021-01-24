@@ -3,15 +3,24 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.GUIController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.NotificationPageController">
 	<top>
-		<fx:include source="GuestTop.fxml"/>
+		<VBox>
+			<children>
+				<fx:include fx:id="header" source="GuestTop.fxml"/>
+				<HBox>
+					<children>
+						<Region HBox.hgrow="ALWAYS"/>
+						<Button fx:id="btnRefresh" text="Refresh" onAction="#handleRefreshButtonAction"/>
+					</children>
+				</HBox>
+			</children>
+		</VBox>
 	</top>
 	<center>
 		<VBox spacing="20" alignment="center">
 			<children>
 				<Label id="titleLabel" text="Notifications"/>
-<!-- 				<Label text="Events created:"/> -->
 			</children>
 		</VBox>
 	</center>

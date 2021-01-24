@@ -15,7 +15,8 @@ public class SearchEventController {
 	
 	@FXML private Button btnBack;
 	
-	public void handleSearchEventPageButtonAction(ActionEvent event) throws IOException {
+	@FXML
+	public void handleBackButtonAction(ActionEvent event) throws IOException {
 		Stage stage = new Stage();
 		Parent root = null;
 		

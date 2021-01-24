@@ -3,13 +3,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<HBox xmlns:fx="http://javafx.com/fxml" spacing="20"  fx:controller="standalone_view.HeaderController">
+<HBox xmlns:fx="http://javafx.com/fxml" spacing="20" fx:controller="standalone_view.HeaderController">
 	<children>
 		<Label id="topLabel" text="HostEat"/>
+		<Region HBox.hgrow="ALWAYS"/>
 		<Button fx:id="btnHome" text="Homepage" onAction="#handleHomepageButtonAction"/>
 		<Button fx:id="btnUser" text="Userpage" onAction="#handleHomepageButtonAction"/>
 		<Button fx:id="btnNotifications" text="Notifications" onAction="#handleHomepageButtonAction"/>
 		<Button fx:id="btnFavorites" text="Favorites"  onAction="#handleHomepageButtonAction"/>
-		<Button text="Refresh"/>
 	</children>
 </HBox>

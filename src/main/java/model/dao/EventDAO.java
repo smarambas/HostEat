@@ -147,7 +147,7 @@ public class EventDAO {
 		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
 		
-		ResultSet rs = SimpleQueries.selectEventByUsernameDateTime(stm, user.getUsername(), sdf.format(event.getDateTime()));
+		ResultSet rs = SimpleQueries.selectEventByUsernameDateTime(stm, user.getUsername(), sdf.format(event.getDateTime().getTime()));
 		
 		if(rs.first()) {
 			throw new DuplicateRecordException("ERROR: the record already exists");
@@ -158,7 +158,7 @@ public class EventDAO {
 			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			
-			CRUDQueries.insertEvent(stm, user.getUsername(), sdf.format(event.getDateTime()), event.getMaxGuestsNumber(), event.getBill());
+			CRUDQueries.insertEvent(stm, user.getUsername(), sdf.format(event.getDateTime().getTime()), event.getMaxGuestsNumber(), event.getBill());
 		}
 		
 		stm.close();
@@ -173,7 +173,7 @@ public class EventDAO {
 		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
 		
-		ResultSet rs = SimpleQueries.selectEventByUsernameDateTime(stm, user.getUsername(), sdf.format(event.getDateTime()));
+		ResultSet rs = SimpleQueries.selectEventByUsernameDateTime(stm, user.getUsername(), sdf.format(event.getDateTime().getTime()));
 				
 		if(rs.first()) {
 			rs.close();
@@ -181,7 +181,7 @@ public class EventDAO {
 			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			
-			CRUDQueries.deleteEvent(stm, user.getUsername(), sdf.format(event.getDateTime()));
+			CRUDQueries.deleteEvent(stm, user.getUsername(), sdf.format(event.getDateTime().getTime()));
 		}
 		else {
 			throw new NoRecordFoundException(norecord);

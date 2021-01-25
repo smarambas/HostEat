@@ -26,7 +26,7 @@ public class GUIController {
 	@FXML private HostBaseController hostBaseController;
 	@FXML private NewEventPageController newEventPageController;
 	@FXML private GuestBaseController guestBaseController;
-	@FXML private SearchEventController searchEventController;
+	@FXML private SearchEventPageController searchEventController;
 	
 	public static SessionBean getSessionBean() {
 		return sessionBean;

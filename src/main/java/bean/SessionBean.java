@@ -1,29 +1,18 @@
 package bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SessionBean {
 
-//	private String userType;
-//	private String username;
 	private UserBean userBean;
 	private List<EventBean> eventBeanList;
+	private List<EventBean> searchedList;
 	
-//	public String getUserType() {
-//		return userType;
-//	}
-//
-//	public void setUserType(String userType) {
-//		this.userType = userType;
-//	}
-//
-//	public String getUsername() {
-//		return username;
-//	}
-//	
-//	public void setUsername(String username) {
-//		this.username = username;
-//	}
+	public SessionBean() {
+		this.eventBeanList = new ArrayList<>();
+		this.searchedList = new ArrayList<>();
+	}
 	
 	public List<EventBean> getEventBeanList() {
 		return eventBeanList;
@@ -39,6 +28,14 @@ public class SessionBean {
 
 	public void setEventBeanList(List<EventBean> eventBeanList) {
 		this.eventBeanList = eventBeanList;
+	}
+
+	public List<EventBean> getSearchedList() {
+		return searchedList;
+	}
+
+	public void setSearchedList(List<EventBean> searchedList) {
+		this.searchedList = searchedList;
 	}
 
 }

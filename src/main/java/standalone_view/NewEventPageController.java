@@ -121,7 +121,6 @@ public class NewEventPageController {
 				stage.setScene(scene);
 				stage.show();
 			} catch (Exception e) {
-				e.printStackTrace();
 				Label errorLabel = new Label("The event was not created, please try again.");
 				errorLabel.setId("errorLabel");
 				centralVBox.getChildren().add(errorLabel);

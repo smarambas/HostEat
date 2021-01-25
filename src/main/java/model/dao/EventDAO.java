@@ -206,6 +206,8 @@ public class EventDAO {
 		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
 		
+		System.out.println(searchType);
+		
 		switch (searchType) {
 		case 0: 
 			rs = NestedQueries.selectEventsByDate(stm, sdf.format(dateTime.getTime()));
@@ -249,9 +251,30 @@ public class EventDAO {
 				
 				User user = UserDAO.retrieveUserByUsername(owner);
 				
+				int guestsNum;
+				Statement tempStatement = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+						ResultSet.CONCUR_READ_ONLY);
+								
+				ResultSet tempResultSet = SimpleQueries.countGuestsNumberForEvent(tempStatement, user.getUsername(), sdf.format(date.getTime()));
+								
+				if(tempResultSet.first()) {
+					tempResultSet.first();
+					guestsNum = tempResultSet.getInt(1);
+				}
+				else {
+					guestsNum = 0;
+				}
+				
 				Event newEvent = new Event(user, date, maxGuestsNum, bill);
+				newEvent.setRegion(user.getRegion());
+				newEvent.setProvince(user.getProvince());
+				newEvent.setCity(user.getCity());
+				newEvent.setGuestsNumber(guestsNum);
 				
 				eventList.add(newEvent);
+				
+				tempStatement.close();
+				tempResultSet.close();
 			}
 			while(rs.next());
 		}

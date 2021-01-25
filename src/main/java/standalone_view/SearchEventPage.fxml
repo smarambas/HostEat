@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.SearchEventController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.SearchEventPageController">
 	<top>
 		<VBox>
 			<children>
@@ -13,10 +13,41 @@
 		</VBox>
 	</top>
 	<center>
-		<VBox spacing="20" alignment="center">
+		<VBox fx:id="centralVBox" spacing="20" alignment="center">
 			<children>
 				<Label id="titleLabel" text="Search events"/>
+				<HBox spacing="20" alignment="center">
+					<children>
+						<Label id="" text="Region:"/>
+						<TextField fx:id="regionField" promptText="region"/>
+					</children>
+				</HBox>
+				<HBox spacing="20" alignment="center">
+					<children>
+						<Label id="" text="Province:"/>
+						<TextField fx:id="provinceField" promptText="province"/>
+					</children>
+				</HBox>
+				<HBox spacing="20" alignment="center">
+					<children>
+						<Label id="" text="City:"/>
+						<TextField fx:id="cityField" promptText="city"/>
+					</children>
+				</HBox>
+				<HBox spacing="20" alignment="center">
+					<children>
+						<Label id="" text="Date:"/>
+						<DatePicker fx:id="datePicker" promptText="date"/>
+					</children>
+				</HBox>
 			</children>
 		</VBox>
 	</center>
+	<bottom>
+		<VBox spacing="20" alignment="center">
+			<children>
+				<Button fx:id="searchButton" text="Search" onAction="#handleSearchButtonAction"/>
+			</children>
+		</VBox>
+	</bottom>
 </BorderPane>

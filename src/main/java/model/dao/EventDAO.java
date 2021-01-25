@@ -208,28 +208,28 @@ public class EventDAO {
 		
 		switch (searchType) {
 		case 0: 
-			rs = NestedQueries.selectEventsByDate(stm, sdf.format(dateTime));
+			rs = NestedQueries.selectEventsByDate(stm, sdf.format(dateTime.getTime()));
 			break;
 		case 1:
-			rs = NestedQueries.selectEventsByCity(stm, city, sdf.format(dateTime));
+			rs = NestedQueries.selectEventsByCity(stm, city, sdf.format(dateTime.getTime()));
 			break;
 		case 10:
-			rs = NestedQueries.selectEventsByProvince(stm, province, sdf.format(dateTime));
+			rs = NestedQueries.selectEventsByProvince(stm, province, sdf.format(dateTime.getTime()));
 			break;
 		case 11:
-			rs = NestedQueries.selectEventsByProvinceCity(stm, province, city, sdf.format(dateTime));
+			rs = NestedQueries.selectEventsByProvinceCity(stm, province, city, sdf.format(dateTime.getTime()));
 			break;
 		case 100:
-			rs = NestedQueries.selectEventsByRegion(stm, region, sdf.format(dateTime));
+			rs = NestedQueries.selectEventsByRegion(stm, region, sdf.format(dateTime.getTime()));
 			break;
 		case 101:
-			rs = NestedQueries.selectEventsByRegionCity(stm, region, city, sdf.format(dateTime));
+			rs = NestedQueries.selectEventsByRegionCity(stm, region, city, sdf.format(dateTime.getTime()));
 			break;
 		case 110:
-			rs = NestedQueries.selectEventsByRegionProvince(stm, region, province, sdf.format(dateTime));
+			rs = NestedQueries.selectEventsByRegionProvince(stm, region, province, sdf.format(dateTime.getTime()));
 			break;
 		case 111:
-			rs = NestedQueries.selectEventsByRegionProvinceCity(stm, region, province, city, sdf.format(dateTime));
+			rs = NestedQueries.selectEventsByRegionProvinceCity(stm, region, province, city, sdf.format(dateTime.getTime()));
 			break;
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + searchType);

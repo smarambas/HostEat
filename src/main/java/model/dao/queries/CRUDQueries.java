@@ -149,9 +149,9 @@ public class CRUDQueries {
 	/*
 	 * Dish statements
 	 */
-	public static int insertDish(Statement stmt, String username, String date, String time, String name, String course) throws SQLException {
-		String statement = String.format("INSERT INTO dish (name, course, event_owner, event_date, event_time) VALUES ('%s', '%s', '%s', '%s', '%s');",
-				name, course, username, date, time);
+	public static int insertDish(Statement stmt, String username, String dateTime, String name, String course) throws SQLException {
+		String statement = String.format("INSERT INTO dish (name, course, event_owner, event_date) VALUES ('%s', '%s', '%s', '%s');",
+				name, course, username, dateTime);
 		return stmt.executeUpdate(statement);
 	}
 	

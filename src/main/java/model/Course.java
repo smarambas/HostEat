@@ -1,11 +1,16 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Course {
 
 	private String name;
 	private List<String> dishes;
+	
+	public Course() {
+		this.dishes = new ArrayList<>();
+	}
 	
 	public Course(String n) {
 		this.name = n;

@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.NotificationPageController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.ProposeMenuPageController">
 	<top>
 		<VBox>
 			<children>
@@ -18,10 +18,31 @@
 		</VBox>
 	</top>
 	<center>
+		<ScrollPane fitToWidth="true" fitToHeight="true">
+			<VBox fx:id="centralVBox" spacing="20" alignment="center">
+				<children>
+					<Label id="titleLabel" text="Menu"/>
+				</children>
+			</VBox>
+		</ScrollPane>
+	</center>
+	<bottom>
 		<VBox spacing="20" alignment="center">
 			<children>
-				<Label id="titleLabel" text="Menu"/>
+				<HBox spacing="20" alignment="center">
+					<children>
+						<Button fx:id="addCourseButton" text="Add course" onAction="#handleAddCourseButtonAction"/>
+						<TextField fx:id="addCourseField" promptText="new course"/>
+					</children>
+				</HBox>
+				<HBox spacing="20" alignment="center">
+					<children>
+						<Button fx:id="addDishButton" text="Add dish" onAction="#handleAddDishButtonAction"/>
+						<TextField fx:id="addDishField" promptText="new dish"/>
+					</children>
+				</HBox>
+				<Button fx:id="confirmButton" text="Confirm menu" onAction="#handleConfirmButtonAction"/>
 			</children>
 		</VBox>
-	</center>
+	</bottom>
 </BorderPane>

@@ -66,6 +66,11 @@
 	-fx-pref-width: 150px;
 }
 
+#dishLabel {
+	-fx-pref-height: 25px;
+	-fx-pref-width: 250px;
+}
+
 #errorLabel {
 	-fx-pref-height: 25px;
 	-fx-pref-width: 300px;

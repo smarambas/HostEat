@@ -34,7 +34,7 @@ public class GuestBaseController {
 			root = FXMLLoader.load(getClass().getResource("/standalone_view/SearchEventPage.fxml"));
 		}
 		
-		Scene scene = new Scene(root, 1080, 720);
+		Scene scene = new Scene(root, 900, 600);
 		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
 		stage.setScene(scene);
 		stage.show();
@@ -70,12 +70,12 @@ public class GuestBaseController {
 					setSelectedEvent(e);
 					try {
 						Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestEventPage.fxml"));
-						Scene scene = new Scene(root, 1080, 720);
+						Scene scene = new Scene(root, 900, 600);
 						scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
 						stage.setScene(scene);
 						stage.show();
 					} catch(IOException ioe) {
-						ioe.printStackTrace();
+						ioe.printStackTrace();	//DA CAMBIARE
 					}
 				});
 				

@@ -1,10 +1,15 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Menu {
 
 	private List<Course> courses;
+	
+	public Menu() {
+		this.courses = new ArrayList<>();
+	}
 		
 	public List<Course> getCourses() {
 		return courses;

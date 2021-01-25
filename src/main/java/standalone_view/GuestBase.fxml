@@ -8,11 +8,13 @@
 		<fx:include fx:id="header" source="GuestTop.fxml"/>
 	</top>
 	<center>
-		<VBox fx:id="centralVBox" spacing="20" alignment="center">
-			<children>
-				<Label id="titleLabel" text="Homepage"/>
-				<Button fx:id="btnEvent" text="Search event" onAction="#handleGuestBaseSearchEventButtonAction"/>
-			</children>
-		</VBox>
+		<ScrollPane fitToWidth="true" fitToHeight="true">
+			<VBox fx:id="centralVBox" spacing="20" alignment="center">
+				<children>
+					<Label id="titleLabel" text="Homepage"/>
+					<Button fx:id="btnEvent" text="Search event" onAction="#handleGuestBaseSearchEventButtonAction"/>
+				</children>
+			</VBox>
+		</ScrollPane>
 	</center>
 </BorderPane>

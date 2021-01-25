@@ -40,7 +40,7 @@ public class NewEventPageController {
 			root = FXMLLoader.load(getClass().getResource("/standalone_view/HostBase.fxml"));
 		}
 		
-		Scene scene = new Scene(root, 1080, 720);
+		Scene scene = new Scene(root, 900, 600);
 		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
 		stage.setScene(scene);
 		stage.show();
@@ -63,7 +63,6 @@ public class NewEventPageController {
             }
         });
 
-		
 		ChoiceBox hoursChoiceBox = new ChoiceBox(FXCollections.observableArrayList(
 			"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", 
 			"13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "00")
@@ -117,7 +116,7 @@ public class NewEventPageController {
 				GUIController.setSessionBean(createEventController.createEvent(eventBean));
 								
 				root = FXMLLoader.load(getClass().getResource("/standalone_view/ProposeMenuPage.fxml"));
-				Scene scene = new Scene(root, 1080, 720);
+				Scene scene = new Scene(root, 900, 600);
 				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
 				stage.setScene(scene);
 				stage.show();

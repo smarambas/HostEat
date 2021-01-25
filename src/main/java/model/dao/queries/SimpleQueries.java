@@ -43,8 +43,8 @@ public class SimpleQueries {
 		return stmt.executeQuery(statement);
 	}
 	
-	public static ResultSet selectMenuByUsernameDateTime(Statement stmt, String username, String date, String time) throws SQLException {
-		String statement = String.format("SELECT name, course FROM dish WHERE event_owner = '%s' AND event_date = '%s' AND event_time = '%s';", username, date, time);
+	public static ResultSet selectMenuByUsernameDateTime(Statement stmt, String username, String dateTime) throws SQLException {
+		String statement = String.format("SELECT name, course FROM dish WHERE event_owner = '%s' AND event_date = '%s';", username, dateTime);
 		return stmt.executeQuery(statement);
 	}
 	

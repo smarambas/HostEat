@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
 import java.util.List;
 import exceptions.DuplicateRecordException;
 import exceptions.NoRecordFoundException;
@@ -19,7 +21,9 @@ public class MenuDAO {
 	
 	private MenuDAO() {}
 	
-	public static Menu retrieveMenu(User user, String date, String time) throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
+	public static Menu retrieveMenu(User user, GregorianCalendar dateTime) throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
+		String format = "yyyy-MM-dd HH:mm";
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		Statement stm = null;
 		Menu menu = new Menu();
 		
@@ -28,7 +32,7 @@ public class MenuDAO {
 		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
 		
-		ResultSet rs = SimpleQueries.selectMenuByUsernameDateTime(stm, user.getUsername(), date, time);
+		ResultSet rs = SimpleQueries.selectMenuByUsernameDateTime(stm, user.getUsername(), sdf.format(dateTime.getTime()));
 		
 		if(!rs.first()) {
 			throw new NoRecordFoundException("ERROR: no record found");
@@ -59,7 +63,9 @@ public class MenuDAO {
 		return menu;
 	}
 	
-	public static void saveMenu(User user, Menu menu, String date, String time) throws SQLException, ClassNotFoundException, DuplicateRecordException, IOException {
+	public static void saveMenu(User user, Menu menu, GregorianCalendar dateTime) throws SQLException, ClassNotFoundException, DuplicateRecordException, IOException {
+		String format = "yyyy-MM-dd HH:mm";
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		Statement stm = null;
 		
 		cs = ConnectionSingleton.createConnection();
@@ -67,7 +73,7 @@ public class MenuDAO {
 		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
 	
-		ResultSet rs = SimpleQueries.selectMenuByUsernameDateTime(stm, user.getUsername(), date, time);
+		ResultSet rs = SimpleQueries.selectMenuByUsernameDateTime(stm, user.getUsername(), sdf.format(dateTime.getTime()));
 		
 		if(rs.first()) {
 			throw new DuplicateRecordException("ERROR: the record already exists");
@@ -86,7 +92,7 @@ public class MenuDAO {
 					stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 							ResultSet.CONCUR_READ_ONLY);
 					
-					CRUDQueries.insertDish(stm, user.getUsername(), date, time, courses.get(i).getDishes().get(j), courseName);
+					CRUDQueries.insertDish(stm, user.getUsername(), sdf.format(dateTime.getTime()), courses.get(i).getDishes().get(j), courseName);
 				}
 			}
 		}

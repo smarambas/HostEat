@@ -34,7 +34,7 @@ public class HostBaseController {
 			root = FXMLLoader.load(getClass().getResource("/standalone_view/NewEventPage.fxml"));
 		}
 		
-		Scene scene = new Scene(root, 1080, 720);
+		Scene scene = new Scene(root, 900, 600);
 		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
 		stage.setScene(scene);
 		stage.show();
@@ -65,7 +65,7 @@ public class HostBaseController {
 					setSelectedEvent(e);
 					try {
 						Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/HostEventPage.fxml"));
-						Scene scene = new Scene(root, 1080, 720);
+						Scene scene = new Scene(root, 900, 600);
 						scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
 						stage.setScene(scene);
 						stage.show();

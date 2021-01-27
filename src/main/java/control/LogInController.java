@@ -11,6 +11,7 @@ import model.Event;
 import model.User;
 import model.UserType;
 import model.dao.EventDAO;
+import model.dao.FavoritesDAO;
 import model.dao.JoinedEventDAO;
 import model.dao.UserDAO;
 
@@ -21,6 +22,8 @@ public class LogInController {
 		SessionBean sessionBean = new SessionBean();
 		List<Event> eventList;
 		List<EventBean> eventBeanList = new ArrayList<>();
+		List<User> savedUsers = null;
+		
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		
@@ -38,6 +41,7 @@ public class LogInController {
 			}
 			else {
 				eventList = JoinedEventDAO.retrieveJoinedEventsByUsername(user);	
+				savedUsers = FavoritesDAO.retrieveFavoritesByUsername(user);
 			}	
 			
 			for(int i = 0; i < eventList.size(); i++) {
@@ -70,6 +74,26 @@ public class LogInController {
 				eventBean.setAddressString(eventList.get(i).getAddress());
 				
 				eventBeanList.add(eventBean);
+			}
+			
+			if(savedUsers != null) {	//only for guests
+				for(int i = 0; i < savedUsers.size(); i++) {
+					User tempUser = savedUsers.get(i);
+					UserBean tempUserBean = new UserBean();
+					
+					tempUserBean.setUsername(tempUser.getUsername());
+					tempUserBean.setName(tempUser.getName());
+					tempUserBean.setSurname(tempUser.getSurname());
+					tempUserBean.setBirthDay(sdf.format(tempUser.getAge().getTime()));
+					tempUserBean.setSex(tempUser.getSex());
+					tempUserBean.setEmailAddr(tempUser.getEmail());
+					tempUserBean.setReg(tempUser.getRegion());
+					tempUserBean.setProv(tempUser.getProvince());
+					tempUserBean.setCity(tempUser.getCity());
+					tempUserBean.setRatings(tempUser.getRating());
+					
+					sessionBean.getSavedHosts().add(tempUserBean);
+				}
 			}
 			
 //			sessionBean.setUserType(userType.toString().toUpperCase());

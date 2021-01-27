@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.EventPageController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.ResultEventPageController">
 	<top>
 		<VBox>
 			<children>
@@ -21,4 +21,13 @@
 			</VBox>
 		</ScrollPane>
 	</center>
+	<bottom>
+		<HBox fx:id="bottomHBox" spacing="20" alignment="center">
+			<children>
+				<Button fx:id="joinButton" text="Join event" onAction="#handleJoinButtonAction"/>
+				<Button fx:id="profileButton" text="Open host profile" onAction="#handleProfileButtonAction"/>
+				<Button fx:id="menuButton" text="Open menu" onAction="#handleMenuButtonAction"/>
+			</children>
+		</HBox>
+	</bottom>
 </BorderPane>

@@ -13,10 +13,12 @@
 		</VBox>
 	</top>
 	<center>
-		<VBox fx:id="centralVBox" spacing="20" alignment="center">
-			<children>
-				<Label id="titleLabel" text="New event"/>
-			</children>
-		</VBox>
+		<ScrollPane fitToWidth="true" fitToHeight="true">
+			<VBox fx:id="centralVBox" spacing="20" alignment="center">
+				<children>
+					<Label id="titleLabel" text="New event"/>
+				</children>
+			</VBox>
+		</ScrollPane>
 	</center>
 </BorderPane>

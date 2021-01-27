@@ -41,6 +41,8 @@ public class GUIController {
 		Stage stage = new Stage();
 		Parent root = null;
 		
+		setSessionBean(new SessionBean());
+		
 		if(event.getSource() == btnSignUp) {
 			stage = (Stage) btnSignUp.getScene().getWindow();
 			root = FXMLLoader.load(getClass().getResource("/standalone_view/SignUpScreen.fxml"));

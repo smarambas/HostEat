@@ -49,5 +49,5 @@ public class NestedQueries {
 		String statement = String.format("SELECT * FROM event WHERE date > '%s';", dateTime);
 		return stmt.executeQuery(statement);
 	}
-		
+	
 }

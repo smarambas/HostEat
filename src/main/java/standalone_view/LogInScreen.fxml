@@ -15,7 +15,7 @@
 	<center>
 		<VBox spacing="20" alignment="center">
 			<children>
-				<Label id="login" text="Log In"/>
+				<Label id="titleLabel" text="Log In"/>
 				<HBox spacing="20" alignment="center">
 					<children>
 						<Label text="Username:"/>

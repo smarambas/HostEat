@@ -184,5 +184,18 @@ public class CRUDQueries {
 				newCourse, username, date, time);
 		return stmt.executeUpdate(statement);
 	}
-		
+	
+	/*
+	 * Favorites statements
+	 */
+	public static int insertFavorite(Statement stmt, String username, String favorite) throws SQLException {
+		String statement = String.format("INSERT INTO saved_user (user, favorite) VALUES ('%s', '%s');", username, favorite);
+		return stmt.executeUpdate(statement);
+	}	
+	
+	public static int deleteFavorite(Statement stmt, String username, String favorite) throws SQLException {
+		String statement = String.format("DELETE FROM saved_user WHERE user = '%s' AND favorite = '%s';", username, favorite);
+		return stmt.executeUpdate(statement);
+	}
+	
 }

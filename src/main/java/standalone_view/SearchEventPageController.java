@@ -2,6 +2,8 @@ package standalone_view;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+
 import bean.EventBean;
 import control.SearchEventController;
 import exceptions.NoRecordFoundException;
@@ -58,6 +60,8 @@ public class SearchEventPageController {
 	public void handleSearchButtonAction(ActionEvent event) throws IOException {
 		EventBean eventBean = new EventBean();
 		
+		GUIController.getSessionBean().setSearchedList(new ArrayList<>());	//clear list
+		
 		try {
 			eventBean.setRegionString(regionField.getText());
 			eventBean.setProvinceString(provinceField.getText());
@@ -81,8 +85,6 @@ public class SearchEventPageController {
 			errorLabel.setId("errorLabel");
 			centralVBox.getChildren().add(errorLabel);
 		} catch (NoRecordFoundException nrfe) {
-			nrfe.printStackTrace();
-			
 			Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/NoResultFoundErrorPage.fxml"));
 			Scene scene = new Scene(root, 400, 100);
 			scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
@@ -90,8 +92,6 @@ public class SearchEventPageController {
 			stage.setScene(scene);
 			stage.show();
 		} catch (Exception e) {
-			e.printStackTrace();
-			
 			Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/GenericErrorPage.fxml"));
 			Scene scene = new Scene(root, 400, 100);
 			scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());

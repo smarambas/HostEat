@@ -40,6 +40,7 @@ public class SignUpPageController {
 	@FXML private RadioButton btnRadioHost;
 	@FXML private ToggleGroup radioGroup;
 	
+	@FXML
 	public void handleUserRadioButtonAction(ActionEvent event) {
 		if(event.getSource() == btnRadioGuest) {
 			userType = "GUEST";
@@ -49,6 +50,17 @@ public class SignUpPageController {
 		}
 	}
 	
+	@FXML
+	public void handleBackButtonAction(ActionEvent event) throws IOException {
+		Stage stage = (Stage) btnBack.getScene().getWindow();
+		Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/FirstScreen.fxml"));
+		Scene scene = new Scene(root, 900, 600);
+		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+		stage.setScene(scene);
+		stage.show();
+	}
+	
+	@FXML
 	public void handleSignUpScreenButtonAction(ActionEvent event) throws IOException {
 		Stage stage = new Stage();
 		Parent root = null;
@@ -58,48 +70,42 @@ public class SignUpPageController {
 		SignUpController signUpController = new SignUpController();
 		SessionBean sessionBean = new SessionBean();
 		
-		if(event.getSource() == btnBack) {
-			stage = (Stage) btnBack.getScene().getWindow();
-			root = FXMLLoader.load(getClass().getResource("/standalone_view/FirstScreen.fxml"));
-		}
-		else if(event.getSource() == btnSubmit) {
-			if(userBean.setName(nameField.getText()) &&
-			   userBean.setSurname(surnameField.getText()) &&
-			   userBean.setEmailAddr(emailField.getText()) &&
-			   userBean.setBirthDay(birthdayField.getValue().toString() + " 00:00")) {
-				
-				checkInput = true;
-				userBean.setUsername(usernameField.getText());
-				userBean.setPassw(passwordField.getText());
-				userBean.setSex(sexChoice.getValue());
-				userBean.setReg(regionField.getText());
-				userBean.setProv(provinceField.getText());
-				userBean.setCity(cityField.getText());
-				userBean.setAddr(addressField.getText());		
-			}
+		if(userBean.setName(nameField.getText()) &&
+		   userBean.setSurname(surnameField.getText()) &&
+		   userBean.setEmailAddr(emailField.getText()) &&
+		   userBean.setBirthDay(birthdayField.getValue().toString() + " 00:00")) {
 			
-			if(checkInput) {
-				if(userType == null) {
-					inputError = true;
-					root = FXMLLoader.load(getClass().getResource("/standalone_view/UserSelectionError.fxml"));
-				}
-				else if(userType.equals("GUEST")) {
-					userBean.setUserType(userType);
-					stage = (Stage) btnSubmit.getScene().getWindow();
-					root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestBase.fxml"));
-					sessionBean = signUpController.signUp(userBean);
-				}
-				else if(userType.equals("HOST")) {
-					userBean.setUserType(userType);
-					stage = (Stage) btnSubmit.getScene().getWindow();
-					root = FXMLLoader.load(getClass().getResource("/standalone_view/HostBase.fxml"));
-					sessionBean = signUpController.signUp(userBean);
-				}
-			}
-			else {
+			checkInput = true;
+			userBean.setUsername(usernameField.getText());
+			userBean.setPassw(passwordField.getText());
+			userBean.setSex(sexChoice.getValue());
+			userBean.setReg(regionField.getText());
+			userBean.setProv(provinceField.getText());
+			userBean.setCity(cityField.getText());
+			userBean.setAddr(addressField.getText());		
+		}
+		
+		if(checkInput) {
+			if(userType == null) {
 				inputError = true;
-				root = FXMLLoader.load(getClass().getResource("/standalone_view/SignUpInputError.fxml"));
+				root = FXMLLoader.load(getClass().getResource("/standalone_view/UserSelectionError.fxml"));
 			}
+			else if(userType.equals("GUEST")) {
+				userBean.setUserType(userType);
+				sessionBean = signUpController.signUp(userBean);
+				stage = (Stage) btnSubmit.getScene().getWindow();
+				root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestBase.fxml"));
+			}
+			else if(userType.equals("HOST")) {
+				userBean.setUserType(userType);
+				sessionBean = signUpController.signUp(userBean);
+				stage = (Stage) btnSubmit.getScene().getWindow();
+				root = FXMLLoader.load(getClass().getResource("/standalone_view/HostBase.fxml"));
+			}
+		}
+		else {
+			inputError = true;
+			root = FXMLLoader.load(getClass().getResource("/standalone_view/SignUpInputError.fxml"));
 		}
 		
 		if(!inputError) {

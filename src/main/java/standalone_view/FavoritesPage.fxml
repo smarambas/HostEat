@@ -8,11 +8,12 @@
 		<fx:include source="GuestTop.fxml"/>
 	</top>
 	<center>
-		<VBox spacing="20" alignment="center">
-			<children>
-				<Label id="titleLabel" text="Favorites"/>
-<!-- 				<Label text="Events created:"/> -->
-			</children>
-		</VBox>
+		<ScrollPane fitToWidth="true" fitToHeight="true">
+			<VBox fx:id="centralVBox" spacing="20" alignment="center">
+				<children>
+					<Label id="titleLabel" text="Favorites"/>
+				</children>
+			</VBox>
+		</ScrollPane>
 	</center>
 </BorderPane>

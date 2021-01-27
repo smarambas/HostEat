@@ -63,4 +63,14 @@ public class SimpleQueries {
 		return stmt.executeQuery(statement);
 	}
 	
+	public static ResultSet selectFavoritesByUsername(Statement stmt, String username) throws SQLException {
+		String statement = String.format("SELECT * FROM saved_user WHERE user = '%s';", username);
+		return stmt.executeQuery(statement);
+	}
+	
+	public static ResultSet selectFavorite(Statement stmt, String username, String favorite) throws SQLException {
+		String statement = String.format("SELECT * FROM saved_user WHERE user = '%s' AND favorite = '%s';", username, favorite);
+		return stmt.executeQuery(statement);
+	}
+	
 }

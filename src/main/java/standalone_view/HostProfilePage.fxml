@@ -3,11 +3,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.EventPageController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.HostProfilePageController">
 	<top>
 		<VBox>
 			<children>
-				<fx:include fx:id="header" source="HostTop.fxml"/>
+				<fx:include fx:id="header" source="GuestTop.fxml"/>
 				<Button fx:id="btnBack" text="Back" onAction="#handleBackButtonAction"/>
 			</children>
 		</VBox>
@@ -16,9 +16,13 @@
 		<ScrollPane fitToWidth="true" fitToHeight="true">
 			<VBox fx:id="centralVBox" spacing="20" alignment="center">
 				<children>
-					<Label id="titleLabel" text="Event page"/>
+					<Label id="titleLabel" text="Host profile"/>
 				</children>
 			</VBox>
 		</ScrollPane>
 	</center>
+	<bottom>
+		<HBox fx:id="bottomHBox" spacing="20" alignment="center">
+		</HBox>
+	</bottom>
 </BorderPane>

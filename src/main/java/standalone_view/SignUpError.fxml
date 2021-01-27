@@ -7,7 +7,7 @@
 	<center>
 		<VBox spacing="20" alignment="center">
 			<children>
-				<Label text="An error occurred, please try again"/>
+				<Label id="errorLabel" text="An error occurred, please try again"/>
 				<Button fx:id="btnOk" text="Ok" onAction="#handleOkButtonAction"/>
 			</children>
 		</VBox>

@@ -22,6 +22,8 @@ public class SearchResultsPageController {
 
 	private String appStyle = "NewStyle.css";
 	
+	private static EventBean selectedEvent;
+	
 	@FXML private VBox centralVBox;
 	
 	@FXML private Button btnBack;
@@ -32,6 +34,7 @@ public class SearchResultsPageController {
 		Parent root = null;
 		
 		if(event.getSource() == btnBack) {
+			GUIController.getSessionBean().setSearchedList(new ArrayList<>());	//clear list
 			centralVBox.getChildren().clear();
 			stage = (Stage) btnBack.getScene().getWindow();
 			root = FXMLLoader.load(getClass().getResource("/standalone_view/SearchEventPage.fxml"));
@@ -46,7 +49,6 @@ public class SearchResultsPageController {
 	@FXML
 	protected void initialize() {
 		List<EventBean> eventList = GUIController.getSessionBean().getSearchedList();
-		GUIController.getSessionBean().setSearchedList(new ArrayList<>());
 		
 		for(EventBean eventBean : eventList) {
 			List<Node> nodeList = new ArrayList<>();
@@ -61,6 +63,20 @@ public class SearchResultsPageController {
 				addHBox(nodeList, openButton),
 				new Separator()
 			);
+			
+			openButton.setOnAction((ActionEvent event) -> {
+				Stage stage = (Stage) openButton.getScene().getWindow();
+				setSelectedEvent(eventBean);
+				try {
+					Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/ResultEventPage.fxml"));
+					Scene scene = new Scene(root, 900, 600);
+					scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+					stage.setScene(scene);
+					stage.show();
+				} catch(IOException ioe) {
+					ioe.printStackTrace();	//DA CAMBIARE
+				}
+			});
 		}
 	}
 	
@@ -77,6 +93,14 @@ public class SearchResultsPageController {
 		hBox.setAlignment(Pos.CENTER);
 		
 		return hBox;
+	}
+
+	public static EventBean getSelectedEvent() {
+		return selectedEvent;
+	}
+
+	public static void setSelectedEvent(EventBean selectedEvent) {
+		SearchResultsPageController.selectedEvent = selectedEvent;
 	}
 	
 }

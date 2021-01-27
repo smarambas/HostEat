@@ -8,10 +8,15 @@
 		<fx:include source="HostTop.fxml"/>
 	</top>
 	<center>
-		<VBox fx:id="centralVBox" spacing="20" alignment="center">
-			<children>
-				<Label id="titleLabel" text="Account"/>
-			</children>
-		</VBox>
+		<ScrollPane fitToWidth="true" fitToHeight="true">
+			<VBox fx:id="centralVBox" spacing="20" alignment="center">
+				<children>
+					<Label id="titleLabel" text="Account"/>
+				</children>
+			</VBox>
+		</ScrollPane>
 	</center>
+	<bottom>
+		<HBox fx:id="bottomHBox" spacing="20" alignment="center"/>
+	</bottom>
 </BorderPane>

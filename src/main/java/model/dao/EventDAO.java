@@ -205,9 +205,7 @@ public class EventDAO {
 		
 		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
-		
-		System.out.println(searchType);
-		
+				
 		switch (searchType) {
 		case 0: 
 			rs = NestedQueries.selectEventsByDate(stm, sdf.format(dateTime.getTime()));

@@ -22,6 +22,7 @@ public class UserPageController {
 	private String dataString = "dataLabel";
 	
 	@FXML private VBox centralVBox;
+	@FXML private HBox bottomHBox;
 	
 	@FXML
 	protected void initialize() {
@@ -60,8 +61,10 @@ public class UserPageController {
 			addHBox("Province", userBean.getProv()),
 			addHBox("City:", userBean.getCity()),
 			addHBox("Address:", userBean.getAddr()),
-			modifyButton
+			addHBox("Rating:", String.valueOf(userBean.getRatings()))
 		);
+		
+		bottomHBox.getChildren().add(modifyButton);
 	}
 	
 	private HBox addHBox(String s, String data) {

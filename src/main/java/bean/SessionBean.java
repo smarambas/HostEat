@@ -8,10 +8,13 @@ public class SessionBean {
 	private UserBean userBean;
 	private List<EventBean> eventBeanList;
 	private List<EventBean> searchedList;
+	private List<UserBean> savedHosts;
 	
 	public SessionBean() {
+		this.userBean = new UserBean();
 		this.eventBeanList = new ArrayList<>();
 		this.searchedList = new ArrayList<>();
+		this.savedHosts = new ArrayList<>();
 	}
 	
 	public List<EventBean> getEventBeanList() {
@@ -36,6 +39,41 @@ public class SessionBean {
 
 	public void setSearchedList(List<EventBean> searchedList) {
 		this.searchedList = searchedList;
+	}
+
+	public List<UserBean> getSavedHosts() {
+		return savedHosts;
+	}
+
+	public void setSavedHosts(List<UserBean> savedHosts) {
+		this.savedHosts = savedHosts;
+	}
+	
+	public boolean containsSavedUser(String username) {
+		boolean result = false;
+				
+		for(UserBean user : this.savedHosts) {
+			if(user.getUsername().equals(username)) {
+				result = true;
+				break;
+			}
+		}
+		
+		return result;
+	}
+	
+	public void removeFromSavedUser(String username) {
+		int i = 0;
+		
+		for(UserBean user : this.savedHosts) {
+			if(user.getUsername().equals(username)) {
+				this.savedHosts.remove(i);
+				break;
+			}
+			else {
+				i++;
+			}
+		}
 	}
 
 }

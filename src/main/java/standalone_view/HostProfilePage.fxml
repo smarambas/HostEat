@@ -22,7 +22,6 @@
 		</ScrollPane>
 	</center>
 	<bottom>
-		<HBox fx:id="bottomHBox" spacing="20" alignment="center">
-		</HBox>
+		<HBox fx:id="bottomHBox" spacing="20" alignment="center"/>
 	</bottom>
 </BorderPane>

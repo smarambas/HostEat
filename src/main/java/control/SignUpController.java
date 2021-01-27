@@ -22,7 +22,6 @@ public class SignUpController {
 //				sessionBean.setUserType(userBean.getUserType().toUpperCase());
 //				sessionBean.setUsername(userBean.getUsername());
 				sessionBean.setUserBean(userBean);
-				sessionBean.setEventBeanList(null);
 			} catch (Exception e) {
 				sessionBean = null;
 			}

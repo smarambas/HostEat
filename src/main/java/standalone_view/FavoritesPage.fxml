@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.GUIController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.FavoritesPageController">
 	<top>
 		<fx:include source="GuestTop.fxml"/>
 	</top>
@@ -16,4 +16,7 @@
 			</VBox>
 		</ScrollPane>
 	</center>
+	<bottom>
+		<HBox fx:id="bottomHBox" spacing="20" alignment="center"/>
+	</bottom>
 </BorderPane>

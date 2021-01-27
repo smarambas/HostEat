@@ -126,6 +126,7 @@ public class ProposeMenuPageController {
 			stage.setScene(scene);
 			stage.show();
 		} catch (Exception e) {
+			e.printStackTrace();
 			Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/GenericErrorPage.fxml"));
 			Scene scene = new Scene(root, 350, 100);
 			scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());

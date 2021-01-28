@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import bean.EventBean;
+import control.DeleteEventController;
+import control.DeleteJoinedEventController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,9 +23,17 @@ public class EventPageController {
 	private String appStyle = "NewStyle.css";
 	private String descriptionString = "descriptionLabel";
 	private String dataString = "dataLabel";
+	private String errorLabelMsg = "Ops, something went wrong, please try again";
+	private String errorLabelId = "errorLabel";
+	private String openString = "Open menu";
+	private String removeString = "Remove event";
+	
+	private EventBean eventBean;
 	
 	@FXML private Button btnBack;
+	
 	@FXML private VBox centralVBox;
+	@FXML private HBox bottomHBox;
 	
 	@FXML
 	private void handleBackButtonAction(ActionEvent event) throws IOException {
@@ -47,10 +57,7 @@ public class EventPageController {
 	}
 	
 	@FXML
-	protected void initialize() {
-		EventBean eventBean;
-		
-		
+	protected void initialize() {		
 		if(GUIController.getSessionBean().getUserBean().getUserType().equalsIgnoreCase("HOST")) {
 			eventBean = HostBaseController.getSelectedEvent();
 			
@@ -70,12 +77,14 @@ public class EventPageController {
 			
 			List<Button> buttonList = new ArrayList<>();
 			
-			Button openMenuButton = new Button("Open menu");
+			Button openMenuButton = new Button(openString);
 			buttonList.add(openMenuButton);
-			Button deleteEventButton = new Button("Delete event");
+			Button deleteEventButton = new Button(removeString);
 			buttonList.add(deleteEventButton);
 			
-			centralVBox.getChildren().add(addButtons(buttonList));
+			bottomHBox.getChildren().add(addButtons(buttonList));
+			
+			deleteButtonSetActionHost(deleteEventButton);
 		}
 		else {
 			eventBean = GuestBaseController.getSelectedEvent();
@@ -86,20 +95,23 @@ public class EventPageController {
 					addHBox("Date:", eventBean.getDateTime().substring(0, 10)),
 					addHBox("Time:", eventBean.getDateTime().substring(11)),
 					addHBox("Guests:", eventBean.getActualGuests()),
+					addHBox("Region:", eventBean.getRegionString()),
+					addHBox("Province:", eventBean.getProvinceString()),
+					addHBox("City:", eventBean.getCityString()),
 					addHBox("State:", eventBean.getGuestStatus())
 			);
 			
 			isPaymentRequired = !(eventBean.getPayStatus().equalsIgnoreCase("NOSET"));
 			if(isPaymentRequired) {
-				centralVBox.getChildren().add(addHBox("Payment:", eventBean.getPayStatus()));
+				centralVBox.getChildren().addAll(
+					addHBox("Payment:", eventBean.getPayStatus()),
+					addHBox("Bill:", String.valueOf(eventBean.getBill()))
+				);
 			}
 			
 			isAccepted = eventBean.getGuestStatus().equalsIgnoreCase("ACCEPTED");
 			if(isAccepted) {
-				centralVBox.getChildren().addAll(
-					addHBox("Region:", eventBean.getRegionString()),
-					addHBox("Province:", eventBean.getProvinceString()),
-					addHBox("City:", eventBean.getCityString()),
+				centralVBox.getChildren().add(
 					addHBox("Address:", eventBean.getAddressString())
 				);
 			}
@@ -109,34 +121,41 @@ public class EventPageController {
 			
 			List<Button> buttonList = new ArrayList<>();
 			
+			Button payHostButton;
+			Button openMenuButton;
+			Button deleteEventButton;
+			Button viewLocationButton;
+			
 			if(isPaymentRequired && !isAccepted) {
-				Button payHostButton = new Button("Pay host");
+				payHostButton = new Button("Pay host");
 				buttonList.add(payHostButton);
-				Button openMenuButton = new Button("Open menu");
+				openMenuButton = new Button(openString);
 				buttonList.add(openMenuButton);
-				Button deleteEventButton = new Button("Delete event");
+				deleteEventButton = new Button(removeString);
 				buttonList.add(deleteEventButton);
 				
-				centralVBox.getChildren().add(addButtons(buttonList));
+				bottomHBox.getChildren().add(addButtons(buttonList));
 			}
 			else if(!isPaymentRequired && !isAccepted) {
-				Button openMenuButton = new Button("Open menu");
+				openMenuButton = new Button(openString);
 				buttonList.add(openMenuButton);
-				Button deleteEventButton = new Button("Delete event");
+				deleteEventButton = new Button(removeString);
 				buttonList.add(deleteEventButton);
 
-				centralVBox.getChildren().add(addButtons(buttonList));
+				bottomHBox.getChildren().add(addButtons(buttonList));
 			}
 			else {
-				Button viewLocationButton = new Button("View location");
+				viewLocationButton = new Button("View location");
 				buttonList.add(viewLocationButton);
-				Button openMenuButton = new Button("Open menu");
+				openMenuButton = new Button(openString);
 				buttonList.add(openMenuButton);
-				Button deleteEventButton = new Button("Delete event");
+				deleteEventButton = new Button(removeString);
 				buttonList.add(deleteEventButton);
 
-				centralVBox.getChildren().add(addButtons(buttonList));
+				bottomHBox.getChildren().add(addButtons(buttonList));
 			}
+			
+			deleteButtonSetActionGuest(deleteEventButton);
 		}
 	}
 	
@@ -163,4 +182,46 @@ public class EventPageController {
 		
 		return hBox;
 	}
+	
+	private void deleteButtonSetActionHost(Button button) {
+		button.setOnAction((ActionEvent event) -> {
+			try {
+				DeleteEventController deleteEventController = new DeleteEventController();
+				deleteEventController.deleteEvent(eventBean);
+				
+				Stage stage = (Stage) button.getScene().getWindow();
+				Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/HostBase.fxml"));
+				Scene scene = new Scene(root, 900, 600);
+				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+				stage.setScene(scene);
+				stage.show();
+			} catch (Exception e) {
+				Label errorLabel = new Label(errorLabelMsg);
+				errorLabel.setId(errorLabelId);
+				centralVBox.getChildren().add(errorLabel);
+			}
+		});
+	}
+	
+	private void deleteButtonSetActionGuest(Button button) {
+		button.setOnAction((ActionEvent event) -> {
+			try {
+				DeleteJoinedEventController deleteJoinedEventController = new DeleteJoinedEventController();
+				deleteJoinedEventController.deleteEvent(eventBean);
+				
+				Stage stage = (Stage) button.getScene().getWindow();
+				Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestBase.fxml"));
+				Scene scene = new Scene(root, 900, 600);
+				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+				stage.setScene(scene);
+				stage.show();
+			} catch (Exception e) {
+				e.printStackTrace();
+				Label errorLabel = new Label(errorLabelMsg);
+				errorLabel.setId(errorLabelId);
+				centralVBox.getChildren().add(errorLabel);
+			}
+		});
+	}
+	
 }

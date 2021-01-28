@@ -99,7 +99,7 @@ public class JoinedEventDAO {
 		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
 		
-		ResultSet rs = SimpleQueries.selectJoinedEventsByUsername(stm, user.getUsername());
+		ResultSet rs = SimpleQueries.selectJoinedEventByDateTime(stm, user.getUsername(), sdf.format(event.getDateTime().getTime()));
 		
 		if(rs.first()) {
 			throw new DuplicateRecordException("ERROR: the record already exists");
@@ -110,7 +110,7 @@ public class JoinedEventDAO {
 			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			
-			CRUDQueries.insertJoinedEvent(stm, user.getUsername(), event.getOwner().getUsername(), sdf.format(event.getDateTime()), event.getGuestStatus().toString(), event.getPayStatus().toString());
+			CRUDQueries.insertJoinedEvent(stm, user.getUsername(), event.getOwner().getUsername(), sdf.format(event.getDateTime().getTime()), event.getGuestStatus().toString(), event.getPayStatus().toString());
 		}
 		
 		stm.close();
@@ -125,7 +125,7 @@ public class JoinedEventDAO {
 		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
 		
-		ResultSet rs = SimpleQueries.selectJoinedEventByDateTime(stm, user.getUsername(), sdf.format(event.getDateTime()));
+		ResultSet rs = SimpleQueries.selectJoinedEventByDateTime(stm, user.getUsername(), sdf.format(event.getDateTime().getTime()));
 				
 		if(rs.first()) {
 			rs.close();
@@ -133,7 +133,7 @@ public class JoinedEventDAO {
 			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			
-			CRUDQueries.deleteJoinedEvent(stm, user.getUsername(), event.getOwner().getUsername(), sdf.format(event.getDateTime()));
+			CRUDQueries.deleteJoinedEvent(stm, user.getUsername(), event.getOwner().getUsername(), sdf.format(event.getDateTime().getTime()));
 		}
 		else {
 			throw new NoRecordFoundException(norecord);

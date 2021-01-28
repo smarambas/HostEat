@@ -47,7 +47,7 @@ public class LogInController {
 			for(int i = 0; i < eventList.size(); i++) {
 				EventBean eventBean = new EventBean();
 				
-				eventBean.setEventOwner(eventList.get(i).getOwner().toString());
+				eventBean.setEventOwner(eventList.get(i).getOwner().getUsername());
 				eventBean.setDateTime(sdf.format(eventList.get(i).getDateTime().getTime()));
 				eventBean.setGuestsNumber(eventList.get(i).getGuestsNumber());
 				eventBean.setMaxGuestsNumber(eventList.get(i).getMaxGuestsNumber());

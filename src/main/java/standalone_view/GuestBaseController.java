@@ -43,7 +43,7 @@ public class GuestBaseController {
 	@FXML
 	protected void initialize() {
 		/*
-		 * Print the list of created events, if it's not empty
+		 * Print the list of joined events, if it's not empty
 		 */
 		List<EventBean> eventBeanList = null;
 		
@@ -58,7 +58,7 @@ public class GuestBaseController {
 			
 			for(EventBean e : eventBeanList) {
 				HBox hbox = new HBox();
-								
+												
 				Label dateLabel = new Label(e.getDateTime().substring(0, 10));
 				Label timeLabel = new Label(e.getDateTime().substring(11));
 				Label guestsLabel = new Label("Guests:  " + e.getActualGuests());

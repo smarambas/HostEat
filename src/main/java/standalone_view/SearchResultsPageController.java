@@ -21,6 +21,8 @@ import javafx.stage.Stage;
 public class SearchResultsPageController {
 
 	private String appStyle = "NewStyle.css";
+	private String errorLabelMsg = "Ops, something went wrong, please try again";
+	private String errorLabelId = "errorLabel";
 	
 	private static EventBean selectedEvent;
 	
@@ -74,7 +76,9 @@ public class SearchResultsPageController {
 					stage.setScene(scene);
 					stage.show();
 				} catch(IOException ioe) {
-					ioe.printStackTrace();	//DA CAMBIARE
+					Label errorLabel = new Label(errorLabelMsg);
+					errorLabel.setId(errorLabelId);
+					centralVBox.getChildren().add(errorLabel);
 				}
 			});
 		}

@@ -31,6 +31,10 @@ public class LogInPageController {
 		if(event.getSource() == btnBack) {
 			stage = (Stage) btnBack.getScene().getWindow();
 			root = FXMLLoader.load(getClass().getResource("/standalone_view/FirstScreen.fxml"));
+			Scene scene = new Scene(root, 900, 600);
+			scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+			stage.setScene(scene);
+			stage.show();
 		}
 		else if(event.getSource() == btnSubmit) {
 			String username = usernameTextField.getText();
@@ -63,13 +67,13 @@ public class LogInPageController {
 					stage = (Stage) btnSubmit.getScene().getWindow();
 					root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestBase.fxml"));
 				}
+				
+				Scene scene = new Scene(root, 900, 600);
+				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+				stage.setScene(scene);
+				stage.show();
 			}
 		}
-		
-		Scene scene = new Scene(root, 900, 600);
-		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-		stage.setScene(scene);
-		stage.show();
 	}
 	
 }

@@ -28,7 +28,7 @@ public class LogInController {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		
 		try {
-			user = UserDAO.retrieveUserByUsername(userBean.getUsername());			
+			user = UserDAO.retrieveUserByUsername(userBean.getUsername());		
 			
 			if(!(userBean.getPassw().equals(user.getPassword()))) {
 				throw new WrongPasswordException("Wrong password");

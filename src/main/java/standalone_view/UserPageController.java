@@ -20,6 +20,8 @@ public class UserPageController {
 
 	private String descriptionString = "descriptionLabel";
 	private String dataString = "dataLabel";
+	private String errorLabelMsg = "Ops, something went wrong, please try again";
+	private String errorLabelId = "errorLabel";
 	
 	@FXML private VBox centralVBox;
 	@FXML private HBox bottomHBox;
@@ -29,6 +31,7 @@ public class UserPageController {
 		UserBean userBean = GUIController.getSessionBean().getUserBean();
 		
 		Button modifyButton = new Button("Modify account");
+		Button logoutButton = new Button("Log out");
 		
 		modifyButton.setOnAction((ActionEvent event) -> {
 			try {
@@ -47,7 +50,25 @@ public class UserPageController {
 				stage.setScene(scene);
 				stage.show();
 			} catch(IOException ioe) {
-				ioe.printStackTrace();
+				Label errorLabel = new Label(errorLabelMsg);
+				errorLabel.setId(errorLabelId);
+				centralVBox.getChildren().add(errorLabel);
+			}
+		});
+		
+		logoutButton.setOnAction((ActionEvent event) -> {
+			try {
+				GUIController.setSessionBean(null);
+				Stage stage = (Stage) logoutButton.getScene().getWindow();
+				Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/FirstScreen.fxml"));
+				Scene scene = new Scene(root, 900, 600);
+				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+				stage.setScene(scene);
+				stage.show();
+			} catch(IOException ioe) {
+				Label errorLabel = new Label(errorLabelMsg);
+				errorLabel.setId(errorLabelId);
+				centralVBox.getChildren().add(errorLabel);
 			}
 		});
 		
@@ -64,7 +85,7 @@ public class UserPageController {
 			addHBox("Rating:", String.valueOf(userBean.getRatings()))
 		);
 		
-		bottomHBox.getChildren().add(modifyButton);
+		bottomHBox.getChildren().addAll(modifyButton, logoutButton);
 	}
 	
 	private HBox addHBox(String s, String data) {

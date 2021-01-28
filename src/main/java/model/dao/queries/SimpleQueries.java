@@ -1,14 +1,28 @@
 package model.dao.queries;
 
+import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import model.dao.ConnectionSingleton;
 
 public class SimpleQueries {
 	
+//	private static ConnectionSingleton cs;
+	
 	private SimpleQueries() {}
 	
-	public static ResultSet selectUserByUsername(Statement stmt, String username) throws SQLException {
+	public static ResultSet selectUserByUsername(Statement stmt, String username) throws SQLException, ClassNotFoundException, IOException {
+//		cs = ConnectionSingleton.createConnection();
+//		
+//		String query = "SELECT * FROM user WHERE username = ?;";
+//
+//		PreparedStatement preparedStatement = cs.getConnection().prepareStatement(query);
+//		preparedStatement.setString(1, username);
+//		
+//		return preparedStatement.executeQuery();
+		
 		String statement = String.format("SELECT * FROM user WHERE username = '%s';", username);
 		return stmt.executeQuery(statement);
 	}

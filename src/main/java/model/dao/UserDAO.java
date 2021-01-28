@@ -2,6 +2,7 @@ package model.dao;
 
 import java.sql.SQLException;
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.GregorianCalendar;
@@ -21,13 +22,13 @@ public class UserDAO {
 	
 	public static User retrieveUserByUsername(String username) throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
 		Statement stm = null;
-		User newUser;
+		User newUser = null;
 		
 		cs = ConnectionSingleton.createConnection();
 		
 		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
-		
+						
 		ResultSet rs = SimpleQueries.selectUserByUsername(stm, username);
 		
 		if(!rs.first()) {
@@ -35,7 +36,7 @@ public class UserDAO {
 		}
 		else {			
 			rs.first();
-			
+									
 			String usern = rs.getString("username");
 			String passw = rs.getString("password");
 			String email = rs.getString("email");
@@ -66,6 +67,37 @@ public class UserDAO {
 			newUser.setRatingsNum(ratingsNum);
 		}
 		
+//		while(rs.next()) {
+//			String usern = rs.getString("username");
+//			String passw = rs.getString("password");
+//			String email = rs.getString("email");
+//			String name = rs.getString("name");
+//			String surname = rs.getString("surname");
+//			String sex = rs.getString("sex");
+//			String region = rs.getString("region");
+//			String province = rs.getString("province");
+//			String city = rs.getString("city");
+//			String address = rs.getString("address");
+//			
+//			GregorianCalendar age = new GregorianCalendar();
+//			age.setTime(rs.getTimestamp("age"));
+//			
+//			UserType type = UserType.valueOf(rs.getString("type").toUpperCase());
+//			
+//			double rating = rs.getDouble("rating");
+//			int ratingsNum = rs.getInt("ratings_num");
+//			
+//			newUser = new User(type, usern, passw, name, surname, email);
+//			newUser.setSex(sex);
+//			newUser.setRegion(region);
+//			newUser.setProvince(province);
+//			newUser.setCity(city);
+//			newUser.setAddress(address);
+//			newUser.setAge(age);
+//			newUser.setRating(rating);
+//			newUser.setRatingsNum(ratingsNum);
+//		}
+				
 		rs.close();
 		stm.close();
 		

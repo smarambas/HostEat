@@ -49,6 +49,8 @@ public class EventPageController {
 	@FXML
 	protected void initialize() {
 		EventBean eventBean;
+		
+		
 		if(GUIController.getSessionBean().getUserBean().getUserType().equalsIgnoreCase("HOST")) {
 			eventBean = HostBaseController.getSelectedEvent();
 			
@@ -61,6 +63,10 @@ public class EventPageController {
 				addHBox("City:", GUIController.getSessionBean().getUserBean().getCity()),
 				addHBox("Address:", GUIController.getSessionBean().getUserBean().getAddr())
 			);
+			
+			if(eventBean.getBill() > 0) {
+				centralVBox.getChildren().add(addHBox("Bill:", String.valueOf(eventBean.getBill())));
+			}
 			
 			List<Button> buttonList = new ArrayList<>();
 			

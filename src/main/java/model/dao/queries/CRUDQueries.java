@@ -146,6 +146,11 @@ public class CRUDQueries {
 		return stmt.executeUpdate(statement);
 	}
 	
+	public static int updatePaymentStatus(Statement stmt, String guest, String eventOwner, String eventDate, String newPaymentStatus) throws SQLException {
+		String statement = String.format("UPDATE joined_event SET payment_status = '%s' WHERE guest = '%s' AND event_owner = '%s' AND event_date = '%s';", newPaymentStatus, guest, eventOwner, eventDate);
+		return stmt.executeUpdate(statement);
+	}
+	
 	/*
 	 * Dish statements
 	 */

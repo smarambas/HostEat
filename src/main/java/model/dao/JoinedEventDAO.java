@@ -99,7 +99,7 @@ public class JoinedEventDAO {
 		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
 		
-		ResultSet rs = SimpleQueries.selectJoinedEventByDateTime(stm, user.getUsername(), sdf.format(event.getDateTime().getTime()));
+		ResultSet rs = SimpleQueries.selectJoinedEventByDateTime(stm, user.getUsername(), event.getOwner().getUsername(), sdf.format(event.getDateTime().getTime()));
 		
 		if(rs.first()) {
 			throw new DuplicateRecordException("ERROR: the record already exists");
@@ -125,7 +125,7 @@ public class JoinedEventDAO {
 		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
 		
-		ResultSet rs = SimpleQueries.selectJoinedEventByDateTime(stm, user.getUsername(), sdf.format(event.getDateTime().getTime()));
+		ResultSet rs = SimpleQueries.selectJoinedEventByDateTime(stm, user.getUsername(), event.getOwner().getUsername(), sdf.format(event.getDateTime().getTime()));
 				
 		if(rs.first()) {
 			rs.close();
@@ -134,6 +134,32 @@ public class JoinedEventDAO {
 					ResultSet.CONCUR_READ_ONLY);
 			
 			CRUDQueries.deleteJoinedEvent(stm, user.getUsername(), event.getOwner().getUsername(), sdf.format(event.getDateTime().getTime()));
+		}
+		else {
+			throw new NoRecordFoundException(norecord);
+		}
+		
+		stm.close();
+	}
+	
+	public static void updateJoinedEventPaymentStatus(User user, Event event) throws ClassNotFoundException, SQLException, IOException, NoRecordFoundException {
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		Statement stm = null;
+		
+		cs = ConnectionSingleton.createConnection();
+		
+		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		
+		ResultSet rs = SimpleQueries.selectJoinedEventByDateTime(stm, user.getUsername(), event.getOwner().getUsername(), sdf.format(event.getDateTime().getTime()));
+		
+		if(rs.first()) {
+			rs.close();
+			stm.close();
+			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			
+			CRUDQueries.updatePaymentStatus(stm, user.getUsername(), event.getOwner().getUsername(), sdf.format(event.getDateTime().getTime()), event.getPayStatus().toString().toUpperCase());
 		}
 		else {
 			throw new NoRecordFoundException(norecord);

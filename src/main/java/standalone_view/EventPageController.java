@@ -6,6 +6,7 @@ import java.util.List;
 import bean.EventBean;
 import control.DeleteEventController;
 import control.DeleteJoinedEventController;
+import control.PayHostController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -79,6 +80,7 @@ public class EventPageController {
 			
 			Button openMenuButton = new Button(openString);
 			buttonList.add(openMenuButton);
+			
 			Button deleteEventButton = new Button(removeString);
 			buttonList.add(deleteEventButton);
 			
@@ -129,16 +131,21 @@ public class EventPageController {
 			if(isPaymentRequired && !isAccepted) {
 				payHostButton = new Button("Pay host");
 				buttonList.add(payHostButton);
+				
 				openMenuButton = new Button(openString);
 				buttonList.add(openMenuButton);
+				
 				deleteEventButton = new Button(removeString);
 				buttonList.add(deleteEventButton);
 				
 				bottomHBox.getChildren().add(addButtons(buttonList));
+				
+				payButtonSetAction(payHostButton);
 			}
 			else if(!isPaymentRequired && !isAccepted) {
 				openMenuButton = new Button(openString);
 				buttonList.add(openMenuButton);
+				
 				deleteEventButton = new Button(removeString);
 				buttonList.add(deleteEventButton);
 
@@ -147,8 +154,10 @@ public class EventPageController {
 			else {
 				viewLocationButton = new Button("View location");
 				buttonList.add(viewLocationButton);
+				
 				openMenuButton = new Button(openString);
 				buttonList.add(openMenuButton);
+				
 				deleteEventButton = new Button(removeString);
 				buttonList.add(deleteEventButton);
 
@@ -216,7 +225,26 @@ public class EventPageController {
 				stage.setScene(scene);
 				stage.show();
 			} catch (Exception e) {
-				e.printStackTrace();
+				Label errorLabel = new Label(errorLabelMsg);
+				errorLabel.setId(errorLabelId);
+				centralVBox.getChildren().add(errorLabel);
+			}
+		});
+	}
+	
+	private void payButtonSetAction(Button button) {
+		button.setOnAction((ActionEvent event) -> {
+			try {
+				PayHostController payHostController = new PayHostController();
+				payHostController.payHost(eventBean);
+				
+				Stage stage = (Stage) button.getScene().getWindow();
+				Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestEventPage.fxml"));
+				Scene scene = new Scene(root, 900, 600);
+				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+				stage.setScene(scene);
+				stage.show();
+			} catch (Exception e) {
 				Label errorLabel = new Label(errorLabelMsg);
 				errorLabel.setId(errorLabelId);
 				centralVBox.getChildren().add(errorLabel);

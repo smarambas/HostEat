@@ -72,8 +72,8 @@ public class SimpleQueries {
 		return stmt.executeQuery(statement);
 	}
 	
-	public static ResultSet selectJoinedEventByDateTime(Statement stmt, String username, String dateTime) throws SQLException {
-		String statement = String.format("SELECT * FROM joined_event WHERE guest = '%s' AND event_date = '%s';", username, dateTime);
+	public static ResultSet selectJoinedEventByDateTime(Statement stmt, String username, String eventOwner, String dateTime) throws SQLException {
+		String statement = String.format("SELECT * FROM joined_event WHERE guest = '%s' AND event_owner = '%s' AND event_date = '%s';", username, eventOwner, dateTime);
 		return stmt.executeQuery(statement);
 	}
 	

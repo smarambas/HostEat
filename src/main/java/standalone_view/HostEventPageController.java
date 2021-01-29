@@ -93,7 +93,7 @@ public class HostEventPageController {
 		bottomHBox.getChildren().add(addButtons(buttonList));
 		
 		deleteButtonSetActionHost(deleteEventButton);
-		
+		//openMenuButtonSetAction
 	}
 	
 	private HBox addHBox(String s, String data) {

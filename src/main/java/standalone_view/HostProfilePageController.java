@@ -47,8 +47,6 @@ public class HostProfilePageController {
 	protected void initialize() {
 		if(userBean == null) {
 			EventBean eventBean = ResultEventPageController.getEventBean();
-//			userBean = new UserBean();
-//			userBean.setUsername(eventBean.getEventOwner());
 			setUserBean(new UserBean());
 			getUserBean().setUsername(eventBean.getEventOwner());
 		}
@@ -58,7 +56,6 @@ public class HostProfilePageController {
 		
 		try {
 			GetUserController getUserController = new GetUserController();
-//			userBean = getUserController.getUser(userBean);
 			setUserBean(getUserController.getUser(userBean));
 		} catch (Exception e) {
 			Label errorLabel = new Label(errorLabelMsg);
@@ -135,11 +132,9 @@ public class HostProfilePageController {
 		
 		Label label = new Label(s);
 		label.setId(descriptionString);
-		label.setAlignment(Pos.CENTER);
 		
 		Label dataLabel = new Label(data);
 		dataLabel.setId(dataString);
-		dataLabel.setAlignment(Pos.CENTER);
 		
 		hBox.getChildren().addAll(label, dataLabel);
 		hBox.setAlignment(Pos.CENTER);

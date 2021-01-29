@@ -52,27 +52,29 @@ public class GuestEventPageController {
 		boolean isPaymentRequired = false;
 		
 		centralVBox.getChildren().addAll(
+				addHBox("Event owner:", eventBean.getEventOwner()),
 				addHBox("Date:", eventBean.getDateTime().substring(0, 10)),
 				addHBox("Time:", eventBean.getDateTime().substring(11)),
 				addHBox("Guests:", eventBean.getActualGuests()),
 				addHBox("Region:", eventBean.getRegionString()),
 				addHBox("Province:", eventBean.getProvinceString()),
-				addHBox("City:", eventBean.getCityString()),
-				addHBox("State:", eventBean.getGuestStatus())
+				addHBox("City:", eventBean.getCityString())
 		);
+		
+		isAccepted = eventBean.getGuestStatus().equalsIgnoreCase("ACCEPTED");
+		if(isAccepted) {
+			centralVBox.getChildren().add(
+				addHBox("Address:", eventBean.getAddressString())
+			);
+		}
+		
+		centralVBox.getChildren().add(addHBox("State:", eventBean.getGuestStatus()));
 		
 		isPaymentRequired = !(eventBean.getPayStatus().equalsIgnoreCase("NOSET"));
 		if(isPaymentRequired) {
 			centralVBox.getChildren().addAll(
 				addHBox("Payment:", eventBean.getPayStatus()),
 				addHBox("Bill:", String.valueOf(eventBean.getBill()))
-			);
-		}
-		
-		isAccepted = eventBean.getGuestStatus().equalsIgnoreCase("ACCEPTED");
-		if(isAccepted) {
-			centralVBox.getChildren().add(
-				addHBox("Address:", eventBean.getAddressString())
 			);
 		}
 		

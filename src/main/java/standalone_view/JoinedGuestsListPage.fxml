@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.HostEventPageController">
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.JoinedGuestsListPageController">
 	<top>
 		<VBox>
 			<children>
@@ -16,7 +16,7 @@
 		<ScrollPane fitToWidth="true" fitToHeight="true">
 			<VBox fx:id="centralVBox" spacing="20" alignment="center">
 				<children>
-					<Label id="titleLabel" text="Event page"/>
+					<Label id="titleLabel" text="Joined guests list"/>
 				</children>
 			</VBox>
 		</ScrollPane>

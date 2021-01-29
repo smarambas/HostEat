@@ -18,6 +18,8 @@ public class User {
 	private String address;
 	private double rating;
 	private int ratingsNum;
+	private GuestStatus guestStatus;
+	private PaymentStatus payStatus;
 	
 	public User(UserType type, String username, String password, String name, String surname, String email) {
 		this.type = type;
@@ -142,6 +144,22 @@ public class User {
 
 	public void setRatingsNum(int ratingsNum) {
 		this.ratingsNum = ratingsNum;
+	}
+
+	public GuestStatus getGuestStatus() {
+		return guestStatus;
+	}
+
+	public void setGuestStatus(GuestStatus guestStatus) {
+		this.guestStatus = guestStatus;
+	}
+
+	public PaymentStatus getPayStatus() {
+		return payStatus;
+	}
+
+	public void setPayStatus(PaymentStatus payStatus) {
+		this.payStatus = payStatus;
 	}	
 	
 }

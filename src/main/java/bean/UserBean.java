@@ -21,6 +21,8 @@ public class UserBean {
 	private String city;
 	private String addr;
 	private double ratings;
+	private String guestStatus;
+	private String payStatus;
 	private List<String> favCuisines;
 	private List<String> allergies;
 	
@@ -153,6 +155,22 @@ public class UserBean {
 		this.ratings = ratings;
 	}
 	
+	public String getGuestStatus() {
+		return guestStatus;
+	}
+
+	public void setGuestStatus(String guestStatus) {
+		this.guestStatus = guestStatus;
+	}
+
+	public String getPayStatus() {
+		return payStatus;
+	}
+
+	public void setPayStatus(String payStatus) {
+		this.payStatus = payStatus;
+	}
+
 	public List<String> getFavCuisines() {
 		return favCuisines;
 	}

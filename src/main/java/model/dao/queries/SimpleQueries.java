@@ -77,6 +77,11 @@ public class SimpleQueries {
 		return stmt.executeQuery(statement);
 	}
 	
+	public static ResultSet selectJoinedGuestsByDateTime(Statement stmt, String username, String dateTime) throws SQLException {
+		String statement = String.format("SELECT guest, guest_status, payment_status FROM joined_event WHERE event_owner = '%s' AND event_date = '%s';", username, dateTime);
+		return stmt.executeQuery(statement);
+	}
+	
 	public static ResultSet selectFavoritesByUsername(Statement stmt, String username) throws SQLException {
 		String statement = String.format("SELECT * FROM saved_user WHERE user = '%s';", username);
 		return stmt.executeQuery(statement);

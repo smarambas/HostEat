@@ -116,7 +116,7 @@ public class JoinedEventDAO {
 		stm.close();
 	}
 	
-	public static void removeJoinedEvent(User user, Event event) throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
+	public static void removeJoinedGuest(User user, Event event) throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		Statement stm = null;
 		
@@ -133,7 +133,7 @@ public class JoinedEventDAO {
 			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			
-			CRUDQueries.deleteJoinedEvent(stm, user.getUsername(), event.getOwner().getUsername(), sdf.format(event.getDateTime().getTime()));
+			CRUDQueries.deleteJoinedGuest(stm, user.getUsername(), event.getOwner().getUsername(), sdf.format(event.getDateTime().getTime()));
 		}
 		else {
 			throw new NoRecordFoundException(norecord);
@@ -166,6 +166,38 @@ public class JoinedEventDAO {
 		}
 		
 		stm.close();
+	}
+	
+	public static List<User> retrieveJoinedGuests(User user, Event event) throws SQLException, ClassNotFoundException, IOException, NoRecordFoundException {
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		Statement stm = null;
+		
+		List<User> guestsList = new ArrayList<>();
+		
+		cs = ConnectionSingleton.createConnection();
+		
+		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		
+		ResultSet rs = SimpleQueries.selectJoinedGuestsByDateTime(stm, user.getUsername(), sdf.format(event.getDateTime().getTime()));
+		
+		if(rs.first()) {
+			do {
+				String username = rs.getString("guest");
+				
+				User guest = UserDAO.retrieveUserByUsername(username);
+				guest.setGuestStatus(GuestStatus.valueOf(rs.getString("guest_status").toUpperCase()));
+				guest.setPayStatus(PaymentStatus.valueOf(rs.getString("payment_status").toUpperCase()));
+				
+				guestsList.add(guest);
+			}
+			while(rs.next());
+		}
+		
+		stm.close();
+		rs.close();
+	
+		return guestsList;
 	}
 	
 }

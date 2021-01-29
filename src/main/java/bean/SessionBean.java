@@ -75,5 +75,19 @@ public class SessionBean {
 			}
 		}
 	}
+	
+	public boolean containsEventBean(EventBean eventBean) {
+		boolean result = false;
+		
+		for(EventBean event : this.eventBeanList) {
+			if(event.getEventOwner().equals(eventBean.getEventOwner()) && 
+				event.getDateTime().equals(eventBean.getDateTime())) {
+				result = true;
+				break;
+			}
+		}
+		
+		return result;
+	}
 
 }

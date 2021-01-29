@@ -45,25 +45,32 @@ public class ResultEventPageController {
 	
 	@FXML
 	private void handleJoinButtonAction(ActionEvent event) throws IOException {
-		if(eventBean.getGuestsNumber() < eventBean.getMaxGuestsNumber()) {
-			JoinEventController joinEventController = new JoinEventController();
-			try {
-				GUIController.setSessionBean(joinEventController.joinEvent(eventBean));
-			} catch (Exception e) {
-				Label errorLabel = new Label(errorLabelMsg);
+		if(!(GUIController.getSessionBean().containsEventBean(eventBean))) {
+			if(eventBean.getGuestsNumber() < eventBean.getMaxGuestsNumber()) {
+				JoinEventController joinEventController = new JoinEventController();
+				try {
+					GUIController.setSessionBean(joinEventController.joinEvent(eventBean));
+				} catch (Exception e) {
+					Label errorLabel = new Label(errorLabelMsg);
+					errorLabel.setId(errorLabelId);
+					centralVBox.getChildren().add(errorLabel);
+				}
+				
+				Stage stage = (Stage) joinButton.getScene().getWindow();
+				Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestBase.fxml"));
+				Scene scene = new Scene(root, 900, 600);
+				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+				stage.setScene(scene);
+				stage.show();
+			}
+			else {
+				Label errorLabel = new Label("You can't join a full event, sorry");
 				errorLabel.setId(errorLabelId);
 				centralVBox.getChildren().add(errorLabel);
 			}
-			
-			Stage stage = (Stage) joinButton.getScene().getWindow();
-			Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestBase.fxml"));
-			Scene scene = new Scene(root, 900, 600);
-			scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-			stage.setScene(scene);
-			stage.show();
 		}
 		else {
-			Label errorLabel = new Label("You can't join a full event, sorry");
+			Label errorLabel = new Label("You already joined that event");
 			errorLabel.setId(errorLabelId);
 			centralVBox.getChildren().add(errorLabel);
 		}

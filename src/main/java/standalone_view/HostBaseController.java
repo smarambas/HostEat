@@ -54,12 +54,12 @@ public class HostBaseController {
 			
 			for(EventBean e : eventBeanList) {
 				HBox hbox = new HBox();
-								
+												
 				Label dateLabel = new Label(e.getDateTime().substring(0, 10));
 				Label timeLabel = new Label(e.getDateTime().substring(11));
 				Label guestsLabel = new Label("Guests:  " + e.getActualGuests());
 				Button openButton = new Button("Open event");
-				
+								
 				openButton.setOnAction((ActionEvent event) -> {
 					Stage stage = (Stage) btnEvent.getScene().getWindow();
 					setSelectedEvent(e);

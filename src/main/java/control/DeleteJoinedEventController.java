@@ -32,7 +32,7 @@ public class DeleteJoinedEventController {
 		
 		Event event = EventDAO.retrieveEventByUsernameDateTime(host, dateTime);
 		
-		JoinedEventDAO.removeJoinedEvent(user, event);
+		JoinedEventDAO.removeJoinedGuest(user, event);
 		
 		for(EventBean eb : sessionBean.getEventBeanList()) {
 			if(eb.getDateTime().equals(eventBean.getDateTime())) {

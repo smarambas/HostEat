@@ -136,7 +136,7 @@ public class CRUDQueries {
 		return stmt.executeUpdate(statement);
 	}
 	
-	public static int deleteJoinedEvent(Statement stmt, String username, String owner, String dateTime) throws SQLException {
+	public static int deleteJoinedGuest(Statement stmt, String username, String owner, String dateTime) throws SQLException {
 		String statement = String.format("DELETE FROM joined_event WHERE guest = '%s' AND event_owner = '%s' AND event_date = '%s';", username, owner, dateTime);
 		return stmt.executeUpdate(statement);
 	}

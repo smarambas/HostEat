@@ -56,7 +56,7 @@ public class HostLocationPageController {
 	
 	@FXML
 	protected void initialize() {
-		String location = eventBean.getCityString() + " " + eventBean.getAddressString();
+		String location = eventBean.getCityString() + ", " + eventBean.getAddressString();
 		
 		Label locationLabel = new Label(location);
 		locationLabel.setId("dataLabel");

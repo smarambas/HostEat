@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.MenuPageController">
+	<top>
+		<VBox>
+			<children>
+				<fx:include fx:id="header" source="GuestTop.fxml"/>
+				<Button fx:id="btnBack" text="Back" onAction="#handleBackButtonAction"/>
+			</children>
+		</VBox>
+	</top>
+	<center>
+		<ScrollPane fitToWidth="true" fitToHeight="true">
+			<VBox fx:id="centralVBox" spacing="20" alignment="center">
+				<children>
+					<Label id="titleLabel" text="Menu"/>
+				</children>
+			</VBox>
+		</ScrollPane>
+	</center>
+	<bottom>
+		<HBox fx:id="bottomHBox" spacing="20" alignment="center"/>
+	</bottom>
+</BorderPane>

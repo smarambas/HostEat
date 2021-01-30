@@ -14,6 +14,7 @@ public class Course {
 	
 	public Course(String n) {
 		this.name = n;
+		this.dishes = new ArrayList<>();
 	}
 
 	public String getName() {

@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import bean.EventBean;
+import bean.MenuBean;
 import control.DeleteJoinedEventController;
+import control.GetMenuController;
 import control.PayHostController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,6 +31,7 @@ public class GuestEventPageController {
 	private String removeString = "Remove event";
 	
 	private EventBean eventBean;
+	private static MenuBean menuBean;
 	
 	@FXML private Button btnBack;
 	
@@ -127,6 +130,7 @@ public class GuestEventPageController {
 		}
 		
 		deleteButtonSetActionGuest(deleteEventButton);
+		menuButtonSetAction(openMenuButton);
 	}
 	
 	
@@ -212,6 +216,34 @@ public class GuestEventPageController {
 				centralVBox.getChildren().add(errorLabel);
 			}
 		});
+	}
+	
+	private void menuButtonSetAction(Button button) {
+		button.setOnAction((ActionEvent event) -> {
+			try {
+				GetMenuController getMenuController = new GetMenuController();
+				setMenuBean(getMenuController.getMenu(eventBean));
+				
+				Stage stage = (Stage) button.getScene().getWindow();
+				Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestMenuPage.fxml"));
+				Scene scene = new Scene(root, 900, 600);
+				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+				stage.setScene(scene);
+				stage.show();
+			} catch (Exception e) {
+				Label errorLabel = new Label("No menu found, sorry");
+				errorLabel.setId(errorLabelId);
+				centralVBox.getChildren().add(errorLabel);
+			}
+		});
+	}
+
+	public static MenuBean getMenuBean() {
+		return menuBean;
+	}
+
+	public static void setMenuBean(MenuBean menuBean) {
+		GuestEventPageController.menuBean = menuBean;
 	}
 	
 }

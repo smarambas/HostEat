@@ -20,14 +20,6 @@ public class GUIController {
 	@FXML private Button btnLogIn;
 	@FXML private Button btnOk;
 	
-	@FXML private HeaderController headerController;
-	@FXML private LogInPageController logInPageController;
-	@FXML private SignUpPageController signUpPageController;
-	@FXML private HostBaseController hostBaseController;
-	@FXML private NewEventPageController newEventPageController;
-	@FXML private GuestBaseController guestBaseController;
-	@FXML private SearchEventPageController searchEventController;
-	
 	public static SessionBean getSessionBean() {
 		return sessionBean;
 	}

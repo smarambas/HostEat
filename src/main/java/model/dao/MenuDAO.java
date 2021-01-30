@@ -42,9 +42,10 @@ public class MenuDAO {
 			do {
 				String courseName = rs.getString("course");
 				String dishName = rs.getString("name");
-				Course newCourse;
 				
-				if((newCourse = menu.getCourse(courseName)) != null) {
+				Course newCourse = menu.getCourse(courseName);
+				
+				if(newCourse != null) {
 					//the menu already contains the course
 					newCourse.addDish(dishName);
 				}

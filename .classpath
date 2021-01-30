@@ -33,5 +33,13 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
 	<classpathentry kind="lib" path="/home/marco/workspace/lib/mysql-connector-java-8.0.22/mysql-connector-java-8.0.22.jar"/>
+	<classpathentry kind="lib" path="/home/marco/workspace/lib/kotlin-stdlib-1.4.10.jar"/>
+	<classpathentry kind="lib" path="/home/marco/workspace/lib/commons-lang3-3.11.jar"/>
+	<classpathentry kind="lib" path="/home/marco/workspace/lib/okio-2.10.0.jar"/>
+	<classpathentry kind="lib" path="/home/marco/workspace/lib/slf4j-simple-1.7.30.jar"/>
+	<classpathentry kind="lib" path="/home/marco/workspace/lib/slf4j-api-1.7.30.jar"/>
+	<classpathentry kind="lib" path="/home/marco/workspace/lib/okhttp-4.9.0.jar"/>
+	<classpathentry kind="lib" path="/home/marco/workspace/lib/gson-2.8.6.jar"/>
+	<classpathentry kind="lib" path="/home/marco/workspace/lib/google-maps-services-0.15.4.jar"/>
 	<classpathentry kind="output" path="bin/default"/>
 </classpath>

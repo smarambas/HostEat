@@ -50,7 +50,7 @@ public class GuestEventPageController {
 		eventBean = GuestBaseController.getSelectedEvent();
 		boolean isAccepted = false;
 		boolean isPaymentRequired = false;
-		
+				
 		centralVBox.getChildren().addAll(
 				addHBox("Event owner:", eventBean.getEventOwner()),
 				addHBox("Date:", eventBean.getDateTime().substring(0, 10)),
@@ -122,6 +122,8 @@ public class GuestEventPageController {
 			buttonList.add(deleteEventButton);
 
 			bottomHBox.getChildren().add(addButtons(buttonList));
+			
+			viewLocationButtonSetAction(viewLocationButton);
 		}
 		
 		deleteButtonSetActionGuest(deleteEventButton);
@@ -185,6 +187,26 @@ public class GuestEventPageController {
 				stage.setScene(scene);
 				stage.show();
 			} catch (Exception e) {
+				Label errorLabel = new Label(errorLabelMsg);
+				errorLabel.setId(errorLabelId);
+				centralVBox.getChildren().add(errorLabel);
+			}
+		});
+	}
+	
+	private void viewLocationButtonSetAction(Button button) {
+		button.setOnAction((ActionEvent event) -> {
+			try {
+				HostLocationPageController.setEventBean(eventBean);
+				
+				Stage stage = (Stage) button.getScene().getWindow();
+				Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/HostLocationPage.fxml"));
+				Scene scene = new Scene(root, 900, 600);
+				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+				stage.setScene(scene);
+				stage.show();
+			} catch (Exception e) {
+				e.printStackTrace();
 				Label errorLabel = new Label(errorLabelMsg);
 				errorLabel.setId(errorLabelId);
 				centralVBox.getChildren().add(errorLabel);

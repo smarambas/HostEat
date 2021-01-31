@@ -60,33 +60,6 @@ public class NotificationDAO {
 		return notifications;
 	}
 	
-	public static Notification retrieveNotification(User user, GregorianCalendar date) throws ClassNotFoundException, SQLException, IOException {
-		SimpleDateFormat sdf = new SimpleDateFormat(format);
-		Statement stm = null;
-		
-		Notification notification = null;
-		
-		cs = ConnectionSingleton.createConnection();
-		
-		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-				ResultSet.CONCUR_READ_ONLY);
-		
-		ResultSet rs = SimpleQueries.selectNotificationByUsernameDate(stm, user.getUsername(), sdf.format(date.getTime()));
-		
-		if(rs.first()) {
-			notification = new Notification();
-			notification.setUser(user);
-			notification.setText(rs.getString("text"));
-			notification.setType(NotificationType.valueOf(rs.getString("type").toUpperCase()));
-			notification.setDate(date);
-		}
-		
-		stm.close();
-		rs.close();
-		
-		return notification;
-	}
-	
 	public static void saveNotification(User user, Notification notification) throws ClassNotFoundException, SQLException, IOException, DuplicateRecordException {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		Statement stm = null;
@@ -96,7 +69,7 @@ public class NotificationDAO {
 		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
 		
-		ResultSet rs = SimpleQueries.selectNotificationByUsernameDate(stm, user.getUsername(), sdf.format(notification.getDate().getTime()));
+		ResultSet rs = SimpleQueries.selectNotificationByUsernameText(stm, user.getUsername(), notification.getText());
 		
 		if(rs.first()) {
 			throw new DuplicateRecordException("ERROR: the record already exists");
@@ -125,7 +98,7 @@ public class NotificationDAO {
 		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 				ResultSet.CONCUR_READ_ONLY);
 		
-		ResultSet rs = SimpleQueries.selectNotificationByUsernameDate(stm, user.getUsername(), sdf.format(notification.getDate().getTime()));
+		ResultSet rs = SimpleQueries.selectNotificationByUsernameText(stm, user.getUsername(), notification.getText());
 		
 		if(rs.first()) {
 			rs.close();

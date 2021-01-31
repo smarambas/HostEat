@@ -212,12 +212,12 @@ public class CRUDQueries {
 	 * Notification statements
 	 */
 	public static int insertNotification(Statement stmt, String username, String text, String type, String date) throws SQLException {
-		String statement = String.format("INSERT INTO notification (user, date, text, type) VALUES ('%s', '%s', '%s', '%s');", username, date, text, type);
+		String statement = String.format("INSERT INTO notification (user, text, date, type) VALUES ('%s', '%s', '%s', '%s');", username, text, date, type);
 		return stmt.executeUpdate(statement);
 	}	
 	
-	public static int deleteNotification(Statement stmt, String username, String date) throws SQLException {
-		String statement = String.format("DELETE FROM notification WHERE user = '%s' AND date = '%s';", username, date);
+	public static int deleteNotification(Statement stmt, String username, String text) throws SQLException {
+		String statement = String.format("DELETE FROM notification WHERE user = '%s' AND text = '%s';", username, text);
 		return stmt.executeUpdate(statement);
 	}
 	

@@ -7,18 +7,22 @@ import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import bean.EventBean;
 import bean.SessionBean;
+import exceptions.DuplicateRecordException;
 import exceptions.NoRecordFoundException;
 import model.Event;
+import model.Notification;
+import model.NotificationType;
 import model.PaymentStatus;
 import model.User;
 import model.dao.EventDAO;
 import model.dao.JoinedEventDAO;
+import model.dao.NotificationDAO;
 import model.dao.UserDAO;
 import standalone_view.GUIController;
 
 public class PayHostController {
 
-	public SessionBean payHost(EventBean eventBean) throws ClassNotFoundException, SQLException, NoRecordFoundException, IOException, ParseException {
+	public SessionBean payHost(EventBean eventBean) throws ClassNotFoundException, SQLException, NoRecordFoundException, IOException, ParseException, DuplicateRecordException {
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		
@@ -43,6 +47,11 @@ public class PayHostController {
 				break;
 			}
 		}
+		
+		String text = "Guest " + user.getUsername() + " paid you for your event on " + eventBean.getDateTime();
+		Notification notification = new Notification(host, text, NotificationType.PAYMENT);
+		
+		NotificationDAO.saveNotification(host, notification);
 		
 		return sessionBean;
 	}

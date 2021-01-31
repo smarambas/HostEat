@@ -1,21 +1,30 @@
 package control;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 import bean.EventBean;
 import bean.SessionBean;
 import bean.UserBean;
+import exceptions.DuplicateRecordException;
 import exceptions.WrongPasswordException;
 import model.Event;
+import model.Notification;
+import model.NotificationType;
 import model.User;
 import model.UserType;
 import model.dao.EventDAO;
 import model.dao.FavoritesDAO;
 import model.dao.JoinedEventDAO;
+import model.dao.NotificationDAO;
 import model.dao.UserDAO;
 
 public class LogInController {
+	
+	private String format = "yyyy-MM-dd HH:mm";
 		
 	public SessionBean logIn(UserBean userBean) throws WrongPasswordException {
 		User user;
@@ -24,7 +33,6 @@ public class LogInController {
 		List<EventBean> eventBeanList = new ArrayList<>();
 		List<User> savedUsers = null;
 		
-		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		
 		try {
@@ -51,6 +59,8 @@ public class LogInController {
 				eventBean.setDateTime(sdf.format(eventList.get(i).getDateTime().getTime()));
 				eventBean.setGuestsNumber(eventList.get(i).getGuestsNumber());
 				eventBean.setMaxGuestsNumber(eventList.get(i).getMaxGuestsNumber());
+				
+				sendReminder(user, eventList.get(i).getDateTime());
 				
 				if(eventList.get(i).getGuestStatus() == null) {
 					eventBean.setGuestStatus("NOSET");
@@ -96,8 +106,6 @@ public class LogInController {
 				}
 			}
 			
-//			sessionBean.setUserType(userType.toString().toUpperCase());
-//			sessionBean.setUsername(user.getUsername());
 			userBean.setName(user.getName());
 			userBean.setSurname(user.getSurname());
 			userBean.setBirthDay(sdf.format(user.getAge().getTime()));
@@ -117,5 +125,38 @@ public class LogInController {
 		}
 		
 		return sessionBean;
+	}
+	
+	private int sendReminder(User user, GregorianCalendar date) throws ClassNotFoundException, SQLException, IOException, DuplicateRecordException {
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		
+		GregorianCalendar nowCalendar = new GregorianCalendar();
+		
+		long day = 86400000;	//in millis
+		long dateInMillis = date.getTimeInMillis();
+		long nowInMillis = nowCalendar.getTimeInMillis();
+		
+		if((dateInMillis - nowInMillis < day) && (dateInMillis - nowInMillis > 0)) {
+			String text = "Don't forget the event on " + sdf.format(date.getTime()) + ", less than one day missing!";
+			Notification notification = new Notification(user, text, NotificationType.REMINDER);
+			
+			try {
+				NotificationDAO.saveNotification(user, notification);
+			} catch(DuplicateRecordException dre) {
+				return 1;
+			}
+		}
+		else if(dateInMillis - nowInMillis < 0) {
+			String text = "Don't forget to leave a review for the event on " + sdf.format(date.getTime());
+			Notification notification = new Notification(user, text, NotificationType.RATING);
+			
+			try {
+				NotificationDAO.saveNotification(user, notification);
+			} catch(DuplicateRecordException dre) {
+				return 1;
+			}
+		}
+		
+		return 0;
 	}
 }

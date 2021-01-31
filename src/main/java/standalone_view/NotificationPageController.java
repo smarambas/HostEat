@@ -3,7 +3,9 @@ package standalone_view;
 import java.io.IOException;
 import java.util.List;
 import bean.NotificationBean;
+import bean.UserBean;
 import control.DeleteAllNotificationsController;
+import control.DeleteNotificationController;
 import control.GetNotificationsController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -90,6 +92,62 @@ public class NotificationPageController {
 		}
 	}
 	
+	private void deleteButtonSetAction(Button button, UserBean userBean, NotificationBean notificationBean) {
+		button.setOnAction((ActionEvent event) -> {
+			try {
+				DeleteNotificationController deleteNotificationController = new DeleteNotificationController();
+				deleteNotificationController.deleteNotification(userBean, notificationBean);
+				
+				Stage stage = (Stage) button.getScene().getWindow();
+				Parent root;
+				
+				if(GUIController.getSessionBean().getUserBean().getUserType().equalsIgnoreCase("HOST")) {
+					root = FXMLLoader.load(getClass().getResource("/standalone_view/HostNotificationPage.fxml"));
+				}
+				else {
+					root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestNotificationPage.fxml"));
+				}
+				
+				Scene scene = new Scene(root, 900, 600);
+				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+				stage.setScene(scene);
+				stage.show();
+			} catch (Exception e) {
+				Label errorLabel = new Label(errorLabelMsg);
+				errorLabel.setId(errorLabelId);
+				centralVBox.getChildren().add(errorLabel);
+			}
+		});
+	}
+	
+//	private void rateButtonSetAction(Button button, UserBean userBean, NotificationBean notificationBean) {
+//		button.setOnAction((ActionEvent event) -> {
+//			try {
+//				DeleteNotificationController deleteNotificationController = new DeleteNotificationController();
+//				deleteNotificationController.deleteNotification(userBean, notificationBean);
+//				
+//				Stage stage = (Stage) button.getScene().getWindow();
+//				Parent root;
+//				
+//				if(GUIController.getSessionBean().getUserBean().getUserType().equalsIgnoreCase("HOST")) {
+//					root = FXMLLoader.load(getClass().getResource("/standalone_view/HostNotificationPage.fxml"));
+//				}
+//				else {
+//					root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestNotificationPage.fxml"));
+//				}
+//				
+//				Scene scene = new Scene(root, 900, 600);
+//				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+//				stage.setScene(scene);
+//				stage.show();
+//			} catch (Exception e) {
+//				Label errorLabel = new Label(errorLabelMsg);
+//				errorLabel.setId(errorLabelId);
+//				centralVBox.getChildren().add(errorLabel);
+//			}
+//		});
+//	}
+	
 	@FXML
 	private void initialize() {
 		try {
@@ -110,11 +168,17 @@ public class NotificationPageController {
 				
 				if(nb.getType().equalsIgnoreCase("rating")) {
 					rateButton = new Button("Rate user");
+					
 					centralVBox.getChildren().addAll(addHBox(vbox, rateButton), new Separator());
+					
+					
 				}
 				else {
 					deleteButton = new Button("Delete");
+					
 					centralVBox.getChildren().addAll(addHBox(vbox, deleteButton), new Separator());
+					
+					deleteButtonSetAction(deleteButton, GUIController.getSessionBean().getUserBean(), nb);
 				}
 			}
 		} catch(Exception e) {

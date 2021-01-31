@@ -11,10 +11,13 @@ import exceptions.DuplicateRecordException;
 import exceptions.NoRecordFoundException;
 import model.Event;
 import model.GuestStatus;
+import model.Notification;
+import model.NotificationType;
 import model.PaymentStatus;
 import model.User;
 import model.dao.EventDAO;
 import model.dao.JoinedEventDAO;
+import model.dao.NotificationDAO;
 import model.dao.UserDAO;
 import standalone_view.GUIController;
 
@@ -57,6 +60,11 @@ public class JoinEventController {
 		eventBean.setGuestStatus("JOINED");
 		
 		sessionBean.getEventBeanList().add(eventBean);		
+		
+		String text = "Guest " + guest.getUsername() + " joined your event on " + eventBean.getDateTime();
+		Notification notification = new Notification(host, text, NotificationType.JOIN);
+		
+		NotificationDAO.saveNotification(host, notification);
 		
 		return sessionBean;
 	}

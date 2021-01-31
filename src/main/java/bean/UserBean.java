@@ -119,24 +119,42 @@ public class UserBean {
 		return reg;
 	}
 	
-	public void setReg(String reg) {
-		this.reg = reg;
+	public boolean setReg(String reg) {
+		if(validateString(reg)) {
+			this.reg = reg;
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	public String getProv() {
 		return prov;
 	}
 	
-	public void setProv(String prov) {
-		this.prov = prov;
+	public boolean setProv(String prov) {
+		if(validateString(prov)) {
+			this.prov = prov;
+			return true;
+		}
+		else {
+			return false;
+		} 
 	}
 	
 	public String getCity() {
 		return city;
 	}
 	
-	public void setCity(String city) {
-		this.city = city;
+	public boolean setCity(String city) {
+		if(validateString(city)) {
+			this.city = city;
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	public String getAddr() {

@@ -5,7 +5,18 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="standalone_view.GuestBaseController">
 	<top>
-		<fx:include fx:id="header" source="GuestTop.fxml"/>
+<!-- 		<fx:include fx:id="header" source="GuestTop.fxml"/> -->
+		<VBox>
+			<children>
+				<fx:include fx:id="header" source="GuestTop.fxml"/>
+				<HBox>
+					<children>
+						<Region HBox.hgrow="ALWAYS"/>
+						<Button fx:id="btnRefresh" text="Refresh" onAction="#handleRefreshButtonAction"/>
+					</children>
+				</HBox>
+			</children>
+		</VBox>
 	</top>
 	<center>
 		<ScrollPane fitToWidth="true" fitToHeight="true">

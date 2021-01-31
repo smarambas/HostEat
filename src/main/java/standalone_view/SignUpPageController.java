@@ -73,15 +73,15 @@ public class SignUpPageController {
 		if(userBean.setName(nameField.getText()) &&
 		   userBean.setSurname(surnameField.getText()) &&
 		   userBean.setEmailAddr(emailField.getText()) &&
-		   userBean.setBirthDay(birthdayField.getValue().toString() + " 00:00")) {
+		   userBean.setBirthDay(birthdayField.getValue().toString() + " 00:00") &&
+		   userBean.setReg(regionField.getText()) &&
+		   userBean.setProv(provinceField.getText()) &&
+		   userBean.setCity(cityField.getText())) {
 			
 			checkInput = true;
 			userBean.setUsername(usernameField.getText());
 			userBean.setPassw(passwordField.getText());
 			userBean.setSex(sexChoice.getValue());
-			userBean.setReg(regionField.getText());
-			userBean.setProv(provinceField.getText());
-			userBean.setCity(cityField.getText());
 			userBean.setAddr(addressField.getText());		
 		}
 		
@@ -127,7 +127,7 @@ public class SignUpPageController {
 			}
 		}
 		else {
-			Scene scene = new Scene(root, 300, 300);
+			Scene scene = new Scene(root, 400, 400);
 			scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
 			stage.setScene(scene);
 			stage.show();

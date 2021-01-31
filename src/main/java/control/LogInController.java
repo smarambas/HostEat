@@ -108,6 +108,7 @@ public class LogInController {
 			userBean.setProv(user.getProvince());
 			userBean.setCity(user.getCity());
 			userBean.setAddr(user.getAddress());
+			userBean.setRatings(user.getRating());
 			
 			sessionBean.setUserBean(userBean);
 			sessionBean.setEventBeanList(eventBeanList);

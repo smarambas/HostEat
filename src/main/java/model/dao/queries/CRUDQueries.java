@@ -208,4 +208,22 @@ public class CRUDQueries {
 		return stmt.executeUpdate(statement);
 	}
 	
+	/*
+	 * Notification statements
+	 */
+	public static int insertNotification(Statement stmt, String username, String text, String type, String date) throws SQLException {
+		String statement = String.format("INSERT INTO notification (user, date, text, type) VALUES ('%s', '%s', '%s', '%s');", username, date, text, type);
+		return stmt.executeUpdate(statement);
+	}	
+	
+	public static int deleteNotification(Statement stmt, String username, String date) throws SQLException {
+		String statement = String.format("DELETE FROM notification WHERE user = '%s' AND date = '%s';", username, date);
+		return stmt.executeUpdate(statement);
+	}
+	
+	public static int deleteAllNotifications(Statement stmt, String username) throws SQLException {
+		String statement = String.format("DELETE FROM notification WHERE user = '%s';", username);
+		return stmt.executeUpdate(statement);
+	}
+	
 }

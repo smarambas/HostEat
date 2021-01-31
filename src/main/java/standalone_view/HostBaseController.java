@@ -3,6 +3,7 @@ package standalone_view;
 import java.io.IOException;
 import java.util.List;
 import bean.EventBean;
+import control.RefreshController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,12 +21,15 @@ public class HostBaseController {
 
 	private String appStyle = "NewStyle.css";
 	
+	@FXML private Button btnRefresh;
 	@FXML private Button btnEvent;
+	
 	@FXML private VBox centralVBox;
 	
 	private static EventBean selectedEvent;
 	
-	public void handleHostBaseNewEventButtonAction(ActionEvent event) throws IOException {
+	@FXML
+	private void handleHostBaseNewEventButtonAction(ActionEvent event) throws IOException {
 		Stage stage = new Stage();
 		Parent root = null;
 		
@@ -34,6 +38,25 @@ public class HostBaseController {
 			root = FXMLLoader.load(getClass().getResource("/standalone_view/NewEventPage.fxml"));
 		}
 		
+		Scene scene = new Scene(root, 900, 600);
+		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+		stage.setScene(scene);
+		stage.show();
+	}
+	
+	@FXML
+	private void handleRefreshButtonAction(ActionEvent event) throws IOException {
+		try {
+			RefreshController refreshController = new RefreshController();
+			GUIController.setSessionBean(refreshController.refresh(GUIController.getSessionBean().getUserBean()));
+		} catch(Exception e) {
+			Label errorLabel = new Label("Ops, something went wrong, please try again");
+			errorLabel.setId("errorLabel");
+			centralVBox.getChildren().add(errorLabel);
+		}
+		
+		Stage stage = (Stage) btnRefresh.getScene().getWindow();
+		Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/HostBase.fxml"));
 		Scene scene = new Scene(root, 900, 600);
 		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
 		stage.setScene(scene);

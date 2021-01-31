@@ -92,4 +92,14 @@ public class SimpleQueries {
 		return stmt.executeQuery(statement);
 	}
 	
+	public static ResultSet selectNotificationsByUsername(Statement stmt, String username) throws SQLException {
+		String statement = String.format("SELECT * FROM notification WHERE user = '%s';", username);
+		return stmt.executeQuery(statement);
+	}
+	
+	public static ResultSet selectNotificationByUsernameDate(Statement stmt, String username, String date) throws SQLException {
+		String statement = String.format("SELECT * FROM notification WHERE user = '%s' AND date = '%s';", username, date);
+		return stmt.executeQuery(statement);
+	}
+	
 }

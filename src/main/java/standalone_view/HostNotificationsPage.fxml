@@ -19,11 +19,18 @@
 	</top>
 	<center>
 		<ScrollPane fitToWidth="true" fitToHeight="true">
-			<VBox spacing="20" alignment="center">
+			<VBox fx:id="centralVBox" spacing="20" alignment="center">
 				<children>
 					<Label id="titleLabel" text="Notifications"/>
 				</children>
 			</VBox>
 		</ScrollPane>
 	</center>
+	<bottom>
+		<HBox fx:id="bottomHBox" spacing="20" alignment="center">
+			<children>
+				<Button fx:id="deleteAllButton" text="Delete all" onAction="#handleDeleteAllButtonAction"/>
+			</children>
+		</HBox>
+	</bottom>
 </BorderPane>

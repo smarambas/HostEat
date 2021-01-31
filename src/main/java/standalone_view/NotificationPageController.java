@@ -1,17 +1,138 @@
 package standalone_view;
 
 import java.io.IOException;
-
+import java.util.List;
+import bean.NotificationBean;
+import control.DeleteAllNotificationsController;
+import control.GetNotificationsController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class NotificationPageController {
+	
+	private String appStyle = "NewStyle.css";
+	private String errorLabelMsg = "Ops, something went wrong, please try again";
+	private String errorLabelId = "errorLabel";
 
+	private List<NotificationBean> notificationBeans;
+	
 	@FXML private Button btnRefresh;
+	@FXML private Button deleteAllButton;
+	
+	@FXML private VBox centralVBox;
+	@FXML private HBox bottomHBox;
 	
 	@FXML
 	private void handleRefreshButtonAction(ActionEvent event) throws IOException {
-		
+		try {
+			GetNotificationsController getNotificationsController = new GetNotificationsController();
+			notificationBeans = getNotificationsController.getNotifications(GUIController.getSessionBean().getUserBean());
+			
+			Stage stage = (Stage) btnRefresh.getScene().getWindow();
+			Parent root = null;
+			
+			if(GUIController.getSessionBean().getUserBean().getUserType().equalsIgnoreCase("HOST")) {
+				root = FXMLLoader.load(getClass().getResource("/standalone_view/HostNotificationPage.fxml"));
+			}
+			else {
+				root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestNotificationPage.fxml"));
+			}
+			
+			Scene scene = new Scene(root, 900, 600);
+			scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+			stage.setScene(scene);
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			Label errorLabel = new Label(errorLabelMsg);
+			errorLabel.setId(errorLabelId);
+			centralVBox.getChildren().add(errorLabel);
+		}
 	}
+	
+	@FXML
+	private void handleDeleteAllButtonAction(ActionEvent event) throws IOException {
+		try {
+			DeleteAllNotificationsController deleteAllNotificationsController = new DeleteAllNotificationsController();
+			deleteAllNotificationsController.deleteAllNotifications(GUIController.getSessionBean().getUserBean());
+			
+			Stage stage = (Stage) deleteAllButton.getScene().getWindow();
+			Parent root = null;
+			
+			if(GUIController.getSessionBean().getUserBean().getUserType().equalsIgnoreCase("HOST")) {
+				root = FXMLLoader.load(getClass().getResource("/standalone_view/HostNotificationPage.fxml"));
+			}
+			else {
+				root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestNotificationPage.fxml"));
+			}
+			
+			Scene scene = new Scene(root, 900, 600);
+			scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+			stage.setScene(scene);
+			stage.show();
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+			Label errorLabel = new Label(errorLabelMsg);
+			errorLabel.setId(errorLabelId);
+			centralVBox.getChildren().add(errorLabel);
+		}
+	}
+	
+	@FXML
+	private void initialize() {
+		try {
+			GetNotificationsController getNotificationsController = new GetNotificationsController();
+			notificationBeans = getNotificationsController.getNotifications(GUIController.getSessionBean().getUserBean());
+			
+			Button deleteButton;
+			Button rateButton;
+			
+			for(NotificationBean nb : notificationBeans) {
+				VBox vbox = new VBox();
+				
+				Label dateLabel = new Label(nb.getDate());
+				Label textLabel = new Label(nb.getText());
+				
+				vbox.getChildren().addAll(dateLabel, textLabel);
+				vbox.setAlignment(Pos.CENTER_LEFT);
+				
+				if(nb.getType().equalsIgnoreCase("rating")) {
+					rateButton = new Button("Rate user");
+					centralVBox.getChildren().addAll(addHBox(vbox, rateButton), new Separator());
+				}
+				else {
+					deleteButton = new Button("Delete");
+					centralVBox.getChildren().addAll(addHBox(vbox, deleteButton), new Separator());
+				}
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			
+			Label errorLabel = new Label(errorLabelMsg);
+			errorLabel.setId(errorLabelId);
+			centralVBox.getChildren().add(errorLabel);
+		}
+	}
+	
+	private HBox addHBox(VBox vbox, Button button) {
+		HBox hbox = new HBox();
+		
+		hbox.getChildren().addAll(vbox, button);
+		hbox.setAlignment(Pos.CENTER);
+		
+		return hbox;
+	}
+	
 }

@@ -18,8 +18,6 @@ import javafx.stage.Stage;
 public class MenuPageController {
 
 	private String appStyle = "NewStyle.css";
-	private String errorLabelMsg = "Ops, something went wrong, please try again";
-	private String errorLabelId = "errorLabel";
 		
 	@FXML private Button btnBack;
 	
@@ -70,11 +68,6 @@ public class MenuPageController {
 				centralVBox.getChildren().add(dishLabel);
 			}
 		}
-		
-		if(GUIController.getSessionBean().getUserBean().getUserType().equalsIgnoreCase("HOST")) {
-			Button modifyMenuButton = new Button("Modify menu");
-			
-			bottomHBox.getChildren().add(modifyMenuButton);
-		}
 	}
+	
 }

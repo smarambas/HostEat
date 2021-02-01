@@ -246,7 +246,6 @@ public class GuestEventPageController {
 				stage.setScene(scene);
 				stage.show();
 			} catch (Exception e) {
-				e.printStackTrace();
 				Label errorLabel = new Label(errorLabelMsg);
 				errorLabel.setId(errorLabelId);
 				centralVBox.getChildren().add(errorLabel);

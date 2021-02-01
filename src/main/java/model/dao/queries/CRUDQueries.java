@@ -2,8 +2,6 @@ package model.dao.queries;
 
 import java .sql.*;
 import java.text.SimpleDateFormat;
-
-import bean.EventBean;
 import model.Event;
 import model.User;
 

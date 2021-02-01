@@ -3,7 +3,6 @@ package bean;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.regex.Pattern;
 
 public class UserBean {

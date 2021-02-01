@@ -20,6 +20,8 @@ import javafx.stage.Stage;
 public class GuestBaseController {
 
 	private String appStyle = "NewStyle.css";
+	private String errorLabelMsg = "Ops, something went wrong, please try again";
+	private String errorLabelId = "errorLabel";
 	
 	@FXML private Button btnRefresh;
 	@FXML private Button btnEvent;
@@ -98,7 +100,9 @@ public class GuestBaseController {
 						stage.setScene(scene);
 						stage.show();
 					} catch(IOException ioe) {
-						ioe.printStackTrace();	//DA CAMBIARE
+						Label errorLabel = new Label(errorLabelMsg);
+						errorLabel.setId(errorLabelId);
+						centralVBox.getChildren().add(errorLabel);
 					}
 				});
 				

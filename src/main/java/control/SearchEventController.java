@@ -30,18 +30,18 @@ public class SearchEventController {
 																dateTime);
 		
 		for(Event e : eventList) {
-			EventBean eBean = new EventBean();
-			eBean.setEventOwner(e.getOwner().getUsername());
-			eBean.setDateTime(sdf.format(e.getDateTime().getTime()));
-			eBean.setGuestsNumber(e.getGuestsNumber());
-			eBean.setMaxGuestsNumber(e.getMaxGuestsNumber());
-			eBean.setActualGuests(e.getGuestsNumber() + "/" + e.getMaxGuestsNumber());
-			eBean.setRegionString(e.getRegion());
-			eBean.setProvinceString(e.getProvince());
-			eBean.setCityString(e.getCity());
-			eBean.setBill(e.getBill());
+			EventBean event = new EventBean();
+			event.setEventOwner(e.getOwner().getUsername());
+			event.setDateTime(sdf.format(e.getDateTime().getTime()));
+			event.setGuestsNumber(e.getGuestsNumber());
+			event.setMaxGuestsNumber(e.getMaxGuestsNumber());
+			event.setActualGuests(e.getGuestsNumber() + "/" + e.getMaxGuestsNumber());
+			event.setRegionString(e.getRegion());
+			event.setProvinceString(e.getProvince());
+			event.setCityString(e.getCity());
+			event.setBill(e.getBill());
 			
-			sessionBean.getSearchedList().add(eBean);
+			sessionBean.getSearchedList().add(event);
 		}
 		
 		return sessionBean;

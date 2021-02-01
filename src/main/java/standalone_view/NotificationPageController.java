@@ -155,7 +155,6 @@ public class NotificationPageController {
 			notificationBeans = getNotificationsController.getNotifications(GUIController.getSessionBean().getUserBean());
 			
 			Button deleteButton;
-			Button rateButton;
 			
 			for(NotificationBean nb : notificationBeans) {
 				VBox vbox = new VBox();
@@ -166,20 +165,11 @@ public class NotificationPageController {
 				vbox.getChildren().addAll(dateLabel, textLabel);
 				vbox.setAlignment(Pos.CENTER_LEFT);
 				
-				if(nb.getType().equalsIgnoreCase("rating")) {
-					rateButton = new Button("Rate user");
-					
-					centralVBox.getChildren().addAll(addHBox(vbox, rateButton), new Separator());
-					
-					
-				}
-				else {
-					deleteButton = new Button("Delete");
-					
-					centralVBox.getChildren().addAll(addHBox(vbox, deleteButton), new Separator());
-					
-					deleteButtonSetAction(deleteButton, GUIController.getSessionBean().getUserBean(), nb);
-				}
+				deleteButton = new Button("Delete");
+				
+				centralVBox.getChildren().addAll(addHBox(vbox, deleteButton), new Separator());
+				
+				deleteButtonSetAction(deleteButton, GUIController.getSessionBean().getUserBean(), nb);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

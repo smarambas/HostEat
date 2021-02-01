@@ -48,8 +48,8 @@ public class UserDAO {
 			String city = rs.getString("city");
 			String address = rs.getString("address");
 			
-			GregorianCalendar age = new GregorianCalendar();
-			age.setTime(rs.getTimestamp("age"));
+			GregorianCalendar birthday = new GregorianCalendar();
+			birthday.setTime(rs.getTimestamp("birthday"));
 			
 			UserType type = UserType.valueOf(rs.getString("type").toUpperCase());
 			
@@ -62,7 +62,7 @@ public class UserDAO {
 			newUser.setProvince(province);
 			newUser.setCity(city);
 			newUser.setAddress(address);
-			newUser.setAge(age);
+			newUser.setBirthday(birthday);
 			newUser.setRating(rating);
 			newUser.setRatingsNum(ratingsNum);
 		}
@@ -79,8 +79,8 @@ public class UserDAO {
 //			String city = rs.getString("city");
 //			String address = rs.getString("address");
 //			
-//			GregorianCalendar age = new GregorianCalendar();
-//			age.setTime(rs.getTimestamp("age"));
+//			GregorianCalendar birthday = new GregorianCalendar();
+//			birthday.setTime(rs.getTimestamp("birthday"));
 //			
 //			UserType type = UserType.valueOf(rs.getString("type").toUpperCase());
 //			
@@ -93,7 +93,7 @@ public class UserDAO {
 //			newUser.setProvince(province);
 //			newUser.setCity(city);
 //			newUser.setAddress(address);
-//			newUser.setAge(age);
+//			newUser.setBirthday(birthday);
 //			newUser.setRating(rating);
 //			newUser.setRatingsNum(ratingsNum);
 //		}
@@ -296,6 +296,31 @@ public class UserDAO {
 					ResultSet.CONCUR_READ_ONLY);
 			
 			CRUDQueries.updateUserAddress(stm, user.getUsername(), newAddress);
+		}
+		else {
+			throw new NoRecordFoundException(norecord);
+		}
+		
+		stm.close();
+	}
+	
+	public static void updateUserRatings(User user, int newRating, int ratingsNum) throws ClassNotFoundException, SQLException, IOException, NoRecordFoundException {
+		Statement stm = null;
+		
+		cs = ConnectionSingleton.createConnection();
+		
+		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		
+		ResultSet rs = SimpleQueries.selectUserByUsername(stm, user.getUsername());
+		
+		if(rs.first()) {
+			rs.close();
+			stm.close();
+			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			
+			CRUDQueries.updateUserRating(stm, user.getUsername(), newRating, ratingsNum);
 		}
 		else {
 			throw new NoRecordFoundException(norecord);

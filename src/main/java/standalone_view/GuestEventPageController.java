@@ -1,7 +1,10 @@
 package standalone_view;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 import bean.EventBean;
 import bean.MenuBean;
@@ -49,7 +52,7 @@ public class GuestEventPageController {
 	}
 	
 	@FXML
-	protected void initialize() {		
+	protected void initialize() throws ParseException {		
 		eventBean = GuestBaseController.getSelectedEvent();
 		boolean isAccepted = false;
 		boolean isPaymentRequired = false;
@@ -90,6 +93,7 @@ public class GuestEventPageController {
 		Button openMenuButton;
 		Button deleteEventButton;
 		Button viewLocationButton;
+		Button rateButton = new Button("Rate host");
 		
 		if(isPaymentRequired && !isAccepted) {
 			payHostButton = new Button("Pay host");
@@ -131,6 +135,7 @@ public class GuestEventPageController {
 		
 		deleteButtonSetActionGuest(deleteEventButton);
 		menuButtonSetAction(openMenuButton);
+		rateButtonSetAction(rateButton, eventBean);
 	}
 	
 	
@@ -156,6 +161,37 @@ public class GuestEventPageController {
 		hBox.setSpacing(20);
 		
 		return hBox;
+	}
+	
+	private void rateButtonSetAction(Button button, EventBean eventBean) throws ParseException {
+		String format = "yyyy-MM-dd HH:mm";
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		
+		GregorianCalendar nowCalendar = new GregorianCalendar();
+		GregorianCalendar date = new GregorianCalendar();
+		date.setTime(sdf.parse(eventBean.getDateTime()));
+		
+		long dateInMillis = date.getTimeInMillis();
+		long nowInMillis = nowCalendar.getTimeInMillis();
+		
+		if(dateInMillis - nowInMillis < 0) {
+			bottomHBox.getChildren().add(button);
+			
+			button.setOnAction((ActionEvent event) -> {
+				try {
+					Stage stage = (Stage) button.getScene().getWindow();
+					Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/RateHostPage.fxml"));
+					Scene scene = new Scene(root, 900, 600);
+					scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+					stage.setScene(scene);
+					stage.show();
+				} catch (Exception e) {
+					Label errorLabel = new Label(errorLabelMsg);
+					errorLabel.setId(errorLabelId);
+					centralVBox.getChildren().add(errorLabel);
+				}
+			});
+		}
 	}
 	
 	private void deleteButtonSetActionGuest(Button button) {

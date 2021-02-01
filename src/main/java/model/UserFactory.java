@@ -31,8 +31,8 @@ public class UserFactory {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		GregorianCalendar date = new GregorianCalendar();
 		try {
-			date.setTime(sdf.parse(userBean.getBirthDay()));
-			newUser.setAge(date);
+			date.setTime(sdf.parse(userBean.getBirthday()));
+			newUser.setBirthday(date);
 		} catch(ParseException e) {
 			newUser = null;
 		}

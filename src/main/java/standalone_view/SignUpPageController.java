@@ -73,7 +73,7 @@ public class SignUpPageController {
 		if(userBean.setName(nameField.getText()) &&
 		   userBean.setSurname(surnameField.getText()) &&
 		   userBean.setEmailAddr(emailField.getText()) &&
-		   userBean.setBirthDay(birthdayField.getValue().toString() + " 00:00") &&
+		   userBean.setBirthday(birthdayField.getValue().toString() + " 00:00") &&
 		   userBean.setReg(regionField.getText()) &&
 		   userBean.setProv(provinceField.getText()) &&
 		   userBean.setCity(cityField.getText())) {

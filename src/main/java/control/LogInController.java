@@ -94,7 +94,7 @@ public class LogInController {
 					tempUserBean.setUsername(tempUser.getUsername());
 					tempUserBean.setName(tempUser.getName());
 					tempUserBean.setSurname(tempUser.getSurname());
-					tempUserBean.setBirthDay(sdf.format(tempUser.getAge().getTime()));
+					tempUserBean.setBirthday(sdf.format(tempUser.getBirthday().getTime()));
 					tempUserBean.setSex(tempUser.getSex());
 					tempUserBean.setEmailAddr(tempUser.getEmail());
 					tempUserBean.setReg(tempUser.getRegion());
@@ -108,7 +108,7 @@ public class LogInController {
 			
 			userBean.setName(user.getName());
 			userBean.setSurname(user.getSurname());
-			userBean.setBirthDay(sdf.format(user.getAge().getTime()));
+			userBean.setBirthday(sdf.format(user.getBirthday().getTime()));
 			userBean.setSex(user.getSex());
 			userBean.setEmailAddr(user.getEmail());
 			userBean.setUserType(userType.toString().toUpperCase());

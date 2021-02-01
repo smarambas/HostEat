@@ -10,7 +10,7 @@ public class User {
 	private String name;
 	private String surname;
 	private String email;
-	private GregorianCalendar birthDate;
+	private GregorianCalendar birthday;
 	private String sex;
 	private String region;
 	private String province;
@@ -38,16 +38,16 @@ public class User {
 		this.type = type;
 	}
 
-	public GregorianCalendar getAge() {
-		return birthDate;
+	public GregorianCalendar getBirthday() {
+		return birthday;
 	}
 
-	public void setAge(int year, int month, int day) {
-		this.birthDate = new GregorianCalendar(year, month, day);
+	public void setBirthday(int year, int month, int day) {
+		this.birthday = new GregorianCalendar(year, month, day);
 	}
 	
-	public void setAge(GregorianCalendar date) {
-		this.birthDate = date;
+	public void setBirthday(GregorianCalendar date) {
+		this.birthday = date;
 	}
 
 	public String getSex() {

@@ -16,8 +16,8 @@ public class CRUDQueries {
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		
-		String statement = String.format("INSERT INTO user (username, email, password, type, name, surname, sex, region, province, city, address, age, rating, ratings_num) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %f, %d);", 
-		user.getUsername(), user.getEmail(), user.getPassword(), user.getType().toString(), user.getName(), user.getSurname(), user.getSex(), user.getRegion(), user.getProvince(), user.getCity(), user.getAddress(), sdf.format(user.getAge().getTime()), user.getRating(), user.getRatingsNum());
+		String statement = String.format("INSERT INTO user (username, email, password, type, name, surname, sex, region, province, city, address, birthday, rating, ratings_num) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %f, %d);", 
+		user.getUsername(), user.getEmail(), user.getPassword(), user.getType().toString(), user.getName(), user.getSurname(), user.getSex(), user.getRegion(), user.getProvince(), user.getCity(), user.getAddress(), sdf.format(user.getBirthday().getTime()), user.getRating(), user.getRatingsNum());
 		
 		return stmt.executeUpdate(statement);
 	}
@@ -54,6 +54,11 @@ public class CRUDQueries {
 	
 	public static int updateUserAddress(Statement stmt, String username, String newAddress) throws SQLException {
 		String statement = String.format("UPDATE user SET address = '%s' WHERE username = '%s';", newAddress, username);
+		return stmt.executeUpdate(statement);
+	}
+	
+	public static int updateUserRating(Statement stmt, String username, int rating, int ratingsNum) throws SQLException {
+		String statement = String.format("UPDATE user SET rating = '%d', ratings_num = '%d' WHERE username = '%s';", rating, ratingsNum, username);
 		return stmt.executeUpdate(statement);
 	}
 	

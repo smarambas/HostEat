@@ -75,7 +75,7 @@ public class UserPageController {
 		centralVBox.getChildren().addAll(
 			addHBox("Name:", userBean.getName()),
 			addHBox("Surname:", userBean.getSurname()),
-			addHBox("Birthday:", userBean.getBirthDay().substring(0, 10)),
+			addHBox("Birthday:", userBean.getBirthday().substring(0, 10)),
 			addHBox("Sex:", userBean.getSex()),
 			addHBox("Email:", userBean.getEmailAddr()),
 			addHBox("Region:", userBean.getReg()),

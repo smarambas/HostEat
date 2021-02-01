@@ -68,7 +68,7 @@ public class HostProfilePageController {
 			addHBox("Name:", userBean.getName()),
 			addHBox("Surname:", userBean.getSurname()),
 			addHBox("Sex:", userBean.getSex()),
-			addHBox("Birthday:", userBean.getBirthDay().substring(0, 10)),
+			addHBox("Birthday:", userBean.getBirthday().substring(0, 10)),
 			addHBox("Email:", userBean.getEmailAddr()),
 			addHBox("Region:", userBean.getReg()),
 			addHBox("Province:", userBean.getProv()),

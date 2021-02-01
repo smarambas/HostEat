@@ -14,7 +14,7 @@ public class UserBean {
 	private String name;
 	private String surname;
 	private String emailAddr;
-	private String birthDay;
+	private String birthday;
 	private String sex;
 	private String reg;
 	private String prov;
@@ -92,13 +92,13 @@ public class UserBean {
 		}
 	}
 	
-	public String getBirthDay() {
-		return birthDay;
+	public String getBirthday() {
+		return birthday;
 	}
 	
-	public boolean setBirthDay(String birthDay) {
+	public boolean setBirthday(String birthDay) {
 		if(validateBirthday(birthDay)) {
-			this.birthDay = birthDay;
+			this.birthday = birthDay;
 			return true;
 		}
 		else {

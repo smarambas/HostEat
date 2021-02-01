@@ -23,7 +23,7 @@ public class GetUserController {
 		result.setName(user.getName());
 		result.setSurname(user.getSurname());
 		result.setEmailAddr(user.getEmail());
-		result.setBirthDay(sdf.format(user.getAge().getTime()));
+		result.setBirthday(sdf.format(user.getBirthday().getTime()));
 		result.setReg(user.getRegion());
 		result.setProv(user.getProvince());
 		result.setCity(user.getCity());

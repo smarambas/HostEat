@@ -39,7 +39,7 @@ public class GetJoinedGuestsController {
 			guestBean.setName(u.getName());
 			guestBean.setSurname(u.getSurname());
 			guestBean.setEmailAddr(u.getEmail());
-			guestBean.setBirthDay(sdf.format(u.getAge().getTime()));
+			guestBean.setBirthday(sdf.format(u.getBirthday().getTime()));
 			guestBean.setReg(u.getRegion());
 			guestBean.setProv(u.getProvince());
 			guestBean.setCity(u.getCity());

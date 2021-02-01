@@ -27,7 +27,7 @@ public class SaveHostController {
 		tempUserBean.setUsername(favUser.getUsername());
 		tempUserBean.setName(favUser.getName());
 		tempUserBean.setSurname(favUser.getSurname());
-		tempUserBean.setBirthDay(sdf.format(favUser.getAge().getTime()));
+		tempUserBean.setBirthday(sdf.format(favUser.getBirthday().getTime()));
 		tempUserBean.setSex(favUser.getSex());
 		tempUserBean.setEmailAddr(favUser.getEmail());
 		tempUserBean.setReg(favUser.getRegion());

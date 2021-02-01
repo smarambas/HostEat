@@ -14,6 +14,8 @@ public class EventBean {
 	private String provinceString;
 	private String cityString;
 	private String addressString;
+	private int guestRated;
+	private int hostRated;
 	
 	public String getEventOwner() {
 		return eventOwner;
@@ -109,6 +111,22 @@ public class EventBean {
 
 	public void setAddressString(String addressString) {
 		this.addressString = addressString;
+	}
+
+	public int getGuestRated() {
+		return guestRated;
+	}
+
+	public void setGuestRated(int guestRated) {
+		this.guestRated = guestRated;
+	}
+
+	public int getHostRated() {
+		return hostRated;
+	}
+
+	public void setHostRated(int hostRated) {
+		this.hostRated = hostRated;
 	}
 	
 }

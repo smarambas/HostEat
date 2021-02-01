@@ -53,7 +53,7 @@ public class UserDAO {
 			
 			UserType type = UserType.valueOf(rs.getString("type").toUpperCase());
 			
-			double rating = rs.getDouble("rating");
+			int rating = rs.getInt("rating");
 			int ratingsNum = rs.getInt("ratings_num");
 			
 			newUser = new User(type, usern, passw, name, surname, email);

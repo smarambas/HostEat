@@ -26,7 +26,6 @@ public class JoinedEventDAO {
 	private JoinedEventDAO() {}
 	
 	public static List<Event> retrieveJoinedEventsByUsername(User user) throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
-		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		Statement stm = null;
 		List<Event> eventList = new ArrayList<>();
 		
@@ -37,10 +36,6 @@ public class JoinedEventDAO {
 		
 		ResultSet rs = SimpleQueries.selectJoinedEventsByUsername(stm, user.getUsername());
 		
-//		if(!rs.first()) {
-//			throw new NoRecordFoundException(norecord);
-//		}
-//		else {
 		if(rs.first()) {
 			rs.first();
 			do {
@@ -52,20 +47,10 @@ public class JoinedEventDAO {
 				String guestStatus = rs.getString("guest_status");
 				String paymentStatus = rs.getString("payment_status");
 				
-				User ownerUser = UserDAO.retrieveUserByUsername(owner);
+				int hrated = rs.getInt("host_rated");
+				int grated = rs.getInt("guest_rated");
 				
-//				Statement tempStatement = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-//						ResultSet.CONCUR_READ_ONLY);
-//				
-//				ResultSet tempResultSet = SimpleQueries.selectEventByUsernameDateTime(tempStatement, owner, sdf.format(date.getTime()));
-//				
-//				if(tempResultSet.first()) {
-//					tempResultSet.first();
-//					newEvent = new Event(ownerUser, date, tempResultSet.getInt("max_num_guests"), tempResultSet.getDouble("payment_bill"));
-//				}
-//				else {
-//					newEvent = new Event(ownerUser, date, 0, 0);
-//				}
+				User ownerUser = UserDAO.retrieveUserByUsername(owner);
 				
 				newEvent = EventDAO.retrieveEventByUsernameDateTime(ownerUser, date);
 				
@@ -75,11 +60,10 @@ public class JoinedEventDAO {
 				newEvent.setProvince(ownerUser.getProvince());
 				newEvent.setCity(ownerUser.getCity());
 				newEvent.setAddress(ownerUser.getAddress());
+				newEvent.setHostRated(hrated);
+				newEvent.setGuestRated(grated);
 				
 				eventList.add(newEvent);
-				
-//				tempStatement.close();
-//				tempResultSet.close();
 			}
 			while(rs.next());
 		}
@@ -110,7 +94,7 @@ public class JoinedEventDAO {
 			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			
-			CRUDQueries.insertJoinedEvent(stm, user.getUsername(), event.getOwner().getUsername(), sdf.format(event.getDateTime().getTime()), event.getGuestStatus().toString(), event.getPayStatus().toString());
+			CRUDQueries.insertJoinedEvent(stm, user.getUsername(), event, sdf.format(event.getDateTime().getTime()));
 		}
 		
 		stm.close();
@@ -194,6 +178,58 @@ public class JoinedEventDAO {
 		stm.close();
 	}
 	
+	public static void updateJoinedEventGuestRated(User user, Event event) throws ClassNotFoundException, SQLException, IOException, NoRecordFoundException {
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		Statement stm = null;
+		
+		cs = ConnectionSingleton.createConnection();
+		
+		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		
+		ResultSet rs = SimpleQueries.selectJoinedEventByDateTime(stm, user.getUsername(), event.getOwner().getUsername(), sdf.format(event.getDateTime().getTime()));
+		
+		if(rs.first()) {
+			rs.close();
+			stm.close();
+			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			
+			CRUDQueries.updateGuestRated(stm, user.getUsername(), event.getOwner().getUsername(), sdf.format(event.getDateTime().getTime()), event.getGuestRated());
+		}
+		else {
+			throw new NoRecordFoundException(norecord);
+		}
+		
+		stm.close();
+	}
+	
+	public static void updateJoinedEventHostRated(User user, Event event) throws ClassNotFoundException, SQLException, IOException, NoRecordFoundException {
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		Statement stm = null;
+		
+		cs = ConnectionSingleton.createConnection();
+		
+		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		
+		ResultSet rs = SimpleQueries.selectJoinedEventByDateTime(stm, user.getUsername(), event.getOwner().getUsername(), sdf.format(event.getDateTime().getTime()));
+		
+		if(rs.first()) {
+			rs.close();
+			stm.close();
+			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+			
+			CRUDQueries.updateHostRated(stm, user.getUsername(), event.getOwner().getUsername(), sdf.format(event.getDateTime().getTime()), event.getHostRated());
+		}
+		else {
+			throw new NoRecordFoundException(norecord);
+		}
+		
+		stm.close();
+	}
+	
 	public static List<User> retrieveJoinedGuests(User user, Event event) throws SQLException, ClassNotFoundException, IOException, NoRecordFoundException {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		Statement stm = null;
@@ -226,4 +262,42 @@ public class JoinedEventDAO {
 		return guestsList;
 	}
 	
+	public static Event retrieveJoinedEvent(User user, Event event) throws ClassNotFoundException, SQLException, IOException, NoRecordFoundException {
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		Statement stm = null;
+		
+		Event newEvent = event;
+				
+		cs = ConnectionSingleton.createConnection();
+		
+		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+				ResultSet.CONCUR_READ_ONLY);
+		
+		ResultSet rs = SimpleQueries.selectJoinedEventByDateTime(stm, user.getUsername(), event.getOwner().getUsername(), sdf.format(event.getDateTime().getTime()));
+		
+		if(rs.first()) {
+			GregorianCalendar date = new GregorianCalendar();
+			date.setTime(rs.getTimestamp("event_date"));
+							
+			String guestStatus = rs.getString("guest_status");
+			String paymentStatus = rs.getString("payment_status");
+			
+			int hrated = rs.getInt("host_rated");
+			int grated = rs.getInt("guest_rated");
+			
+			newEvent.setGuestStatus(GuestStatus.valueOf(guestStatus.toUpperCase()));
+			newEvent.setPayStatus(PaymentStatus.valueOf(paymentStatus.toUpperCase()));
+			newEvent.setHostRated(hrated);
+			newEvent.setGuestRated(grated);
+		}
+		else {
+			throw new NoRecordFoundException(norecord);
+		}
+		
+		rs.close();
+		stm.close();
+		
+		return newEvent;
+	}
+	 
 }

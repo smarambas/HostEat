@@ -3,6 +3,8 @@ package model.dao.queries;
 import java .sql.*;
 import java.text.SimpleDateFormat;
 
+import bean.EventBean;
+import model.Event;
 import model.User;
 
 public class CRUDQueries {
@@ -16,7 +18,7 @@ public class CRUDQueries {
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		
-		String statement = String.format("INSERT INTO user (username, email, password, type, name, surname, sex, region, province, city, address, birthday, rating, ratings_num) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %f, %d);", 
+		String statement = String.format("INSERT INTO user (username, email, password, type, name, surname, sex, region, province, city, address, birthday, rating, ratings_num) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d, %d);", 
 		user.getUsername(), user.getEmail(), user.getPassword(), user.getType().toString(), user.getName(), user.getSurname(), user.getSex(), user.getRegion(), user.getProvince(), user.getCity(), user.getAddress(), sdf.format(user.getBirthday().getTime()), user.getRating(), user.getRatingsNum());
 		
 		return stmt.executeUpdate(statement);
@@ -135,9 +137,9 @@ public class CRUDQueries {
 	/*
 	 * Joined Event statements
 	 */
-	public static int insertJoinedEvent(Statement stmt, String guest, String eventOwner, String eventDate, String guestStatus, String paymentStatus) throws SQLException {
-		String statement = String.format("INSERT INTO joined_event (guest, event_owner, event_date, guest_status, payment_status) VALUES ('%s', '%s', '%s', '%s', '%s');",
-				guest, eventOwner, eventDate, guestStatus, paymentStatus);
+	public static int insertJoinedEvent(Statement stmt, String guest, Event event, String eventDate) throws SQLException {
+		String statement = String.format("INSERT INTO joined_event (guest, event_owner, event_date, guest_status, payment_status, host_rated, guest_rated) VALUES ('%s', '%s', '%s', '%s', '%s', '%d', '%d');",
+				guest, event.getOwner(), eventDate, event.getGuestStatus().toString().toUpperCase(), event.getPayStatus().toString().toUpperCase(), event.getHostRated(), event.getGuestRated());
 		return stmt.executeUpdate(statement);
 	}
 	
@@ -158,6 +160,16 @@ public class CRUDQueries {
 	
 	public static int updateGuestStatus(Statement stmt, String guest, String eventOwner, String eventDate, String newGuestStatus) throws SQLException {
 		String statement = String.format("UPDATE joined_event SET guest_status = '%s' WHERE guest = '%s' AND event_owner = '%s' AND event_date = '%s';", newGuestStatus, guest, eventOwner, eventDate);
+		return stmt.executeUpdate(statement);
+	}
+	
+	public static int updateGuestRated(Statement stmt, String guest, String eventOwner, String eventDate, int guestRated) throws SQLException {
+		String statement = String.format("UPDATE joined_event SET guest_rated = '%d' WHERE guest = '%s' AND event_owner = '%s' AND event_date = '%s';", guestRated, guest, eventOwner, eventDate);
+		return stmt.executeUpdate(statement);
+	}
+	
+	public static int updateHostRated(Statement stmt, String guest, String eventOwner, String eventDate, int hostRated) throws SQLException {
+		String statement = String.format("UPDATE joined_event SET host_rated = '%d' WHERE guest = '%s' AND event_owner = '%s' AND event_date = '%s';", hostRated, guest, eventOwner, eventDate);
 		return stmt.executeUpdate(statement);
 	}
 	

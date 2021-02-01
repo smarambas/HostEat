@@ -82,7 +82,7 @@ public class UserPageController {
 			addHBox("Province", userBean.getProv()),
 			addHBox("City:", userBean.getCity()),
 			addHBox("Address:", userBean.getAddr()),
-			addHBox("Rating:", String.valueOf(userBean.getRatings()))
+			addHBox("Rating:", String.valueOf((double) userBean.getRatings() / userBean.getRatingsNum()))
 		);
 		
 		bottomHBox.getChildren().addAll(modifyButton, logoutButton);

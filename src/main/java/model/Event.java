@@ -16,6 +16,8 @@ public class Event {
 	private String province;
 	private String city;
 	private String address;
+	private int guestRated;
+	private int hostRated;
 		
 	public Event(User owner, GregorianCalendar dateTime, int maxGuests, double bill) {
 		this.owner = owner;
@@ -130,6 +132,22 @@ public class Event {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public int getGuestRated() {
+		return guestRated;
+	}
+
+	public void setGuestRated(int guestRated) {
+		this.guestRated = guestRated;
+	}
+
+	public int getHostRated() {
+		return hostRated;
+	}
+
+	public void setHostRated(int hostRated) {
+		this.hostRated = hostRated;
 	}
 	
 }

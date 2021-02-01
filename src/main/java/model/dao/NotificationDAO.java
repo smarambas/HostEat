@@ -90,7 +90,6 @@ public class NotificationDAO {
 	}
 	
 	public static void deleteNotification(User user, Notification notification) throws ClassNotFoundException, SQLException, IOException, NoRecordFoundException {
-		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		Statement stm = null;
 		
 		cs = ConnectionSingleton.createConnection();
@@ -106,7 +105,7 @@ public class NotificationDAO {
 			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
 					ResultSet.CONCUR_READ_ONLY);
 			
-			CRUDQueries.deleteNotification(stm, user.getUsername(), sdf.format(notification.getDate().getTime()));
+			CRUDQueries.deleteNotification(stm, user.getUsername(), notification.getText());
 		}
 		else {
 			throw new NoRecordFoundException("ERROR: no record found");

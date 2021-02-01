@@ -117,10 +117,12 @@ public class LogInController {
 			userBean.setCity(user.getCity());
 			userBean.setAddr(user.getAddress());
 			userBean.setRatings(user.getRating());
+			userBean.setRatingsNum(user.getRatingsNum());
 			
 			sessionBean.setUserBean(userBean);
 			sessionBean.setEventBeanList(eventBeanList);
 		} catch (Exception e) {
+			e.printStackTrace();
 			sessionBean = null;
 		}
 		
@@ -137,7 +139,7 @@ public class LogInController {
 		long nowInMillis = nowCalendar.getTimeInMillis();
 		
 		if((dateInMillis - nowInMillis < day) && (dateInMillis - nowInMillis > 0)) {
-			String text = "Don't forget the event on " + sdf.format(date.getTime()) + ", less than one day missing!";
+			String text = "Don''t forget the event on " + sdf.format(date.getTime()) + ", less than one day left!";
 			Notification notification = new Notification(user, text, NotificationType.REMINDER);
 			
 			try {
@@ -147,7 +149,7 @@ public class LogInController {
 			}
 		}
 		else if(dateInMillis - nowInMillis < 0) {
-			String text = "Don't forget to leave a review for the event on " + sdf.format(date.getTime());
+			String text = "Don''t forget to leave a review for the event on " + sdf.format(date.getTime());
 			Notification notification = new Notification(user, text, NotificationType.RATING);
 			
 			try {

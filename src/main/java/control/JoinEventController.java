@@ -48,6 +48,9 @@ public class JoinEventController {
 			event.setPayStatus(PaymentStatus.NOSET);
 		}
 		
+		event.setHostRated(0);
+		event.setGuestRated(0);
+		
 		JoinedEventDAO.saveJoinedEvent(guest, event);
 		
 		eventBean.setEventOwner(host.getUsername());
@@ -58,6 +61,8 @@ public class JoinEventController {
 		eventBean.setCityString(host.getCity());
 		eventBean.setBill(event.getBill());
 		eventBean.setGuestStatus("JOINED");
+		eventBean.setHostRated(0);
+		eventBean.setGuestRated(0);
 		
 		sessionBean.getEventBeanList().add(eventBean);		
 		

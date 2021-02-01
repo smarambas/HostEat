@@ -3,6 +3,7 @@ package standalone_view;
 import java.io.IOException;
 import bean.UserBean;
 import control.RateUserController;
+import exceptions.AlreadyRatedException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,8 +20,6 @@ import javafx.stage.Stage;
 public class RateUserPageController {
 
 	private String appStyle = "NewStyle.css";
-	private String descriptionString = "descriptionLabel";
-	private String dataString = "dataLabel";
 	private String errorLabelMsg = "You must select a vote first";
 	private String errorLabelId = "errorLabel";
 	
@@ -45,10 +44,10 @@ public class RateUserPageController {
 		Parent root = null;
 		
 		if(GUIController.getSessionBean().getUserBean().getUserType().equalsIgnoreCase("HOST")) {
-			root = FXMLLoader.load(getClass().getResource("/standalone_view/RateGuestPage.fxml"));
+			root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestProfilePage.fxml"));
 		}
 		else {
-			root = FXMLLoader.load(getClass().getResource("/standalone_view/RateHostPage.fxml"));
+			root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestEventPage.fxml"));
 		}
 		
 		Scene scene = new Scene(root, 900, 600);
@@ -89,31 +88,34 @@ public class RateUserPageController {
 			Stage stage = (Stage) submitButton.getScene().getWindow();
 			Parent root = null;
 			
-			if(GUIController.getSessionBean().getUserBean().getUserType().equalsIgnoreCase("HOST")) {
-				user = JoinedGuestsListPageController.getSelectedGuest();
-				root = FXMLLoader.load(getClass().getResource("/standalone_view/RateGuestPage.fxml"));
-			}
-			else {
-				user = new UserBean();
-				user.setUsername(GuestBaseController.getSelectedEvent().getEventOwner());
-				root = FXMLLoader.load(getClass().getResource("/standalone_view/RateHostPage.fxml"));
-			}
-			
 			try {
 				RateUserController rateUserController = new RateUserController();
-				rateUserController.rateUser(user, vote);
-			} catch(Exception e) {
-				e.printStackTrace();
 				
+				if(GUIController.getSessionBean().getUserBean().getUserType().equalsIgnoreCase("HOST")) {
+					user = JoinedGuestsListPageController.getSelectedGuest();
+					root = FXMLLoader.load(getClass().getResource("/standalone_view/JoinedGuestsListPage.fxml"));
+					rateUserController.rateUser(user, HostBaseController.getSelectedEvent(), vote);
+				}
+				else {
+					user = new UserBean();
+					user.setUsername(GuestBaseController.getSelectedEvent().getEventOwner());
+					root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestEventPage.fxml"));
+					rateUserController.rateUser(user, GuestBaseController.getSelectedEvent(), vote);
+				}
+				
+				Scene scene = new Scene(root, 900, 600);
+				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+				stage.setScene(scene);
+				stage.show();
+			} catch(AlreadyRatedException are) {
+				Label errorLabel = new Label("You already rated that user");
+				errorLabel.setId(errorLabelId);
+				centralVBox.getChildren().add(errorLabel);
+			} catch(Exception e) {
 				Label errorLabel = new Label("Ops, something went wrong");
 				errorLabel.setId(errorLabelId);
 				centralVBox.getChildren().add(errorLabel);
 			}
-			
-			Scene scene = new Scene(root, 900, 600);
-			scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-			stage.setScene(scene);
-			stage.show();
 		}
 	}
 	

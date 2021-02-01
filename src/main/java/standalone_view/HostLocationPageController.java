@@ -66,7 +66,7 @@ public class HostLocationPageController {
 		GeoApiContext context = new GeoApiContext.Builder().apiKey(API_KEY).build();
 		StaticMapsRequest request = StaticMapsApi.newRequest(context, new Size(WIDTH, HEIGHT));
 		request.center(location);
-		request.zoom(15);
+		request.zoom(16);
 		request.language("it");
 		request.maptype(StaticMapType.roadmap);
 		request.scale(1);

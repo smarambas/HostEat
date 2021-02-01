@@ -62,8 +62,9 @@ public class MenuPageController {
 			
 			for(String dish : cb.getDishes()) {
 				Label dishLabel = new Label(dish);
-				dishLabel.setId("dataLabel");
+				dishLabel.setId("dishLabel");
 				dishLabel.setAlignment(Pos.CENTER);
+				dishLabel.setWrapText(true);
 				
 				centralVBox.getChildren().add(dishLabel);
 			}

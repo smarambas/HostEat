@@ -71,6 +71,11 @@
 	-fx-pref-width: 250px;
 }
 
+#notificationLabel {
+	-fx-pref-height: 25px;
+	-fx-pref-width: 450px;
+}
+
 #errorLabel {
 	-fx-pref-height: 25px;
 	-fx-pref-width: 320px;

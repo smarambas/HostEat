@@ -20,11 +20,10 @@ public class UserBean {
 	private String prov;
 	private String city;
 	private String addr;
-	private double ratings;
+	private int ratings;
+	private int ratingsNum;
 	private String guestStatus;
 	private String payStatus;
-	private List<String> favCuisines;
-	private List<String> allergies;
 	
 	public String getUserType() {
 		return userType;
@@ -165,14 +164,22 @@ public class UserBean {
 		this.addr = addr;
 	}
 	
-	public double getRatings() {
+	public int getRatings() {
 		return ratings;
 	}
 	
-	public void setRatings(double ratings) {
+	public void setRatings(int ratings) {
 		this.ratings = ratings;
 	}
 	
+	public int getRatingsNum() {
+		return ratingsNum;
+	}
+
+	public void setRatingsNum(int ratingsNum) {
+		this.ratingsNum = ratingsNum;
+	}
+
 	public String getGuestStatus() {
 		return guestStatus;
 	}
@@ -188,22 +195,6 @@ public class UserBean {
 	public void setPayStatus(String payStatus) {
 		this.payStatus = payStatus;
 	}
-
-	public List<String> getFavCuisines() {
-		return favCuisines;
-	}
-	
-	public void setFavCuisines(List<String> favCuisines) {
-		this.favCuisines = favCuisines;
-	}
-	
-	public List<String> getAllergies() {
-		return allergies;
-	}
-	
-	public void setAllergies(List<String> allergies) {
-		this.allergies = allergies;
-	}
 	
 	public boolean validateString(String string) {
 		if(string == null || string.equals("")) {
@@ -213,7 +204,7 @@ public class UserBean {
 		char[] chars = string.toCharArray();
 		
 		for(char c : chars) {
-			if(!Character.isLetter(c)) {
+			if(!(Character.isLetter(c)) && !(Character.isWhitespace(c))) {
 				return false;
 			}
 		}

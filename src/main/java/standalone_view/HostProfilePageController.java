@@ -73,7 +73,7 @@ public class HostProfilePageController {
 			addHBox("Region:", userBean.getReg()),
 			addHBox("Province:", userBean.getProv()),
 			addHBox("City:", userBean.getCity()),
-			addHBox("Rating:", String.valueOf(userBean.getRatings()))
+			addHBox("Rating:", String.valueOf((double) userBean.getRatings() / userBean.getRatingsNum()))
 		);
 		
 		if(GUIController.getSessionBean().containsSavedUser(userBean.getUsername())) {

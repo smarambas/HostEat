@@ -44,10 +44,10 @@ public class NotificationPageController {
 			Parent root = null;
 			
 			if(GUIController.getSessionBean().getUserBean().getUserType().equalsIgnoreCase("HOST")) {
-				root = FXMLLoader.load(getClass().getResource("/standalone_view/HostNotificationPage.fxml"));
+				root = FXMLLoader.load(getClass().getResource("/standalone_view/HostNotificationsPage.fxml"));
 			}
 			else {
-				root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestNotificationPage.fxml"));
+				root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestNotificationsPage.fxml"));
 			}
 			
 			Scene scene = new Scene(root, 900, 600);
@@ -55,8 +55,6 @@ public class NotificationPageController {
 			stage.setScene(scene);
 			stage.show();
 		} catch (Exception e) {
-			e.printStackTrace();
-			
 			Label errorLabel = new Label(errorLabelMsg);
 			errorLabel.setId(errorLabelId);
 			centralVBox.getChildren().add(errorLabel);
@@ -73,10 +71,10 @@ public class NotificationPageController {
 			Parent root = null;
 			
 			if(GUIController.getSessionBean().getUserBean().getUserType().equalsIgnoreCase("HOST")) {
-				root = FXMLLoader.load(getClass().getResource("/standalone_view/HostNotificationPage.fxml"));
+				root = FXMLLoader.load(getClass().getResource("/standalone_view/HostNotificationsPage.fxml"));
 			}
 			else {
-				root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestNotificationPage.fxml"));
+				root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestNotificationsPage.fxml"));
 			}
 			
 			Scene scene = new Scene(root, 900, 600);
@@ -84,8 +82,6 @@ public class NotificationPageController {
 			stage.setScene(scene);
 			stage.show();
 		} catch (Exception e) {
-			e.printStackTrace();
-			
 			Label errorLabel = new Label(errorLabelMsg);
 			errorLabel.setId(errorLabelId);
 			centralVBox.getChildren().add(errorLabel);
@@ -102,10 +98,10 @@ public class NotificationPageController {
 				Parent root;
 				
 				if(GUIController.getSessionBean().getUserBean().getUserType().equalsIgnoreCase("HOST")) {
-					root = FXMLLoader.load(getClass().getResource("/standalone_view/HostNotificationPage.fxml"));
+					root = FXMLLoader.load(getClass().getResource("/standalone_view/HostNotificationsPage.fxml"));
 				}
 				else {
-					root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestNotificationPage.fxml"));
+					root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestNotificationsPage.fxml"));
 				}
 				
 				Scene scene = new Scene(root, 900, 600);
@@ -120,34 +116,6 @@ public class NotificationPageController {
 		});
 	}
 	
-//	private void rateButtonSetAction(Button button, UserBean userBean, NotificationBean notificationBean) {
-//		button.setOnAction((ActionEvent event) -> {
-//			try {
-//				DeleteNotificationController deleteNotificationController = new DeleteNotificationController();
-//				deleteNotificationController.deleteNotification(userBean, notificationBean);
-//				
-//				Stage stage = (Stage) button.getScene().getWindow();
-//				Parent root;
-//				
-//				if(GUIController.getSessionBean().getUserBean().getUserType().equalsIgnoreCase("HOST")) {
-//					root = FXMLLoader.load(getClass().getResource("/standalone_view/HostNotificationPage.fxml"));
-//				}
-//				else {
-//					root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestNotificationPage.fxml"));
-//				}
-//				
-//				Scene scene = new Scene(root, 900, 600);
-//				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-//				stage.setScene(scene);
-//				stage.show();
-//			} catch (Exception e) {
-//				Label errorLabel = new Label(errorLabelMsg);
-//				errorLabel.setId(errorLabelId);
-//				centralVBox.getChildren().add(errorLabel);
-//			}
-//		});
-//	}
-	
 	@FXML
 	private void initialize() {
 		try {
@@ -160,7 +128,9 @@ public class NotificationPageController {
 				VBox vbox = new VBox();
 				
 				Label dateLabel = new Label(nb.getDate());
+				dateLabel.setId("dataLabel");
 				Label textLabel = new Label(nb.getText());
+				textLabel.setId("notificationLabel");
 				
 				vbox.getChildren().addAll(dateLabel, textLabel);
 				vbox.setAlignment(Pos.CENTER_LEFT);
@@ -172,8 +142,6 @@ public class NotificationPageController {
 				deleteButtonSetAction(deleteButton, GUIController.getSessionBean().getUserBean(), nb);
 			}
 		} catch(Exception e) {
-			e.printStackTrace();
-			
 			Label errorLabel = new Label(errorLabelMsg);
 			errorLabel.setId(errorLabelId);
 			centralVBox.getChildren().add(errorLabel);

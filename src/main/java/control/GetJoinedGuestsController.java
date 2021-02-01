@@ -44,6 +44,7 @@ public class GetJoinedGuestsController {
 			guestBean.setProv(u.getProvince());
 			guestBean.setCity(u.getCity());
 			guestBean.setRatings(u.getRating());
+			guestBean.setRatingsNum(u.getRatingsNum());
 			guestBean.setSex(u.getSex());
 			guestBean.setGuestStatus(u.getGuestStatus().toString().toUpperCase());
 			guestBean.setPayStatus(u.getPayStatus().toString().toUpperCase());

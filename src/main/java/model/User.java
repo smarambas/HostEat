@@ -16,7 +16,7 @@ public class User {
 	private String province;
 	private String city;
 	private String address;
-	private double rating;
+	private int rating;
 	private int ratingsNum;
 	private GuestStatus guestStatus;
 	private PaymentStatus payStatus;
@@ -130,11 +130,11 @@ public class User {
 		this.address = address;
 	}
 
-	public double getRating() {
+	public int getRating() {
 		return rating;
 	}
 
-	public void setRating(double rating) {
+	public void setRating(int rating) {
 		this.rating = rating;
 	}
 

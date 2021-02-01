@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
-
 import bean.EventBean;
 import bean.UserBean;
 import javafx.event.ActionEvent;
@@ -26,7 +25,7 @@ public class GuestProfilePageController {
 	private String dataString = "dataLabel";
 	private String errorLabelMsg = "Ops, something went wrong, please try again";
 	private String errorLabelId = "errorLabel";
-	
+		
 	@FXML private Button btnBack;
 	
 	@FXML private VBox centralVBox;
@@ -58,7 +57,7 @@ public class GuestProfilePageController {
 			addHBox("Region:", guestBean.getReg()),
 			addHBox("Province:", guestBean.getProv()),
 			addHBox("City:", guestBean.getCity()),
-			addHBox("Rating:", String.valueOf(guestBean.getRatings()))
+			addHBox("Rating:", String.valueOf((double) guestBean.getRatings() / guestBean.getRatingsNum()))
 		);
 		
 		rateButtonSetAction(rateButton);

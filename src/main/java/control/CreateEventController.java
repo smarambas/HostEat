@@ -35,9 +35,9 @@ public class CreateEventController {
 		eventBean.setEventOwner(username);
 		eventBean.setGuestsNumber(0);
 		eventBean.setActualGuests("0/" + eventBean.getMaxGuestsNumber());
-		eventBean.setRegionString(user.getRegion());
-		eventBean.setProvinceString(user.getProvince());
-		eventBean.setCityString(user.getCity());
+		eventBean.setRegionString(user.getUserRegion());
+		eventBean.setProvinceString(user.getUserProvince());
+		eventBean.setCityString(user.getUserCity());
 		eventBean.setAddressString(user.getAddress());
 		
 		sessionBean.getEventBeanList().add(eventBean);		

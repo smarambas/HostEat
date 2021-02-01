@@ -25,6 +25,8 @@ public class NotificationPageController {
 	private String appStyle = "NewStyle.css";
 	private String errorLabelMsg = "Ops, something went wrong, please try again";
 	private String errorLabelId = "errorLabel";
+	private String hostPageString = "/standalone_view/HostNotificationsPage.fxml";
+	private String guestPageString = "/standalone_view/GuestNotificationsPage.fxml";
 
 	private List<NotificationBean> notificationBeans;
 	
@@ -44,10 +46,10 @@ public class NotificationPageController {
 			Parent root = null;
 			
 			if(GUIController.getSessionBean().getUserBean().getUserType().equalsIgnoreCase("HOST")) {
-				root = FXMLLoader.load(getClass().getResource("/standalone_view/HostNotificationsPage.fxml"));
+				root = FXMLLoader.load(getClass().getResource(hostPageString));
 			}
 			else {
-				root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestNotificationsPage.fxml"));
+				root = FXMLLoader.load(getClass().getResource(guestPageString));
 			}
 			
 			Scene scene = new Scene(root, 900, 600);
@@ -71,10 +73,10 @@ public class NotificationPageController {
 			Parent root = null;
 			
 			if(GUIController.getSessionBean().getUserBean().getUserType().equalsIgnoreCase("HOST")) {
-				root = FXMLLoader.load(getClass().getResource("/standalone_view/HostNotificationsPage.fxml"));
+				root = FXMLLoader.load(getClass().getResource(hostPageString));
 			}
 			else {
-				root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestNotificationsPage.fxml"));
+				root = FXMLLoader.load(getClass().getResource(guestPageString));
 			}
 			
 			Scene scene = new Scene(root, 900, 600);
@@ -98,10 +100,10 @@ public class NotificationPageController {
 				Parent root;
 				
 				if(GUIController.getSessionBean().getUserBean().getUserType().equalsIgnoreCase("HOST")) {
-					root = FXMLLoader.load(getClass().getResource("/standalone_view/HostNotificationsPage.fxml"));
+					root = FXMLLoader.load(getClass().getResource(hostPageString));
 				}
 				else {
-					root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestNotificationsPage.fxml"));
+					root = FXMLLoader.load(getClass().getResource(guestPageString));
 				}
 				
 				Scene scene = new Scene(root, 900, 600);

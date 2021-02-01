@@ -58,9 +58,9 @@ public class UserDAO {
 			
 			newUser = new User(type, usern, passw, name, surname, email);
 			newUser.setSex(sex);
-			newUser.setRegion(region);
-			newUser.setProvince(province);
-			newUser.setCity(city);
+			newUser.setUserRegion(region);
+			newUser.setUserProvince(province);
+			newUser.setUserCity(city);
 			newUser.setAddress(address);
 			newUser.setBirthday(birthday);
 			newUser.setRating(rating);

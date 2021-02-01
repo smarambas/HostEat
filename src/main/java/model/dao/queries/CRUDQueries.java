@@ -17,7 +17,7 @@ public class CRUDQueries {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		
 		String statement = String.format("INSERT INTO user (username, email, password, type, name, surname, sex, region, province, city, address, birthday, rating, ratings_num) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', %d, %d);", 
-		user.getUsername(), user.getEmail(), user.getPassword(), user.getType().toString(), user.getName(), user.getSurname(), user.getSex(), user.getRegion(), user.getProvince(), user.getCity(), user.getAddress(), sdf.format(user.getBirthday().getTime()), user.getRating(), user.getRatingsNum());
+		user.getUsername(), user.getEmail(), user.getPassword(), user.getType().toString(), user.getName(), user.getSurname(), user.getSex(), user.getUserRegion(), user.getUserProvince(), user.getUserCity(), user.getAddress(), sdf.format(user.getBirthday().getTime()), user.getRating(), user.getRatingsNum());
 		
 		return stmt.executeUpdate(statement);
 	}

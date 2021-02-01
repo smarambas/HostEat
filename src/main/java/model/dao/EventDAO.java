@@ -21,10 +21,12 @@ public class EventDAO {
 	private static ConnectionSingleton cs;
 	private static String norecord = "ERROR: no record found";
 	private static String format = "yyyy-MM-dd HH:mm";
+	private static String maxGuestsString = "max_num_guests";
+	private static String billString = "payment_bill";
 	
 	private EventDAO() {}
 	
-	public static List<Event> retrieveEventsByUsername(User user) throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
+	public static List<Event> retrieveEventsByUsername(User user) throws SQLException, ClassNotFoundException, IOException {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		Statement stm = null;
 		List<Event> eventList = new ArrayList<>();
@@ -35,11 +37,7 @@ public class EventDAO {
 				ResultSet.CONCUR_READ_ONLY);
 		
 		ResultSet rs = SimpleQueries.selectEventsByUsername(stm, user.getUsername());
-//		
-//		if(!rs.first()) {
-//			throw new NoRecordFoundException(norecord);
-//		}
-//		else {
+
 		if(rs.first()) {
 			rs.first();
 			do {
@@ -47,8 +45,8 @@ public class EventDAO {
 				GregorianCalendar date = new GregorianCalendar();	
 				date.setTime(rs.getTimestamp("date"));
 								
-				int maxGuestsNum = rs.getInt("max_num_guests");
-				int bill = rs.getInt("payment_bill");
+				int maxGuestsNum = rs.getInt(maxGuestsString);
+				int bill = rs.getInt(billString);
 				
 				Event newEvent = new Event(user, date, maxGuestsNum, bill);
 				
@@ -66,9 +64,9 @@ public class EventDAO {
 				}
 				
 				newEvent.setGuestsNumber(guestsNum);
-				newEvent.setRegion(user.getRegion());
-				newEvent.setProvince(user.getProvince());
-				newEvent.setCity(user.getCity());
+				newEvent.setRegion(user.getUserRegion());
+				newEvent.setProvince(user.getUserProvince());
+				newEvent.setCity(user.getUserCity());
 				newEvent.setAddress(user.getAddress());
 				
 				eventList.add(newEvent);
@@ -85,7 +83,7 @@ public class EventDAO {
 		return eventList;
 	}
 	
-	public static Event retrieveEventByUsernameDateTime(User user, GregorianCalendar dateTime) throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
+	public static Event retrieveEventByUsernameDateTime(User user, GregorianCalendar dateTime) throws SQLException, ClassNotFoundException, IOException {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		Statement stm = null;
 		Event event = null;
@@ -104,8 +102,8 @@ public class EventDAO {
 			GregorianCalendar date = new GregorianCalendar();	
 			date.setTime(rs.getTimestamp("date"));
 			
-			int maxGuestsNum = rs.getInt("max_num_guests");
-			int bill = rs.getInt("payment_bill");
+			int maxGuestsNum = rs.getInt(maxGuestsString);
+			int bill = rs.getInt(billString);
 			
 			event = new Event(user, date, maxGuestsNum, bill);
 			
@@ -123,9 +121,9 @@ public class EventDAO {
 			}
 			
 			event.setGuestsNumber(guestsNum);
-			event.setRegion(user.getRegion());
-			event.setProvince(user.getProvince());
-			event.setCity(user.getCity());
+			event.setRegion(user.getUserRegion());
+			event.setProvince(user.getUserProvince());
+			event.setCity(user.getUserCity());
 			event.setAddress(user.getAddress());
 			
 			tempStatement.close();
@@ -244,8 +242,8 @@ public class EventDAO {
 				String owner = rs.getString("owner");
 				GregorianCalendar date = new GregorianCalendar();
 				date.setTime(rs.getTimestamp("date"));
-				int maxGuestsNum = rs.getInt("max_num_guests");
-				int bill = rs.getInt("payment_bill");
+				int maxGuestsNum = rs.getInt(maxGuestsString);
+				int bill = rs.getInt(billString);
 				
 				User user = UserDAO.retrieveUserByUsername(owner);
 				
@@ -264,9 +262,9 @@ public class EventDAO {
 				}
 				
 				Event newEvent = new Event(user, date, maxGuestsNum, bill);
-				newEvent.setRegion(user.getRegion());
-				newEvent.setProvince(user.getProvince());
-				newEvent.setCity(user.getCity());
+				newEvent.setRegion(user.getUserRegion());
+				newEvent.setProvince(user.getUserProvince());
+				newEvent.setCity(user.getUserCity());
 				newEvent.setGuestsNumber(guestsNum);
 				
 				eventList.add(newEvent);

@@ -12,9 +12,9 @@ public class User {
 	private String email;
 	private GregorianCalendar birthday;
 	private String sex;
-	private String region;
-	private String province;
-	private String city;
+	private String userRegion;
+	private String userProvince;
+	private String userCity;
 	private String address;
 	private int rating;
 	private int ratingsNum;
@@ -58,28 +58,28 @@ public class User {
 		this.sex = sex;
 	}
 
-	public String getRegion() {
-		return region;
+	public String getUserRegion() {
+		return userRegion;
 	}
 
-	public void setRegion(String region) {
-		this.region = region;
+	public void setUserRegion(String region) {
+		this.userRegion = region;
 	}
 
-	public String getProvince() {
-		return province;
+	public String getUserProvince() {
+		return userProvince;
 	}
 
-	public void setProvince(String province) {
-		this.province = province;
+	public void setUserProvince(String province) {
+		this.userProvince = province;
 	}
 
-	public String getCity() {
-		return city;
+	public String getUserCity() {
+		return userCity;
 	}
 
-	public void setCity(String city) {
-		this.city = city;
+	public void setUserCity(String city) {
+		this.userCity = city;
 	}
 
 	public String getUsername() {

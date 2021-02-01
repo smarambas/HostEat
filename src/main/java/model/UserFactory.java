@@ -21,9 +21,9 @@ public class UserFactory {
 								userBean.getEmailAddr());
 		
 		newUser.setSex(userBean.getSex());
-		newUser.setRegion(userBean.getReg());
-		newUser.setProvince(userBean.getProv());
-		newUser.setCity(userBean.getCity());
+		newUser.setUserRegion(userBean.getReg());
+		newUser.setUserProvince(userBean.getProv());
+		newUser.setUserCity(userBean.getCity());
 		newUser.setAddress(userBean.getAddr());
 		newUser.setRating(0);
 		newUser.setRatingsNum(0);

@@ -87,8 +87,13 @@ public class ResultEventPageController {
 	}
 	
 	@FXML
-	private void handleMenuButtonAction(ActionEvent event) {
-		
+	private void handleMenuButtonAction(ActionEvent event) throws IOException {
+		Stage stage = (Stage) menuButton.getScene().getWindow();
+		Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/ResultMenuPage.fxml"));
+		Scene scene = new Scene(root, 900, 600);
+		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+		stage.setScene(scene);
+		stage.show();
 	}
 	
 	@FXML

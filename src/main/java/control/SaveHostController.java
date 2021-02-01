@@ -30,9 +30,9 @@ public class SaveHostController {
 		tempUserBean.setBirthday(sdf.format(favUser.getBirthday().getTime()));
 		tempUserBean.setSex(favUser.getSex());
 		tempUserBean.setEmailAddr(favUser.getEmail());
-		tempUserBean.setReg(favUser.getRegion());
-		tempUserBean.setProv(favUser.getProvince());
-		tempUserBean.setCity(favUser.getCity());
+		tempUserBean.setReg(favUser.getUserRegion());
+		tempUserBean.setProv(favUser.getUserProvince());
+		tempUserBean.setCity(favUser.getUserCity());
 		tempUserBean.setRatings(favUser.getRating());
 		
 		GUIController.getSessionBean().getSavedHosts().add(tempUserBean);

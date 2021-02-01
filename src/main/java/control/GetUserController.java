@@ -24,9 +24,9 @@ public class GetUserController {
 		result.setSurname(user.getSurname());
 		result.setEmailAddr(user.getEmail());
 		result.setBirthday(sdf.format(user.getBirthday().getTime()));
-		result.setReg(user.getRegion());
-		result.setProv(user.getProvince());
-		result.setCity(user.getCity());
+		result.setReg(user.getUserRegion());
+		result.setProv(user.getUserProvince());
+		result.setCity(user.getUserCity());
 		result.setRatings(user.getRating());
 		result.setSex(user.getSex());
 		

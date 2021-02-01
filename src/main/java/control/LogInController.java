@@ -97,9 +97,9 @@ public class LogInController {
 					tempUserBean.setBirthday(sdf.format(tempUser.getBirthday().getTime()));
 					tempUserBean.setSex(tempUser.getSex());
 					tempUserBean.setEmailAddr(tempUser.getEmail());
-					tempUserBean.setReg(tempUser.getRegion());
-					tempUserBean.setProv(tempUser.getProvince());
-					tempUserBean.setCity(tempUser.getCity());
+					tempUserBean.setReg(tempUser.getUserRegion());
+					tempUserBean.setProv(tempUser.getUserProvince());
+					tempUserBean.setCity(tempUser.getUserCity());
 					tempUserBean.setRatings(tempUser.getRating());
 					
 					sessionBean.getSavedHosts().add(tempUserBean);
@@ -112,9 +112,9 @@ public class LogInController {
 			userBean.setSex(user.getSex());
 			userBean.setEmailAddr(user.getEmail());
 			userBean.setUserType(userType.toString().toUpperCase());
-			userBean.setReg(user.getRegion());
-			userBean.setProv(user.getProvince());
-			userBean.setCity(user.getCity());
+			userBean.setReg(user.getUserRegion());
+			userBean.setProv(user.getUserProvince());
+			userBean.setCity(user.getUserCity());
 			userBean.setAddr(user.getAddress());
 			userBean.setRatings(user.getRating());
 			userBean.setRatingsNum(user.getRatingsNum());

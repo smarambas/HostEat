@@ -56,9 +56,9 @@ public class JoinEventController {
 		eventBean.setEventOwner(host.getUsername());
 		eventBean.setGuestsNumber(event.getGuestsNumber() + 1);
 		eventBean.setActualGuests(eventBean.getGuestsNumber() + "/" + event.getMaxGuestsNumber());
-		eventBean.setRegionString(host.getRegion());
-		eventBean.setProvinceString(host.getProvince());
-		eventBean.setCityString(host.getCity());
+		eventBean.setRegionString(host.getUserRegion());
+		eventBean.setProvinceString(host.getUserProvince());
+		eventBean.setCityString(host.getUserCity());
 		eventBean.setBill(event.getBill());
 		eventBean.setGuestStatus("JOINED");
 		eventBean.setHostRated(0);

@@ -22,6 +22,8 @@ public class JoinedEventDAO {
 	private static ConnectionSingleton cs;
 	private static String norecord = "ERROR: no record found";
 	private static String format = "yyyy-MM-dd HH:mm";
+	private static String guestStatusString = "guest_status";
+	private static String paymentStatusString = "payment_status";
 	
 	private JoinedEventDAO() {}
 	
@@ -44,8 +46,8 @@ public class JoinedEventDAO {
 				GregorianCalendar date = new GregorianCalendar();
 				date.setTime(rs.getTimestamp("event_date"));
 								
-				String guestStatus = rs.getString("guest_status");
-				String paymentStatus = rs.getString("payment_status");
+				String guestStatus = rs.getString(guestStatusString);
+				String paymentStatus = rs.getString(paymentStatusString);
 				
 				int hrated = rs.getInt("host_rated");
 				int grated = rs.getInt("guest_rated");
@@ -56,9 +58,9 @@ public class JoinedEventDAO {
 				
 				newEvent.setGuestStatus(GuestStatus.valueOf(guestStatus.toUpperCase()));
 				newEvent.setPayStatus(PaymentStatus.valueOf(paymentStatus.toUpperCase()));
-				newEvent.setRegion(ownerUser.getRegion());
-				newEvent.setProvince(ownerUser.getProvince());
-				newEvent.setCity(ownerUser.getCity());
+				newEvent.setRegion(ownerUser.getUserRegion());
+				newEvent.setProvince(ownerUser.getUserProvince());
+				newEvent.setCity(ownerUser.getUserCity());
 				newEvent.setAddress(ownerUser.getAddress());
 				newEvent.setHostRated(hrated);
 				newEvent.setGuestRated(grated);
@@ -248,8 +250,8 @@ public class JoinedEventDAO {
 				String username = rs.getString("guest");
 				
 				User guest = UserDAO.retrieveUserByUsername(username);
-				guest.setGuestStatus(GuestStatus.valueOf(rs.getString("guest_status").toUpperCase()));
-				guest.setPayStatus(PaymentStatus.valueOf(rs.getString("payment_status").toUpperCase()));
+				guest.setGuestStatus(GuestStatus.valueOf(rs.getString(guestStatusString).toUpperCase()));
+				guest.setPayStatus(PaymentStatus.valueOf(rs.getString(paymentStatusString).toUpperCase()));
 				
 				guestsList.add(guest);
 			}
@@ -279,8 +281,8 @@ public class JoinedEventDAO {
 			GregorianCalendar date = new GregorianCalendar();
 			date.setTime(rs.getTimestamp("event_date"));
 							
-			String guestStatus = rs.getString("guest_status");
-			String paymentStatus = rs.getString("payment_status");
+			String guestStatus = rs.getString(guestStatusString);
+			String paymentStatus = rs.getString(paymentStatusString);
 			
 			int hrated = rs.getInt("host_rated");
 			int grated = rs.getInt("guest_rated");

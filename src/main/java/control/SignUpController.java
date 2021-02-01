@@ -19,8 +19,6 @@ public class SignUpController {
 		else {
 			try {
 				UserDAO.saveUser(user);
-//				sessionBean.setUserType(userBean.getUserType().toUpperCase());
-//				sessionBean.setUsername(userBean.getUsername());
 				sessionBean.setUserBean(userBean);
 			} catch (Exception e) {
 				sessionBean = null;

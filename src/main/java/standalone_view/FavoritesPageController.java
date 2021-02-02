@@ -5,19 +5,14 @@ import bean.UserBean;
 import control.GetHostEventsController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class FavoritesPageController {
 
-	private String appStyle = "NewStyle.css";
 	private String errorLabelMsg = "Ops, something went wrong, please try again";
 	private String errorLabelId = "errorLabel";
 		
@@ -51,12 +46,8 @@ public class FavoritesPageController {
 				HostProfilePageController.setUserBean(ub);
 				
 				try {
-					Stage stage = (Stage) openButton.getScene().getWindow();
-					Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/HostProfilePage.fxml"));
-					Scene scene = new Scene(root, 900, 600);
-					scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-					stage.setScene(scene);
-					stage.show();
+					ViewCommons viewCommons = new ViewCommons();
+					viewCommons.handleButtonShowStage(openButton, "/standalone_view/HostProfilePage.fxml", 900, 600);
 				} catch (Exception e) {
 					Label errorLabel = new Label(errorLabelMsg);
 					errorLabel.setId(errorLabelId);
@@ -71,12 +62,8 @@ public class FavoritesPageController {
 					GetHostEventsController getHostEventsController = new GetHostEventsController();
 					GUIController.setSessionBean(getHostEventsController.getHostEvents(ub));
 					
-					Stage stage = (Stage) eventsButton.getScene().getWindow();
-					Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/SearchResultsPage.fxml"));
-					Scene scene = new Scene(root, 900, 600);
-					scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-					stage.setScene(scene);
-					stage.show();
+					ViewCommons viewCommons = new ViewCommons();
+					viewCommons.handleButtonShowStage(eventsButton, "/standalone_view/SearchResultsPage.fxml", 900, 600);
 				} catch (Exception e) {
 					Label errorLabel = new Label(errorLabelMsg);
 					errorLabel.setId(errorLabelId);

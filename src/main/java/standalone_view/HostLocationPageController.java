@@ -15,21 +15,15 @@ import bean.EventBean;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class HostLocationPageController {
 	
-	private String appStyle = "NewStyle.css";
 	private String errorLabelMsg = "Ops, something went wrong, please try again";
 	private String errorLabelId = "errorLabel";
 
@@ -42,16 +36,11 @@ public class HostLocationPageController {
 	@FXML private Button btnBack;
 	
 	@FXML private VBox centralVBox;
-	@FXML private HBox bottomHBox;
 	
 	@FXML
 	private void handleBackButtonAction(ActionEvent event) throws IOException {
-		Stage stage = (Stage) btnBack.getScene().getWindow();
-		Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestEventPage.fxml"));
-		Scene scene = new Scene(root, 900, 600);
-		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-		stage.setScene(scene);
-		stage.show();
+		ViewCommons viewCommons = new ViewCommons();
+		viewCommons.handleButtonShowStage(btnBack, "/standalone_view/GuestEventPage.fxml", 900, 600);
 	}
 	
 	@FXML

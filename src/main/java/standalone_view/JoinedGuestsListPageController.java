@@ -29,12 +29,6 @@ public class JoinedGuestsListPageController {
 	@FXML private VBox centralVBox;
 	
 	@FXML
-	private void handleBackButtonAction(ActionEvent event) throws IOException {
-		ViewCommons viewCommons = new ViewCommons();
-		viewCommons.handleButtonShowStage(btnBack, "/standalone_view/HostEventPage.fxml", 900, 600);
-	}
-	
-	@FXML
 	protected void initialize() {		
 		eventBean = HostBaseController.getSelectedEvent();
 		GetJoinedGuestsController getJoinedGuestsController = new GetJoinedGuestsController();
@@ -76,6 +70,12 @@ public class JoinedGuestsListPageController {
 			errorLabel.setId(errorLabelId);
 			centralVBox.getChildren().add(errorLabel);
 		}
+	}
+	
+	@FXML
+	private void handleBackButtonAction(ActionEvent event) throws IOException {
+		ViewCommons viewCommons = new ViewCommons();
+		viewCommons.handleButtonShowStage(btnBack, "/standalone_view/HostEventPage.fxml", 900, 600);
 	}
 	
 	private void denyButtonSetActionHost(UserBean guestBean ,Button button) {

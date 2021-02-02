@@ -94,8 +94,6 @@ public class NewEventPageController {
 		
 		submitButton.setOnAction((ActionEvent event) -> {
 			EventBean eventBean = new EventBean();
-			Parent root = null;
-			Stage stage = (Stage) submitButton.getScene().getWindow();
 			
 			try {
 				eventBean.setDateTime(datePicker.getValue().toString() + " " +
@@ -114,12 +112,9 @@ public class NewEventPageController {
 				CreateEventController createEventController = new CreateEventController();
 			
 				GUIController.setSessionBean(createEventController.createEvent(eventBean));
-								
-				root = FXMLLoader.load(getClass().getResource("/standalone_view/ProposeMenuPage.fxml"));
-				Scene scene = new Scene(root, 900, 600);
-				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-				stage.setScene(scene);
-				stage.show();
+				
+				ViewCommons viewCommons = new ViewCommons();
+				viewCommons.handleButtonShowStage(submitButton, "/standalone_view/ProposeMenuPage.fxml", 900, 600);
 			} catch (Exception e) {
 				Label errorLabel = new Label("The event was not created, please try again.");
 				errorLabel.setId("errorLabel");

@@ -9,13 +9,14 @@ import java.util.List;
 import bean.EventBean;
 import bean.SessionBean;
 import exceptions.NoRecordFoundException;
+import exceptions.WrongDateException;
 import model.Event;
 import model.dao.EventDAO;
 import standalone_view.GUIController;
 
 public class SearchEventController {
 
-	public SessionBean searchEvent(EventBean eventBean) throws ClassNotFoundException, SQLException, NoRecordFoundException, IOException, ParseException {
+	public SessionBean searchEvent(EventBean eventBean) throws ClassNotFoundException, SQLException, NoRecordFoundException, IOException, ParseException, WrongDateException {
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		
@@ -23,6 +24,12 @@ public class SearchEventController {
 		
 		GregorianCalendar dateTime = new GregorianCalendar();
 		dateTime.setTime(sdf.parse(eventBean.getDateTime()));
+		
+		GregorianCalendar now = new GregorianCalendar();
+		
+		if(dateTime.getTime().compareTo(now.getTime()) < 0) {
+			throw new WrongDateException("Wrong date selected");
+		}
 		
 		List<Event> eventList = EventDAO.retrieveEventsBySearch(eventBean.getRegionString(), 
 																eventBean.getProvinceString(), 

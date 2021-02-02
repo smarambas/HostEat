@@ -1,9 +1,9 @@
 package standalone_view;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import bean.EventBean;
 import control.CreateEventController;
+import exceptions.WrongDateException;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +14,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -53,15 +52,6 @@ public class NewEventPageController {
 				
 		DatePicker datePicker = new DatePicker();
 		datePicker.setPromptText("date");
-        datePicker.setDayCellFactory(picker -> new DateCell() {
-        	@Override
-            public void updateItem(LocalDate date, boolean empty) {
-                super.updateItem(date, empty);
-                LocalDate today = LocalDate.now();
-
-                setDisable(empty || date.compareTo(today) < 0 );
-            }
-        });
 
 		ChoiceBox hoursChoiceBox = new ChoiceBox(FXCollections.observableArrayList(
 			"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", 
@@ -115,6 +105,10 @@ public class NewEventPageController {
 				
 				ViewCommons viewCommons = new ViewCommons();
 				viewCommons.handleButtonShowStage(submitButton, "/standalone_view/ProposeMenuPage.fxml", 900, 600);
+			} catch (WrongDateException wde) {
+				Label errorLabel = new Label("The date picked is in the past, try again");
+				errorLabel.setId("errorLabel");
+				centralVBox.getChildren().add(errorLabel);
 			} catch (Exception e) {
 				Label errorLabel = new Label("The event was not created, please try again.");
 				errorLabel.setId("errorLabel");

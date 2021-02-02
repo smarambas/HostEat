@@ -3,10 +3,10 @@ package standalone_view;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
 import bean.EventBean;
 import control.SearchEventController;
 import exceptions.NoRecordFoundException;
+import exceptions.WrongDateException;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,7 +17,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -78,6 +77,10 @@ public class SearchEventPageController {
 			Label errorLabel = new Label("Please, insert at least one research field");
 			errorLabel.setId("errorLabel");
 			centralVBox.getChildren().add(errorLabel);
+		} catch (WrongDateException wde) {
+			Label errorLabel = new Label("The date picked is in the past, try again");
+			errorLabel.setId("errorLabel");
+			centralVBox.getChildren().add(errorLabel);
 		} catch (NoRecordFoundException nrfe) {
 			Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/NoResultFoundErrorPage.fxml"));
 			Scene scene = new Scene(root, 400, 100);
@@ -96,17 +99,7 @@ public class SearchEventPageController {
 	}
 	
 	@FXML
-	protected void initialize() {
-		datePicker.setDayCellFactory(picker -> new DateCell() {
-        	@Override
-            public void updateItem(LocalDate date, boolean empty) {
-                super.updateItem(date, empty);
-                LocalDate today = LocalDate.now();
-
-                setDisable(empty || date.compareTo(today) < 0 );
-            }
-        });
-		
+	protected void initialize() {		
 		datePicker.setValue(LocalDate.now());
 		
 		hoursChoiceBox = new ChoiceBox<>(FXCollections.observableArrayList(

@@ -20,19 +20,13 @@ public class HostEventPageController {
 	private String errorLabelMsg = "Ops, something went wrong, please try again";
 	private String errorLabelId = "errorLabel";
 	
+	@FXML private Button btnBack;
+	
 	private EventBean eventBean;
 	private static MenuBean menuBean;
 	
-	@FXML private Button btnBack;
-	
 	@FXML private VBox centralVBox;
 	@FXML private HBox bottomHBox;
-	
-	@FXML
-	private void handleBackButtonAction(ActionEvent event) throws IOException {
-		ViewCommons viewCommons = new ViewCommons();
-		viewCommons.handleButtonShowStage(btnBack, "/standalone_view/HostBase.fxml", 900, 600);
-	}
 	
 	@FXML
 	protected void initialize() {	
@@ -145,6 +139,12 @@ public class HostEventPageController {
 				centralVBox.getChildren().add(errorLabel);
 			}
 		});
+	}
+	
+	@FXML
+	private void handleBackButtonAction(ActionEvent event) throws IOException {
+		ViewCommons viewCommons = new ViewCommons();
+		viewCommons.handleButtonShowStage(btnBack, "/standalone_view/HostBase.fxml", 900, 600);
 	}
 
 	public static void setMenuBean(MenuBean menuBean) {

@@ -104,12 +104,6 @@ public class HostProfilePageController {
 		});		
 	}
 	
-	@FXML
-	private void handleBackButtonAction(ActionEvent event) throws IOException {
-		ViewCommons viewCommons = new ViewCommons();
-		viewCommons.handleButtonShowStage(btnBack, "/standalone_view/ResultEventPage.fxml", 900, 600);
-	}
-	
 	private HBox addHBox(String s, String data) {
 		HBox hBox = new HBox();
 		
@@ -131,6 +125,12 @@ public class HostProfilePageController {
 
 	public static void setUserBean(UserBean userBean) {
 		HostProfilePageController.userBean = userBean;
+	}
+	
+	@FXML
+	private void handleBackButtonAction(ActionEvent event) throws IOException {
+		ViewCommons viewCommons = new ViewCommons();
+		viewCommons.handleButtonShowStage(btnBack, "/standalone_view/ResultEventPage.fxml", 900, 600);
 	}
 	
 }

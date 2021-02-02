@@ -6,44 +6,29 @@ import bean.EventBean;
 import control.RefreshController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class HostBaseController {
 
-	private String appStyle = "NewStyle.css";
 	private String errorLabelMsg = "Ops, something went wrong, please try again";
 	private String errorLabelId = "errorLabel";
+	
+	private static EventBean selectedEvent;
 	
 	@FXML private Button btnRefresh;
 	@FXML private Button btnEvent;
 	
 	@FXML private VBox centralVBox;
 	
-	private static EventBean selectedEvent;
-	
 	@FXML
 	private void handleHostBaseNewEventButtonAction(ActionEvent event) throws IOException {
-		Stage stage = new Stage();
-		Parent root = null;
-		
-		if(event.getSource() == btnEvent) {
-			stage = (Stage) btnEvent.getScene().getWindow();
-			root = FXMLLoader.load(getClass().getResource("/standalone_view/NewEventPage.fxml"));
-		}
-		
-		Scene scene = new Scene(root, 900, 600);
-		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-		stage.setScene(scene);
-		stage.show();
+		ViewCommons viewCommons = new ViewCommons();
+		viewCommons.handleButtonShowStage(btnEvent, "/standalone_view/NewEventPage.fxml", 900, 600);
 	}
 	
 	@FXML
@@ -51,18 +36,14 @@ public class HostBaseController {
 		try {
 			RefreshController refreshController = new RefreshController();
 			GUIController.setSessionBean(refreshController.refresh(GUIController.getSessionBean().getUserBean()));
+			
+			ViewCommons viewCommons = new ViewCommons();
+			viewCommons.handleButtonShowStage(btnRefresh, "/standalone_view/HostBase.fxml", 900, 600);
 		} catch(Exception e) {
 			Label errorLabel = new Label("Ops, something went wrong, please try again");
 			errorLabel.setId("errorLabel");
 			centralVBox.getChildren().add(errorLabel);
 		}
-		
-		Stage stage = (Stage) btnRefresh.getScene().getWindow();
-		Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/HostBase.fxml"));
-		Scene scene = new Scene(root, 900, 600);
-		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-		stage.setScene(scene);
-		stage.show();
 	}
 	
 	@FXML
@@ -86,14 +67,10 @@ public class HostBaseController {
 				Button openButton = new Button("Open event");
 								
 				openButton.setOnAction((ActionEvent event) -> {
-					Stage stage = (Stage) btnEvent.getScene().getWindow();
 					setSelectedEvent(e);
 					try {
-						Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/HostEventPage.fxml"));
-						Scene scene = new Scene(root, 900, 600);
-						scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-						stage.setScene(scene);
-						stage.show();
+						ViewCommons viewCommons = new ViewCommons();
+						viewCommons.handleButtonShowStage(openButton, "/standalone_view/HostEventPage.fxml", 900, 600);
 					} catch(IOException ioe) {
 						Label errorLabel = new Label(errorLabelMsg);
 						errorLabel.setId(errorLabelId);

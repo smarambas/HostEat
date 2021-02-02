@@ -35,12 +35,8 @@ public class ResultEventPageController {
 	
 	@FXML
 	private void handleBackButtonAction(ActionEvent event) throws IOException {
-		Stage stage = (Stage) btnBack.getScene().getWindow();
-		Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/SearchResultsPage.fxml"));
-		Scene scene = new Scene(root, 900, 600);
-		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-		stage.setScene(scene);
-		stage.show();
+		ViewCommons viewCommons = new ViewCommons();
+		viewCommons.handleButtonShowStage(btnBack, "/standalone_view/SearchResultsPage.fxml", 900, 600);
 	}
 	
 	@FXML

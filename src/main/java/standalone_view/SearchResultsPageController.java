@@ -69,7 +69,8 @@ public class SearchResultsPageController {
 			openButton.setOnAction((ActionEvent event) -> {
 				setSelectedEvent(eventBean);
 				try {
-					showStage(openButton, "/standalone_view/ResultEventPage.fxml");
+					ViewCommons viewCommons = new ViewCommons();
+					viewCommons.handleButtonShowStage(openButton, "/standalone_view/ResultEventPage.fxml", 900, 600);
 				} catch(IOException ioe) {
 					Label errorLabel = new Label(errorLabelMsg);
 					errorLabel.setId(errorLabelId);
@@ -101,14 +102,5 @@ public class SearchResultsPageController {
 	public static void setSelectedEvent(EventBean selectedEvent) {
 		SearchResultsPageController.selectedEvent = selectedEvent;
 	}
-	
-	private void showStage(Button button, String fxml) throws IOException {
-		Stage stage = (Stage) button.getScene().getWindow();
-		Parent root = FXMLLoader.load(getClass().getResource(fxml));
-		Scene scene = new Scene(root, 900, 600);
-		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-		stage.setScene(scene);
-		stage.show();
-	}
-	
+
 }

@@ -8,19 +8,14 @@ import control.RemoveHostController;
 import control.SaveHostController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class HostProfilePageController {
 
-	private String appStyle = "NewStyle.css";
 	private String descriptionString = "descriptionLabel";
 	private String dataString = "dataLabel";
 	private String errorLabelMsg = "Ops, something went wrong, please try again";
@@ -35,12 +30,8 @@ public class HostProfilePageController {
 	
 	@FXML
 	private void handleBackButtonAction(ActionEvent event) throws IOException {
-		Stage stage = (Stage) btnBack.getScene().getWindow();
-		Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/ResultEventPage.fxml"));
-		Scene scene = new Scene(root, 900, 600);
-		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-		stage.setScene(scene);
-		stage.show();
+		ViewCommons viewCommons = new ViewCommons();
+		viewCommons.handleButtonShowStage(btnBack, "/standalone_view/ResultEventPage.fxml", 900, 600);
 	}
 	
 	@FXML
@@ -92,13 +83,9 @@ public class HostProfilePageController {
 			try {
 				SaveHostController saveHostController = new SaveHostController();
 				saveHostController.saveHost(guestBean, favUserBean);
-								
-				Stage stage = (Stage) saveButton.getScene().getWindow();
-				Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/FavoritesPage.fxml"));
-				Scene scene = new Scene(root, 900, 600);
-				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-				stage.setScene(scene);
-				stage.show();
+				
+				ViewCommons viewCommons = new ViewCommons();
+				viewCommons.handleButtonShowStage(saveButton, "/standalone_view/FavoritesPage.fxml", 900, 600);
 			} catch (Exception e) {
 				Label errorLabel = new Label(errorLabelMsg);
 				errorLabel.setId(errorLabelId);
@@ -113,12 +100,8 @@ public class HostProfilePageController {
 				RemoveHostController removeHostController = new RemoveHostController();
 				removeHostController.removeHost(guestBean, favUserBean);
 				
-				Stage stage = (Stage) removeButton.getScene().getWindow();
-				Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/FavoritesPage.fxml"));
-				Scene scene = new Scene(root, 900, 600);
-				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-				stage.setScene(scene);
-				stage.show();
+				ViewCommons viewCommons = new ViewCommons();
+				viewCommons.handleButtonShowStage(removeButton, "/standalone_view/FavoritesPage.fxml", 900, 600);
 			} catch (Exception e) {
 				Label errorLabel = new Label(errorLabelMsg);
 				errorLabel.setId(errorLabelId);

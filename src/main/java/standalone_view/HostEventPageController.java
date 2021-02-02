@@ -19,8 +19,6 @@ public class HostEventPageController {
 
 	private String errorLabelMsg = "Ops, something went wrong, please try again";
 	private String errorLabelId = "errorLabel";
-	private String openString = "Open menu";
-	private String removeString = "Remove event";
 	
 	private EventBean eventBean;
 	private static MenuBean menuBean;
@@ -37,7 +35,10 @@ public class HostEventPageController {
 	}
 	
 	@FXML
-	protected void initialize() {		
+	protected void initialize() {	
+		String openString = "Open menu";
+		String removeString = "Remove event";
+		
 		eventBean = HostBaseController.getSelectedEvent();
 		
 		ViewCommons viewCommons = new ViewCommons();
@@ -101,6 +102,22 @@ public class HostEventPageController {
 		return hBox;
 	}
 	
+	private void menuButtonSetAction(Button button) {
+		button.setOnAction((ActionEvent event) -> {
+			try {
+				GetMenuController getMenuController = new GetMenuController();
+				setMenuBean(getMenuController.getMenu(eventBean));
+				
+				ViewCommons viewCommons = new ViewCommons();
+				viewCommons.handleButtonShowStage(button, "/standalone_view/HostMenuPage.fxml", 900, 600);
+			} catch (Exception e) {
+				Label errorLabel = new Label("No menu found, sorry");
+				errorLabel.setId(errorLabelId);
+				centralVBox.getChildren().add(errorLabel);
+			}
+		});
+	}
+	
 	private void deleteButtonSetActionHost(Button button) {
 		button.setOnAction((ActionEvent event) -> {
 			try {
@@ -124,22 +141,6 @@ public class HostEventPageController {
 				viewCommons.handleButtonShowStage(button, "/standalone_view/JoinedGuestsListPage.fxml", 900, 600);
 			} catch (Exception e) {
 				Label errorLabel = new Label(errorLabelMsg);
-				errorLabel.setId(errorLabelId);
-				centralVBox.getChildren().add(errorLabel);
-			}
-		});
-	}
-	
-	private void menuButtonSetAction(Button button) {
-		button.setOnAction((ActionEvent event) -> {
-			try {
-				GetMenuController getMenuController = new GetMenuController();
-				setMenuBean(getMenuController.getMenu(eventBean));
-				
-				ViewCommons viewCommons = new ViewCommons();
-				viewCommons.handleButtonShowStage(button, "/standalone_view/HostMenuPage.fxml", 900, 600);
-			} catch (Exception e) {
-				Label errorLabel = new Label("No menu found, sorry");
 				errorLabel.setId(errorLabelId);
 				centralVBox.getChildren().add(errorLabel);
 			}

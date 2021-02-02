@@ -29,12 +29,6 @@ public class HostProfilePageController {
 	@FXML private HBox bottomHBox;
 	
 	@FXML
-	private void handleBackButtonAction(ActionEvent event) throws IOException {
-		ViewCommons viewCommons = new ViewCommons();
-		viewCommons.handleButtonShowStage(btnBack, "/standalone_view/ResultEventPage.fxml", 900, 600);
-	}
-	
-	@FXML
 	protected void initialize() {
 		if(userBean == null) {
 			EventBean eventBean = ResultEventPageController.getEventBean();
@@ -108,6 +102,12 @@ public class HostProfilePageController {
 				centralVBox.getChildren().add(errorLabel);
 			}
 		});		
+	}
+	
+	@FXML
+	private void handleBackButtonAction(ActionEvent event) throws IOException {
+		ViewCommons viewCommons = new ViewCommons();
+		viewCommons.handleButtonShowStage(btnBack, "/standalone_view/ResultEventPage.fxml", 900, 600);
 	}
 	
 	private HBox addHBox(String s, String data) {

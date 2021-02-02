@@ -4,13 +4,12 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import bean.UserBean;
-import exceptions.NoRecordFoundException;
 import model.User;
 import model.dao.UserDAO;
 
 public class GetUserController {
 
-	public UserBean getUser(UserBean userBean) throws ClassNotFoundException, SQLException, NoRecordFoundException, IOException {
+	public UserBean getUser(UserBean userBean) throws ClassNotFoundException, SQLException, IOException {
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		

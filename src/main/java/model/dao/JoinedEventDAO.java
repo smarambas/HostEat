@@ -144,11 +144,11 @@ public class JoinedEventDAO {
 		
 		String query = selectString;
 
-		try(PreparedStatement preparedStatement = cs.getConnection().prepareStatement(query)) {
-			preparedStatement.setString(1, user.getUsername());
-			preparedStatement.setString(2, event.getOwner().getUsername());
-			preparedStatement.setString(3, sdf.format(event.getDateTime().getTime()));
-			ResultSet rs = preparedStatement.executeQuery();
+		try(PreparedStatement prepStatement = cs.getConnection().prepareStatement(query)) {
+			prepStatement.setString(1, user.getUsername());
+			prepStatement.setString(2, event.getOwner().getUsername());
+			prepStatement.setString(3, sdf.format(event.getDateTime().getTime()));
+			ResultSet rs = prepStatement.executeQuery();
 
 			if(rs.next()) {
 				query = "UPDATE joined_event SET payment_status = ? WHERE guest = ? AND event_owner = ? AND event_date = ?;";
@@ -175,11 +175,11 @@ public class JoinedEventDAO {
 		
 		String query = selectString;
 
-		try(PreparedStatement preparedStatement = cs.getConnection().prepareStatement(query)) {
-			preparedStatement.setString(1, user.getUsername());
-			preparedStatement.setString(2, event.getOwner().getUsername());
-			preparedStatement.setString(3, sdf.format(event.getDateTime().getTime()));
-			ResultSet rs = preparedStatement.executeQuery();
+		try(PreparedStatement preparedStmt = cs.getConnection().prepareStatement(query)) {
+			preparedStmt.setString(1, user.getUsername());
+			preparedStmt.setString(2, event.getOwner().getUsername());
+			preparedStmt.setString(3, sdf.format(event.getDateTime().getTime()));
+			ResultSet rs = preparedStmt.executeQuery();
 
 			if(rs.next()) {
 				query = "UPDATE joined_event SET guest_status = ? WHERE guest = ? AND event_owner = ? AND event_date = ?;";
@@ -206,11 +206,11 @@ public class JoinedEventDAO {
 		
 		String query = selectString;
 
-		try(PreparedStatement preparedStatement = cs.getConnection().prepareStatement(query)) {
-			preparedStatement.setString(1, user.getUsername());
-			preparedStatement.setString(2, event.getOwner().getUsername());
-			preparedStatement.setString(3, sdf.format(event.getDateTime().getTime()));
-			ResultSet rs = preparedStatement.executeQuery();
+		try(PreparedStatement prepStmt = cs.getConnection().prepareStatement(query)) {
+			prepStmt.setString(1, user.getUsername());
+			prepStmt.setString(2, event.getOwner().getUsername());
+			prepStmt.setString(3, sdf.format(event.getDateTime().getTime()));
+			ResultSet rs = prepStmt.executeQuery();
 
 			if(rs.next()) {
 				query = "UPDATE joined_event SET guest_rated = ? WHERE guest = ? AND event_owner = ? AND event_date = ?;";
@@ -237,11 +237,11 @@ public class JoinedEventDAO {
 		
 		String query = selectString;
 
-		try(PreparedStatement preparedStatement = cs.getConnection().prepareStatement(query)) {
-			preparedStatement.setString(1, user.getUsername());
-			preparedStatement.setString(2, event.getOwner().getUsername());
-			preparedStatement.setString(3, sdf.format(event.getDateTime().getTime()));
-			ResultSet rs = preparedStatement.executeQuery();
+		try(PreparedStatement pStatement = cs.getConnection().prepareStatement(query)) {
+			pStatement.setString(1, user.getUsername());
+			pStatement.setString(2, event.getOwner().getUsername());
+			pStatement.setString(3, sdf.format(event.getDateTime().getTime()));
+			ResultSet rs = pStatement.executeQuery();
 
 			if(rs.next()) {
 				query = "UPDATE joined_event SET host_rated = ? WHERE guest = ? AND event_owner = ? AND event_date = ?;";

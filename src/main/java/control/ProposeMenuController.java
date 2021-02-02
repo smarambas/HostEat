@@ -5,12 +5,10 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
-
 import bean.CourseBean;
 import bean.EventBean;
 import bean.MenuBean;
 import exceptions.DuplicateRecordException;
-import exceptions.NoRecordFoundException;
 import model.Course;
 import model.Menu;
 import model.User;
@@ -19,7 +17,7 @@ import model.dao.UserDAO;
 
 public class ProposeMenuController {
 
-	public void proposeMenu(EventBean eventBean, MenuBean menuBean) throws ClassNotFoundException, SQLException, NoRecordFoundException, IOException, ParseException, DuplicateRecordException {
+	public void proposeMenu(EventBean eventBean, MenuBean menuBean) throws ClassNotFoundException, SQLException, IOException, ParseException, DuplicateRecordException {
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		

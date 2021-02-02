@@ -8,7 +8,6 @@ import java.util.GregorianCalendar;
 import bean.EventBean;
 import bean.SessionBean;
 import exceptions.DuplicateRecordException;
-import exceptions.NoRecordFoundException;
 import exceptions.WrongDateException;
 import model.Event;
 import model.User;
@@ -18,7 +17,7 @@ import standalone_view.GUIController;
 
 public class CreateEventController {
 
-	public SessionBean createEvent(EventBean eventBean) throws ClassNotFoundException, SQLException, NoRecordFoundException, IOException, ParseException, DuplicateRecordException, WrongDateException {
+	public SessionBean createEvent(EventBean eventBean) throws ClassNotFoundException, SQLException, IOException, ParseException, DuplicateRecordException, WrongDateException {
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		

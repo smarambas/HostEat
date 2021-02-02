@@ -9,7 +9,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import bean.EventBean;
 import bean.UserBean;
-import exceptions.NoRecordFoundException;
 import model.Event;
 import model.User;
 import model.dao.EventDAO;
@@ -18,7 +17,7 @@ import model.dao.UserDAO;
 
 public class GetJoinedGuestsController {
 
-	public List<UserBean> getJoinedGuests(EventBean eventBean) throws ClassNotFoundException, SQLException, NoRecordFoundException, IOException, ParseException {
+	public List<UserBean> getJoinedGuests(EventBean eventBean) throws ClassNotFoundException, SQLException, IOException, ParseException {
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		

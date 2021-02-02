@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import bean.UserBean;
 import exceptions.DuplicateRecordException;
-import exceptions.NoRecordFoundException;
 import model.User;
 import model.dao.FavoritesDAO;
 import model.dao.UserDAO;
@@ -13,7 +12,7 @@ import standalone_view.GUIController;
 
 public class SaveHostController {
 
-	public void saveHost(UserBean userBean, UserBean favUserBean) throws ClassNotFoundException, SQLException, NoRecordFoundException, IOException, DuplicateRecordException {
+	public void saveHost(UserBean userBean, UserBean favUserBean) throws ClassNotFoundException, SQLException, IOException, DuplicateRecordException {
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		

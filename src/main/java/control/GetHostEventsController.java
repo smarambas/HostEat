@@ -4,11 +4,9 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.List;
-
 import bean.EventBean;
 import bean.SessionBean;
 import bean.UserBean;
-import exceptions.NoRecordFoundException;
 import model.Event;
 import model.User;
 import model.dao.EventDAO;
@@ -17,7 +15,7 @@ import standalone_view.GUIController;
 
 public class GetHostEventsController {
 
-	public SessionBean getHostEvents(UserBean hostBean) throws ClassNotFoundException, SQLException, NoRecordFoundException, IOException {
+	public SessionBean getHostEvents(UserBean hostBean) throws ClassNotFoundException, SQLException, IOException {
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		

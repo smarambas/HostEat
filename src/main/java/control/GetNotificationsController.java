@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import bean.NotificationBean;
 import bean.UserBean;
-import exceptions.NoRecordFoundException;
 import model.Notification;
 import model.User;
 import model.dao.NotificationDAO;
@@ -16,7 +15,7 @@ import model.dao.UserDAO;
 
 public class GetNotificationsController {
 
-	public List<NotificationBean> getNotifications(UserBean userBean) throws ClassNotFoundException, SQLException, NoRecordFoundException, IOException, ParseException {
+	public List<NotificationBean> getNotifications(UserBean userBean) throws ClassNotFoundException, SQLException, IOException, ParseException {
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		

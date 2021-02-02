@@ -20,6 +20,7 @@ public class HostProfilePageController {
 	private String dataString = "dataLabel";
 	private String errorLabelMsg = "Ops, something went wrong, please try again";
 	private String errorLabelId = "errorLabel";
+	private String favString = "/standalone_view/FavoritesPage.fxml";
 	
 	private static UserBean userBean = null;
 		
@@ -79,7 +80,7 @@ public class HostProfilePageController {
 				saveHostController.saveHost(guestBean, favUserBean);
 				
 				ViewCommons viewCommons = new ViewCommons();
-				viewCommons.handleButtonShowStage(saveButton, "/standalone_view/FavoritesPage.fxml", 900, 600);
+				viewCommons.handleButtonShowStage(saveButton, favString, 900, 600);
 			} catch (Exception e) {
 				Label errorLabel = new Label(errorLabelMsg);
 				errorLabel.setId(errorLabelId);
@@ -95,7 +96,7 @@ public class HostProfilePageController {
 				removeHostController.removeHost(guestBean, favUserBean);
 				
 				ViewCommons viewCommons = new ViewCommons();
-				viewCommons.handleButtonShowStage(removeButton, "/standalone_view/FavoritesPage.fxml", 900, 600);
+				viewCommons.handleButtonShowStage(removeButton, favString, 900, 600);
 			} catch (Exception e) {
 				Label errorLabel = new Label(errorLabelMsg);
 				errorLabel.setId(errorLabelId);
@@ -130,7 +131,12 @@ public class HostProfilePageController {
 	@FXML
 	private void handleBackButtonAction(ActionEvent event) throws IOException {
 		ViewCommons viewCommons = new ViewCommons();
-		viewCommons.handleButtonShowStage(btnBack, "/standalone_view/ResultEventPage.fxml", 900, 600);
+		if(SearchResultsPageController.getSelectedEvent() == null) {
+			viewCommons.handleButtonShowStage(btnBack, favString, 900, 600);
+		}
+		else {
+			viewCommons.handleButtonShowStage(btnBack, "/standalone_view/ResultEventPage.fxml", 900, 600);
+		}
 	}
 	
 }

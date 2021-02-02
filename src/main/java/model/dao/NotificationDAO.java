@@ -1,9 +1,9 @@
 package model.dao;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,8 +14,6 @@ import exceptions.NoRecordFoundException;
 import model.Notification;
 import model.NotificationType;
 import model.User;
-import model.dao.queries.CRUDQueries;
-import model.dao.queries.SimpleQueries;
 
 public class NotificationDAO {
 
@@ -26,117 +24,118 @@ public class NotificationDAO {
 	
 	public static List<Notification> retrieveNotificationsByUser(User user) throws ClassNotFoundException, SQLException, IOException, ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
-		Statement stm = null;
 		
 		List<Notification> notifications = new ArrayList<>();
 		
 		cs = ConnectionSingleton.createConnection();
 		
-		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-				ResultSet.CONCUR_READ_ONLY);
-		
-		ResultSet rs = SimpleQueries.selectNotificationsByUsername(stm, user.getUsername());
-		
-		if(rs.first()) {
-			do {
-				Notification newNotification = new Notification();
-				
-				GregorianCalendar date = new GregorianCalendar();
-				date.setTime(sdf.parse(rs.getString("date")));
-				
-				newNotification.setUser(user);
-				newNotification.setText(rs.getString("text"));
-				newNotification.setType(NotificationType.valueOf(rs.getString("type").toUpperCase()));
-				newNotification.setDate(date);
-				
-				notifications.add(newNotification);
+		String query = "SELECT * FROM notification WHERE user = ?;";
+
+		try(PreparedStatement preparedStatement = cs.getConnection().prepareStatement(query)) {
+			preparedStatement.setString(1, user.getUsername());
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			if(rs.next()) {
+				do {
+					Notification newNotification = new Notification();
+					
+					GregorianCalendar date = new GregorianCalendar();
+					date.setTime(sdf.parse(rs.getString("date")));
+					
+					newNotification.setUser(user);
+					newNotification.setText(rs.getString("text"));
+					newNotification.setType(NotificationType.valueOf(rs.getString("type").toUpperCase()));
+					newNotification.setDate(date);
+					
+					notifications.add(newNotification);
+				}
+				while(rs.next());
 			}
-			while(rs.next());
-		}
 		
-		stm.close();
-		rs.close();
+		}
 		
 		return notifications;
 	}
 	
 	public static void saveNotification(User user, Notification notification) throws ClassNotFoundException, SQLException, IOException, DuplicateRecordException {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
-		Statement stm = null;
 		
 		cs = ConnectionSingleton.createConnection();
 		
-		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-				ResultSet.CONCUR_READ_ONLY);
-		
-		ResultSet rs = SimpleQueries.selectNotificationByUsernameText(stm, user.getUsername(), notification.getText());
-		
-		if(rs.first()) {
-			throw new DuplicateRecordException("ERROR: the record already exists");
-		}
-		else {
-			rs.close();
-			stm.close();
-			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
+		String query = "SELECT * FROM notification WHERE user = ? AND text = ?;";
+
+		try(PreparedStatement preparedStatement = cs.getConnection().prepareStatement(query)) {
+			preparedStatement.setString(1, user.getUsername());
+			preparedStatement.setString(2, notification.getText());
+			ResultSet rs = preparedStatement.executeQuery();
 			
-			CRUDQueries.insertNotification(stm, user.getUsername(), 
-											   notification.getText(), 
-											   notification.getType().toString().toUpperCase(), 
-											   sdf.format(notification.getDate().getTime()));
-		}
+			if(!rs.next()) {
+				query = "INSERT INTO notification (user, text, date, type) VALUES (?, ?, ?, ?);";
+				
+				try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
+					ps.setString(1, user.getUsername());
+					ps.setString(2, notification.getText());
+					ps.setString(3, sdf.format(notification.getDate().getTime()));
+					ps.setString(4, notification.getType().toString().toUpperCase());
+					
+					ps.executeUpdate();
+				}
+			}
+			else {
+				throw new DuplicateRecordException("ERROR: the record already exists");
+			}
 		
-		stm.close();
+		}
 	}
 	
 	public static void deleteNotification(User user, Notification notification) throws ClassNotFoundException, SQLException, IOException, NoRecordFoundException {
-		Statement stm = null;
-		
 		cs = ConnectionSingleton.createConnection();
 		
-		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-				ResultSet.CONCUR_READ_ONLY);
-		
-		ResultSet rs = SimpleQueries.selectNotificationByUsernameText(stm, user.getUsername(), notification.getText());
-		
-		if(rs.first()) {
-			rs.close();
-			stm.close();
-			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
+		String query = "SELECT * FROM notification WHERE user = ? AND text = ?;";
+
+		try(PreparedStatement preparedStatement = cs.getConnection().prepareStatement(query)) {
+			preparedStatement.setString(1, user.getUsername());
+			preparedStatement.setString(2, notification.getText());
+			ResultSet rs = preparedStatement.executeQuery();
 			
-			CRUDQueries.deleteNotification(stm, user.getUsername(), notification.getText());
+			if(rs.next()) {
+				query = "DELETE FROM notification WHERE user = ? AND text = ?;";
+				
+				try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
+					ps.setString(1, user.getUsername());
+					ps.setString(2, notification.getText());
+					
+					ps.executeUpdate();
+				}
+			}
+			else {
+				throw new NoRecordFoundException("ERROR: no record found");
+			}
 		}
-		else {
-			throw new NoRecordFoundException("ERROR: no record found");
-		}
-		
-		stm.close();
 	}
 	
-	public static void deleteAllNotifications(User user) throws ClassNotFoundException, SQLException, IOException, NoRecordFoundException {
-		Statement stm = null;
-		
+	public static void deleteAllNotifications(User user) throws ClassNotFoundException, SQLException, IOException, NoRecordFoundException {		
 		cs = ConnectionSingleton.createConnection();
 		
-		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-				ResultSet.CONCUR_READ_ONLY);
-		
-		ResultSet rs = SimpleQueries.selectNotificationsByUsername(stm, user.getUsername());
-		
-		if(rs.first()) {
-			rs.close();
-			stm.close();
-			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
+		String query = "SELECT * FROM notification WHERE user = ?;";
+
+		try(PreparedStatement preparedStatement = cs.getConnection().prepareStatement(query)) {
+			preparedStatement.setString(1, user.getUsername());
+			ResultSet rs = preparedStatement.executeQuery();
 			
-			CRUDQueries.deleteAllNotifications(stm, user.getUsername());
+			if(rs.next()) {
+				query = "DELETE FROM notification WHERE user = ?;";
+				
+				try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
+					ps.setString(1, user.getUsername());
+					
+					ps.executeUpdate();
+				}
+			}
+			else {
+				throw new NoRecordFoundException("ERROR: no record found");
+			}
 		}
-		else {
-			throw new NoRecordFoundException("ERROR: no record found");
-		}
-		
-		stm.close();
 	}
 	
 }

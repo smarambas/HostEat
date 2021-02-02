@@ -22,6 +22,7 @@ public class FavoritesPageController {
 	@FXML
 	protected void initialize() {
 		GUIController.getSessionBean().setSearchedList(new ArrayList<>());	//clear list
+		SearchResultsPageController.setSelectedEvent(null);
 		
 		for(UserBean ub : GUIController.getSessionBean().getSavedHosts()) {
 			Button openButton = new Button("View profile");

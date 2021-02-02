@@ -1,16 +1,14 @@
 package model.dao;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import exceptions.DuplicateRecordException;
 import exceptions.NoRecordFoundException;
 import model.User;
-import model.dao.queries.CRUDQueries;
-import model.dao.queries.SimpleQueries;
 
 public class FavoritesDAO {
 
@@ -18,80 +16,82 @@ public class FavoritesDAO {
 	
 	private FavoritesDAO() {}
 	
-	public static List<User> retrieveFavoritesByUsername(User user) throws SQLException, NoRecordFoundException, ClassNotFoundException, IOException {
-		Statement stm = null;
+	public static List<User> retrieveFavoritesByUsername(User user) throws SQLException, ClassNotFoundException, IOException {
 		List<User> favList = new ArrayList<>();
 		
 		cs = ConnectionSingleton.createConnection();
 		
-		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-				ResultSet.CONCUR_READ_ONLY);
-		
-		ResultSet rs = SimpleQueries.selectFavoritesByUsername(stm, user.getUsername());
-		
-		if(rs.first()) {
-			rs.first();
+		String query = "SELECT * FROM saved_user WHERE user = ?;";
+
+		try(PreparedStatement preparedStatement = cs.getConnection().prepareStatement(query)) {
+			preparedStatement.setString(1, user.getUsername());
+			ResultSet rs = preparedStatement.executeQuery();
 			
-			do {
-				User savedUser = UserDAO.retrieveUserByUsername(rs.getString("favorite"));
-				
-				favList.add(savedUser);
+			if(rs.next()) {
+				do {
+					User savedUser = UserDAO.retrieveUserByUsername(rs.getString("favorite"));
+					
+					favList.add(savedUser);
+				}
+				while(rs.next());
 			}
-			while(rs.next());
 		}
 		
 		return favList;
 	}
 	
 	public static void saveFavorite(User user, User favorite) throws ClassNotFoundException, SQLException, IOException, DuplicateRecordException {
-		Statement stm = null;
-		
 		cs = ConnectionSingleton.createConnection();
 		
-		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-				ResultSet.CONCUR_READ_ONLY);
-		
-		ResultSet rs = SimpleQueries.selectFavorite(stm, user.getUsername(), favorite.getUsername());
-		
-		if(rs.first()) {
-			throw new DuplicateRecordException("ERROR: the record already exists");
-		}
-		else {
-			rs.close();
-			stm.close();
-			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
+		String query = "SELECT * FROM saved_user WHERE user = ? AND favorite = ?;";
+
+		try(PreparedStatement preparedStatement = cs.getConnection().prepareStatement(query)) {
+			preparedStatement.setString(1, user.getUsername());
+			preparedStatement.setString(2, favorite.getUsername());
+			ResultSet rs = preparedStatement.executeQuery();
 			
-			CRUDQueries.insertFavorite(stm, user.getUsername(), favorite.getUsername());
+			if(!rs.next()) {
+				query = "INSERT INTO saved_user (user, favorite) VALUES (?, ?);";
+				
+				try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
+					ps.setString(1, user.getUsername());
+					ps.setString(2, favorite.getUsername());
+					
+					ps.executeUpdate();
+				}
+			}
+			else {
+				throw new DuplicateRecordException("ERROR: the record already exists");
+			}
 		}
-		
-		stm.close();
 	}
 	
 	public static void removeFavorite(User user, User favorite) throws ClassNotFoundException, SQLException, IOException, NoRecordFoundException {
-		Statement stm = null;
 		String norecord = "ERROR: no record found";
 		
 		cs = ConnectionSingleton.createConnection();
 		
-		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-				ResultSet.CONCUR_READ_ONLY);
-		
-		ResultSet rs = SimpleQueries.selectFavorite(stm, user.getUsername(), favorite.getUsername());
-		
-		if(rs.first()) {
-			rs.close();
-			stm.close();
-			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
+		String query = "SELECT * FROM saved_user WHERE user = ? AND favorite = ?;";
+
+		try(PreparedStatement preparedStatement = cs.getConnection().prepareStatement(query)) {
+			preparedStatement.setString(1, user.getUsername());
+			preparedStatement.setString(2, favorite.getUsername());
+			ResultSet rs = preparedStatement.executeQuery();
 			
-			CRUDQueries.deleteFavorite(stm, user.getUsername(), favorite.getUsername());
+			if(rs.next()) {
+				query = "DELETE FROM saved_user WHERE user = ? AND favorite = ?;";
+				
+				try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
+					ps.setString(1, user.getUsername());
+					ps.setString(2, favorite.getUsername());
+					
+					ps.executeUpdate();
+				}
+			}
+			else {
+				throw new NoRecordFoundException(norecord);
+			}
 		}
-		else {
-			throw new NoRecordFoundException(norecord);
-		}
-		
-		stm.close();
 	}
 	
 }

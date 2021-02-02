@@ -1,49 +1,15 @@
 package model.dao.queries;
 
-import java.io.IOException;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import model.dao.ConnectionSingleton;
 
 public class SimpleQueries {
-	
-//	private static ConnectionSingleton cs;
-	
+		
 	private SimpleQueries() {}
 	
-	public static ResultSet selectUserByUsername(Statement stmt, String username) throws SQLException, ClassNotFoundException, IOException {
-//		cs = ConnectionSingleton.createConnection();
-//		
-//		String query = "SELECT * FROM user WHERE username = ?;";
-//
-//		PreparedStatement preparedStatement = cs.getConnection().prepareStatement(query);
-//		preparedStatement.setString(1, username);
-//		
-//		return preparedStatement.executeQuery();
-		
+	public static ResultSet selectUserByUsername(Statement stmt, String username) throws SQLException {
 		String statement = String.format("SELECT * FROM user WHERE username = '%s';", username);
-		return stmt.executeQuery(statement);
-	}
-	
-	public static ResultSet selectAllergiesByUsername(Statement stmt, String username) throws SQLException {
-		String statement = String.format("SELECT name FROM allergy WHERE user = '%s';", username);
-		return stmt.executeQuery(statement);
-	}
-	
-	public static ResultSet selectAllergy(Statement stmt, String username, String allergy) throws SQLException {
-		String statement = String.format("SELECT name FROM allergy WHERE user = '%s' AND name = '%s';", username, allergy);
-		return stmt.executeQuery(statement);
-	}
-	
-	public static ResultSet selectCuisinesByUsername(Statement stmt, String username) throws SQLException {
-		String statement = String.format("SELECT name FROM cuisine WHERE user = '%s';", username);
-		return stmt.executeQuery(statement);
-	}
-	
-	public static ResultSet selectCuisine(Statement stmt, String username, String cuisine) throws SQLException {
-		String statement = String.format("SELECT name FROM cuisine WHERE user = '%s' AND name = '%s';", username, cuisine);
 		return stmt.executeQuery(statement);
 	}
 	

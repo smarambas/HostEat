@@ -8,7 +8,6 @@ import java.util.GregorianCalendar;
 import bean.EventBean;
 import bean.SessionBean;
 import exceptions.DuplicateRecordException;
-import exceptions.NoRecordFoundException;
 import model.Event;
 import model.GuestStatus;
 import model.Notification;
@@ -23,7 +22,7 @@ import standalone_view.GUIController;
 
 public class JoinEventController {
 
-	public SessionBean joinEvent(EventBean eventBean) throws ClassNotFoundException, SQLException, NoRecordFoundException, IOException, ParseException, DuplicateRecordException {
+	public SessionBean joinEvent(EventBean eventBean) throws ClassNotFoundException, SQLException, IOException, ParseException, DuplicateRecordException {
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		

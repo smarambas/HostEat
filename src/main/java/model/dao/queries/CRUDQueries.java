@@ -63,52 +63,6 @@ public class CRUDQueries {
 	}
 	
 	/*
-	 * Allergy statements
-	 */
-	public static int insertAllergy(Statement stmt, String username, String allergyName) throws SQLException {
-		String statement = String.format("INSERT INTO allergy (user, name) VALUES ('%s', '%s');", username, allergyName);
-		return stmt.executeUpdate(statement);
-	}
-	
-	public static int deleteAllergy(Statement stmt, String username, String allergyName) throws SQLException {
-		String statement = String.format("DELETE FROM allergy WHERE user = '%s' AND name = '%s';", username, allergyName);
-		return stmt.executeUpdate(statement);
-	}
-	
-	public static int deleteAllAllergies(Statement stmt, String username) throws SQLException {
-		String statement = String.format("DELETE FROM allergy WHERE user = '%s';", username);
-		return stmt.executeUpdate(statement);
-	}
-	
-	public static int updateAllergy(Statement stmt, String username, String newAllergy) throws SQLException {
-		String statement = String.format("UPDATE allergy SET name = '%s' WHERE user = '%s';", newAllergy, username);
-		return stmt.executeUpdate(statement);
-	}
-	
-	/*
-	 * Cuisine statements
-	 */
-	public static int insertCuisine(Statement stmt, String username, String cuisineName) throws SQLException {
-		String statement = String.format("INSERT INTO cuisine (user, name) VALUES ('%s', '%s');", username, cuisineName);
-		return stmt.executeUpdate(statement);
-	}
-	
-	public static int deleteCuisine(Statement stmt, String username, String cuisineName) throws SQLException {
-		String statement = String.format("DELETE FROM cuisine WHERE user = '%s' AND name = '%s';", username, cuisineName);
-		return stmt.executeUpdate(statement);
-	}
-	
-	public static int deleteAllCuisines(Statement stmt, String username) throws SQLException {
-		String statement = String.format("DELETE FROM cuisine WHERE user = '%s';", username);
-		return stmt.executeUpdate(statement);
-	}
-	
-	public static int updateCuisine(Statement stmt, String username, String newCuisine) throws SQLException {
-		String statement = String.format("UPDATE cuisine SET name = '%s' WHERE user = '%s';", newCuisine, username);
-		return stmt.executeUpdate(statement);
-	}
-	
-	/*
 	 * Event statements
 	 */
 	public static int insertEvent(Statement stmt, String username, String date, int maxGuestsNum, double bill) throws SQLException {
@@ -137,7 +91,7 @@ public class CRUDQueries {
 	 */
 	public static int insertJoinedEvent(Statement stmt, String guest, Event event, String eventDate) throws SQLException {
 		String statement = String.format("INSERT INTO joined_event (guest, event_owner, event_date, guest_status, payment_status, host_rated, guest_rated) VALUES ('%s', '%s', '%s', '%s', '%s', '%d', '%d');",
-				guest, event.getOwner(), eventDate, event.getGuestStatus().toString().toUpperCase(), event.getPayStatus().toString().toUpperCase(), event.getHostRated(), event.getGuestRated());
+				guest, event.getOwner().getUsername(), eventDate, event.getGuestStatus().toString().toUpperCase(), event.getPayStatus().toString().toUpperCase(), event.getHostRated(), event.getGuestRated());
 		return stmt.executeUpdate(statement);
 	}
 	

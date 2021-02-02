@@ -1,9 +1,9 @@
 package model.dao;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -12,9 +12,6 @@ import exceptions.DuplicateRecordException;
 import exceptions.NoRecordFoundException;
 import model.Event;
 import model.User;
-import model.dao.queries.CRUDQueries;
-import model.dao.queries.NestedQueries;
-import model.dao.queries.SimpleQueries;
 
 public class EventDAO {
 
@@ -23,176 +20,177 @@ public class EventDAO {
 	private static String format = "yyyy-MM-dd HH:mm";
 	private static String maxGuestsString = "max_num_guests";
 	private static String billString = "payment_bill";
+	private static String selectString = "SELECT * FROM event WHERE owner = ? AND date = ?;";
+	private static String countString = "SELECT COUNT(*) FROM joined_event WHERE event_owner = ? AND event_date = ?;";
 	
 	private EventDAO() {}
 	
 	public static List<Event> retrieveEventsByUsername(User user) throws SQLException, ClassNotFoundException, IOException {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
-		Statement stm = null;
 		List<Event> eventList = new ArrayList<>();
 		
 		cs = ConnectionSingleton.createConnection();
 		
-		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-				ResultSet.CONCUR_READ_ONLY);
+		String query = "SELECT * FROM event WHERE owner = ?;";
 		
-		ResultSet rs = SimpleQueries.selectEventsByUsername(stm, user.getUsername());
+		try(PreparedStatement preparedStatement = cs.getConnection().prepareStatement(query)) {
+			preparedStatement.setString(1, user.getUsername());
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			if(rs.next()) {
+				do {
+					int guestsNum = 0;
+					GregorianCalendar date = new GregorianCalendar();	
+					date.setTime(rs.getTimestamp("date"));
+									
+					int maxGuestsNum = rs.getInt(maxGuestsString);
+					int bill = rs.getInt(billString);
+					
+					Event newEvent = new Event(user, date, maxGuestsNum, bill);
+					
+					query = countString;
 
-		if(rs.first()) {
-			rs.first();
-			do {
-				int guestsNum = 0;
-				GregorianCalendar date = new GregorianCalendar();	
-				date.setTime(rs.getTimestamp("date"));
-								
-				int maxGuestsNum = rs.getInt(maxGuestsString);
-				int bill = rs.getInt(billString);
-				
-				Event newEvent = new Event(user, date, maxGuestsNum, bill);
-				
-				Statement tempStatement = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-						ResultSet.CONCUR_READ_ONLY);
-								
-				ResultSet tempResultSet = SimpleQueries.countGuestsNumberForEvent(tempStatement, user.getUsername(), sdf.format(date.getTime()));
-								
-				if(tempResultSet.first()) {
-					tempResultSet.first();
-					guestsNum = tempResultSet.getInt(1);
+					try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
+						ps.setString(1, user.getUsername());
+						ps.setString(2, sdf.format(date.getTime()));
+						ResultSet tempResultSet = ps.executeQuery();
+						
+						if(tempResultSet.next()) {
+							guestsNum = tempResultSet.getInt(1);
+						}
+						else {
+							guestsNum = 0;
+						}
+					}
+					
+					newEvent.setGuestsNumber(guestsNum);
+					newEvent.setRegion(user.getUserRegion());
+					newEvent.setProvince(user.getUserProvince());
+					newEvent.setCity(user.getUserCity());
+					newEvent.setAddress(user.getAddress());
+					
+					eventList.add(newEvent);
 				}
-				else {
-					guestsNum = 0;
-				}
-				
-				newEvent.setGuestsNumber(guestsNum);
-				newEvent.setRegion(user.getUserRegion());
-				newEvent.setProvince(user.getUserProvince());
-				newEvent.setCity(user.getUserCity());
-				newEvent.setAddress(user.getAddress());
-				
-				eventList.add(newEvent);
-				
-				tempStatement.close();
-				tempResultSet.close();
+				while(rs.next());
 			}
-			while(rs.next());
 		}
-		
-		rs.close();
-		stm.close();
 		
 		return eventList;
 	}
 	
 	public static Event retrieveEventByUsernameDateTime(User user, GregorianCalendar dateTime) throws SQLException, ClassNotFoundException, IOException {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
-		Statement stm = null;
+		
 		Event event = null;
 		
 		cs = ConnectionSingleton.createConnection();
 		
-		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-				ResultSet.CONCUR_READ_ONLY);
+		String query = selectString;
 		
-		ResultSet rs = SimpleQueries.selectEventByUsernameDateTime(stm, user.getUsername(), sdf.format(dateTime.getTime()));
-		
-		if(rs.first()) {
-			rs.first();
+		try(PreparedStatement preparedStatement = cs.getConnection().prepareStatement(query)) {
+			preparedStatement.setString(1, user.getUsername());
+			preparedStatement.setString(2, sdf.format(dateTime.getTime()));
+			ResultSet rs = preparedStatement.executeQuery();
 			
-			int guestsNum = 0;
-			GregorianCalendar date = new GregorianCalendar();	
-			date.setTime(rs.getTimestamp("date"));
-			
-			int maxGuestsNum = rs.getInt(maxGuestsString);
-			int bill = rs.getInt(billString);
-			
-			event = new Event(user, date, maxGuestsNum, bill);
-			
-			Statement tempStatement = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
-							
-			ResultSet tempResultSet = SimpleQueries.countGuestsNumberForEvent(tempStatement, user.getUsername(), sdf.format(date.getTime()));
-							
-			if(tempResultSet.first()) {
-				tempResultSet.first();
-				guestsNum = tempResultSet.getInt(1);
+			if(rs.next()) {
+				int guestsNum = 0;
+				GregorianCalendar date = new GregorianCalendar();	
+				date.setTime(rs.getTimestamp("date"));
+				
+				int maxGuestsNum = rs.getInt(maxGuestsString);
+				int bill = rs.getInt(billString);
+				
+				event = new Event(user, date, maxGuestsNum, bill);
+				
+				query = countString;
+
+				try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
+					ps.setString(1, user.getUsername());
+					ps.setString(2, sdf.format(dateTime.getTime()));
+					ResultSet tempResultSet = ps.executeQuery();
+					
+					if(tempResultSet.next()) {
+						guestsNum = tempResultSet.getInt(1);
+					}
+					else {
+						guestsNum = 0;
+					}
+				}
+				
+				event.setGuestsNumber(guestsNum);
+				event.setRegion(user.getUserRegion());
+				event.setProvince(user.getUserProvince());
+				event.setCity(user.getUserCity());
+				event.setAddress(user.getAddress());
 			}
-			else {
-				guestsNum = 0;
-			}
-			
-			event.setGuestsNumber(guestsNum);
-			event.setRegion(user.getUserRegion());
-			event.setProvince(user.getUserProvince());
-			event.setCity(user.getUserCity());
-			event.setAddress(user.getAddress());
-			
-			tempStatement.close();
-			tempResultSet.close();
 		}
-		
-		rs.close();
-		stm.close();
 		
 		return event;
 	}
 	
 	public static void saveEvent(User user, Event event) throws SQLException, ClassNotFoundException, DuplicateRecordException, IOException {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
-		Statement stm = null;
 		
 		cs = ConnectionSingleton.createConnection();
 		
-		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-				ResultSet.CONCUR_READ_ONLY);
+		String query = selectString;
 		
-		ResultSet rs = SimpleQueries.selectEventByUsernameDateTime(stm, user.getUsername(), sdf.format(event.getDateTime().getTime()));
-		
-		if(rs.first()) {
-			throw new DuplicateRecordException("ERROR: the record already exists");
-		}
-		else {
-			rs.close();
-			stm.close();
-			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
+		try(PreparedStatement preparedStatement = cs.getConnection().prepareStatement(query)) {
+			preparedStatement.setString(1, user.getUsername());
+			preparedStatement.setString(2, sdf.format(event.getDateTime().getTime()));
+			ResultSet rs = preparedStatement.executeQuery();
 			
-			CRUDQueries.insertEvent(stm, user.getUsername(), sdf.format(event.getDateTime().getTime()), event.getMaxGuestsNumber(), event.getBill());
+			if(!rs.next()) {
+				query = "INSERT INTO event (owner, date, max_num_guests, payment_bill) VALUES (?, ?, ?, ?);";
+				
+				try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
+					ps.setString(1, user.getUsername());
+					ps.setString(2, sdf.format(event.getDateTime().getTime()));
+					ps.setInt(3, event.getMaxGuestsNumber());
+					ps.setDouble(4, event.getBill());
+					
+					ps.executeUpdate();
+				}
+			}
+			else {
+				throw new DuplicateRecordException("ERROR: the record already exists");
+			}
 		}
-		
-		stm.close();
 	}
 	
 	public static void removeEvent(User user, Event event) throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
-		Statement stm = null;
 		
 		cs = ConnectionSingleton.createConnection();
 		
-		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-				ResultSet.CONCUR_READ_ONLY);
+		String query = selectString;
 		
-		ResultSet rs = SimpleQueries.selectEventByUsernameDateTime(stm, user.getUsername(), sdf.format(event.getDateTime().getTime()));
-				
-		if(rs.first()) {
-			rs.close();
-			stm.close();
-			stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-					ResultSet.CONCUR_READ_ONLY);
+		try(PreparedStatement preparedStatement = cs.getConnection().prepareStatement(query)) {
+			preparedStatement.setString(1, user.getUsername());
+			preparedStatement.setString(2, sdf.format(event.getDateTime().getTime()));
+			ResultSet rs = preparedStatement.executeQuery();
 			
-			CRUDQueries.deleteEvent(stm, user.getUsername(), sdf.format(event.getDateTime().getTime()));
+			if(rs.next()) {
+				query = "DELETE FROM event WHERE owner = ? AND date = ?;";
+				
+				try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
+					ps.setString(1, user.getUsername());
+					ps.setString(2, sdf.format(event.getDateTime().getTime()));
+					
+					ps.executeUpdate();
+				}
+			}
+			else {
+				throw new NoRecordFoundException(norecord);
+			}
 		}
-		else {
-			throw new NoRecordFoundException(norecord);
-		}
-		
-		stm.close();
 	}
 	
 	public static List<Event> retrieveEventsBySearch(String region, String province, String city, GregorianCalendar dateTime) throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
-		Statement stm = null;
+		
 		List<Event> eventList = new ArrayList<>();
-		ResultSet rs;
+
 		boolean[] fields = new boolean[3];
 		int searchType;
 		
@@ -201,82 +199,121 @@ public class EventDAO {
 		
 		cs = ConnectionSingleton.createConnection();
 		
-		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-				ResultSet.CONCUR_READ_ONLY);
+		ResultSet rs;
+		String query;
 				
 		switch (searchType) {
 		case 0: 
-			rs = NestedQueries.selectEventsByDate(stm, sdf.format(dateTime.getTime()));
+			query = "SELECT * FROM event WHERE date > ?;";
+			
+			try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
+				ps.setString(1, sdf.format(dateTime.getTime()));
+				
+				rs = ps.executeQuery();
+				
+				workOnRS(rs, eventList);
+			}
+			
 			break;
 		case 1:
-			rs = NestedQueries.selectEventsByCity(stm, city, sdf.format(dateTime.getTime()));
+			query = "SELECT * FROM event WHERE owner = any (SELECT username FROM user WHERE city = ?) AND date > ?;";
+			
+			try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
+				ps.setString(1, city);
+				ps.setString(2, sdf.format(dateTime.getTime()));
+				
+				rs = ps.executeQuery();
+				
+				workOnRS(rs, eventList);
+			}
+			
 			break;
 		case 10:
-			rs = NestedQueries.selectEventsByProvince(stm, province, sdf.format(dateTime.getTime()));
+			query = "SELECT * FROM event WHERE owner = any (SELECT username FROM user WHERE province = ?) AND date > ?;";
+			
+			try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
+				ps.setString(1, province);
+				ps.setString(2, sdf.format(dateTime.getTime()));
+				
+				rs = ps.executeQuery();
+				
+				workOnRS(rs, eventList);
+			}
+
 			break;
 		case 11:
-			rs = NestedQueries.selectEventsByProvinceCity(stm, province, city, sdf.format(dateTime.getTime()));
+			query = "SELECT * FROM event WHERE owner = any (SELECT username FROM user WHERE province = ? AND city = ?) AND date > ?;";
+			
+			try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
+				ps.setString(1, province);
+				ps.setString(2, city);
+				ps.setString(3, sdf.format(dateTime.getTime()));
+				
+				rs = ps.executeQuery();
+				
+				workOnRS(rs, eventList);
+			}
+
 			break;
 		case 100:
-			rs = NestedQueries.selectEventsByRegion(stm, region, sdf.format(dateTime.getTime()));
+			query = "SELECT * FROM event WHERE owner = any (SELECT username FROM user WHERE region = ?) AND date > ?;";
+			
+			try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
+				ps.setString(1, region);
+				ps.setString(2, sdf.format(dateTime.getTime()));
+				
+				rs = ps.executeQuery();
+				
+				workOnRS(rs, eventList);
+			}
+
 			break;
 		case 101:
-			rs = NestedQueries.selectEventsByRegionCity(stm, region, city, sdf.format(dateTime.getTime()));
+			query = "SELECT * FROM event WHERE owner = any (SELECT username FROM user WHERE region = ? AND city = ?) AND date > ?;";
+			
+			try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
+				ps.setString(1, region);
+				ps.setString(2, city);
+				ps.setString(3, sdf.format(dateTime.getTime()));
+				
+				rs = ps.executeQuery();
+				
+				workOnRS(rs, eventList);
+			}
+
 			break;
 		case 110:
-			rs = NestedQueries.selectEventsByRegionProvince(stm, region, province, sdf.format(dateTime.getTime()));
+			query = "SELECT * FROM event WHERE owner = any (SELECT username FROM user WHERE region = ? AND province = ?) AND date > ?;";
+			
+			try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
+				ps.setString(1, region);
+				ps.setString(2, province);
+				ps.setString(3, sdf.format(dateTime.getTime()));
+				
+				rs = ps.executeQuery();
+				
+				workOnRS(rs, eventList);
+			}
+
 			break;
 		case 111:
-			rs = NestedQueries.selectEventsByRegionProvinceCity(stm, region, province, city, sdf.format(dateTime.getTime()));
+			query = "SELECT * FROM event WHERE owner = any (SELECT username FROM user WHERE region = ? AND province = ? AND city = ?) AND date > ?;";
+			
+			try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
+				ps.setString(1, region);
+				ps.setString(2, province);
+				ps.setString(3, city);
+				ps.setString(4, sdf.format(dateTime.getTime()));
+				
+				rs = ps.executeQuery();
+				
+				workOnRS(rs, eventList);
+			}
+
 			break;
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + searchType);
 		}
-				
-		if(!rs.first()) {
-			throw new NoRecordFoundException(norecord);
-		}
-		else {
-			rs.first();
-			do {
-				String owner = rs.getString("owner");
-				GregorianCalendar date = new GregorianCalendar();
-				date.setTime(rs.getTimestamp("date"));
-				int maxGuestsNum = rs.getInt(maxGuestsString);
-				int bill = rs.getInt(billString);
-				
-				User user = UserDAO.retrieveUserByUsername(owner);
-				
-				int guestsNum;
-				Statement tempStatement = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-						ResultSet.CONCUR_READ_ONLY);
-								
-				ResultSet tempResultSet = SimpleQueries.countGuestsNumberForEvent(tempStatement, user.getUsername(), sdf.format(date.getTime()));
-								
-				if(tempResultSet.first()) {
-					tempResultSet.first();
-					guestsNum = tempResultSet.getInt(1);
-				}
-				else {
-					guestsNum = 0;
-				}
-				
-				Event newEvent = new Event(user, date, maxGuestsNum, bill);
-				newEvent.setRegion(user.getUserRegion());
-				newEvent.setProvince(user.getUserProvince());
-				newEvent.setCity(user.getUserCity());
-				newEvent.setGuestsNumber(guestsNum);
-				
-				eventList.add(newEvent);
-				
-				tempStatement.close();
-				tempResultSet.close();
-			}
-			while(rs.next());
-		}
-		
-		rs.close();
-		stm.close();
 		
 		return eventList;
 	}
@@ -322,6 +359,51 @@ public class EventDAO {
 		}
 		
 		return result;
+	}
+	
+	private static void workOnRS(ResultSet rs, List<Event> events) throws NoRecordFoundException, ClassNotFoundException, SQLException, IOException {
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		
+		if(rs.next()) {
+			do {
+				String owner = rs.getString("owner");
+				GregorianCalendar date = new GregorianCalendar();
+				date.setTime(rs.getTimestamp("date"));
+				int maxGuestsNum = rs.getInt(maxGuestsString);
+				int bill = rs.getInt(billString);
+				
+				User user = UserDAO.retrieveUserByUsername(owner);
+				
+				int guestsNum;
+				
+				String query = countString;
+
+				try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
+					ps.setString(1, user.getUsername());
+					ps.setString(2, sdf.format(date.getTime()));
+					ResultSet tempResultSet = ps.executeQuery();
+					
+					if(tempResultSet.next()) {
+						guestsNum = tempResultSet.getInt(1);
+					}
+					else {
+						guestsNum = 0;
+					}
+				}
+						
+				Event newEvent = new Event(user, date, maxGuestsNum, bill);
+				newEvent.setRegion(user.getUserRegion());
+				newEvent.setProvince(user.getUserProvince());
+				newEvent.setCity(user.getUserCity());
+				newEvent.setGuestsNumber(guestsNum);
+				
+				events.add(newEvent);
+			}
+			while(rs.next());
+		}
+		else {
+			throw new NoRecordFoundException(norecord);
+		}
 	}
 	
 }

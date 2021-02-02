@@ -1,9 +1,9 @@
 package model.dao;
 
 import java.io.IOException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -12,8 +12,6 @@ import exceptions.NoRecordFoundException;
 import model.Course;
 import model.Menu;
 import model.User;
-import model.dao.queries.CRUDQueries;
-import model.dao.queries.SimpleQueries;
 
 public class MenuDAO {
 
@@ -24,42 +22,40 @@ public class MenuDAO {
 	public static Menu retrieveMenu(User user, GregorianCalendar dateTime) throws SQLException, ClassNotFoundException, NoRecordFoundException, IOException {
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
-		Statement stm = null;
 		Menu menu = new Menu();
 		
 		cs = ConnectionSingleton.createConnection();
 		
-		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-				ResultSet.CONCUR_READ_ONLY);
-		
-		ResultSet rs = SimpleQueries.selectMenuByUsernameDateTime(stm, user.getUsername(), sdf.format(dateTime.getTime()));
-		
-		if(!rs.first()) {
-			throw new NoRecordFoundException("ERROR: no record found");
-		}
-		else {
-			rs.first();
-			do {
-				String courseName = rs.getString("course");
-				String dishName = rs.getString("name");
-				
-				Course newCourse = menu.getCourse(courseName);
-				
-				if(newCourse != null) {
-					//the menu already contains the course
-					newCourse.addDish(dishName);
+		String query = "SELECT name, course FROM dish WHERE event_owner = ? AND event_date = ?;";
+
+		try(PreparedStatement preparedStatement = cs.getConnection().prepareStatement(query)) {
+			preparedStatement.setString(1, user.getUsername());
+			preparedStatement.setString(2, sdf.format(dateTime.getTime()));
+			ResultSet rs = preparedStatement.executeQuery();
+			
+			if(rs.next()) {
+				do {
+					String courseName = rs.getString("course");
+					String dishName = rs.getString("name");
+					
+					Course newCourse = menu.getCourse(courseName);
+					
+					if(newCourse != null) {
+						//the menu already contains the course
+						newCourse.addDish(dishName);
+					}
+					else {
+						newCourse = new Course(courseName);
+						newCourse.addDish(dishName);
+						menu.addCourse(newCourse);
+					}
 				}
-				else {
-					newCourse = new Course(courseName);
-					newCourse.addDish(dishName);
-					menu.addCourse(newCourse);
-				}
+				while(rs.next());	
 			}
-			while(rs.next());			
+			else {
+				throw new NoRecordFoundException("ERROR: no record found");
+			}
 		}
-		
-		rs.close();
-		stm.close();
 		
 		return menu;
 	}
@@ -67,38 +63,43 @@ public class MenuDAO {
 	public static void saveMenu(User user, Menu menu, GregorianCalendar dateTime) throws SQLException, ClassNotFoundException, DuplicateRecordException, IOException {
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
-		Statement stm = null;
 		
 		cs = ConnectionSingleton.createConnection();
 		
-		stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-				ResultSet.CONCUR_READ_ONLY);
-	
-		ResultSet rs = SimpleQueries.selectMenuByUsernameDateTime(stm, user.getUsername(), sdf.format(dateTime.getTime()));
-		
-		if(rs.first()) {
-			throw new DuplicateRecordException("ERROR: the record already exists");
-		}
-		else {
-			rs.close();
-			List<Course> courses = menu.getCourses();
-			int coursesSize = courses.size();
+		String query = "SELECT name, course FROM dish WHERE event_owner = ? AND event_date = ?;";
+
+		try(PreparedStatement preparedStatement = cs.getConnection().prepareStatement(query)) {
+			preparedStatement.setString(1, user.getUsername());
+			preparedStatement.setString(2, sdf.format(dateTime.getTime()));
+			ResultSet rs = preparedStatement.executeQuery();
 			
-			for(int i = 0; i < coursesSize; i++) {
-				String courseName = courses.get(i).getName();				
-				int dishSize = courses.get(i).getDishes().size();
+			if(!rs.next()) {
+				List<Course> courses = menu.getCourses();
+				int coursesSize = courses.size();
 				
-				for(int j = 0; j < dishSize; j++) {
-					stm.close();
-					stm = cs.getConnection().createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-							ResultSet.CONCUR_READ_ONLY);
+				query = "INSERT INTO dish (name, course, event_owner, event_date) VALUES (?, ?, ?, ?);";
+				
+				for(int i = 0; i < coursesSize; i++) {
+					String courseName = courses.get(i).getName();				
+					int dishSize = courses.get(i).getDishes().size();
 					
-					CRUDQueries.insertDish(stm, user.getUsername(), sdf.format(dateTime.getTime()), courses.get(i).getDishes().get(j), courseName);
+					for(int j = 0; j < dishSize; j++) {
+						
+						try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
+							ps.setString(1, courses.get(i).getDishes().get(j));
+							ps.setString(2, courseName);
+							ps.setString(3, user.getUsername());
+							ps.setString(4, sdf.format(dateTime.getTime()));
+							
+							ps.executeUpdate();
+						}
+					}
 				}
 			}
+			else {
+				throw new DuplicateRecordException("ERROR: the record already exists");
+			}
 		}
-	
-		stm.close();
 	}
 	
 }

@@ -7,6 +7,7 @@ import bean.UserBean;
 import control.AcceptGuestController;
 import control.DenyGuestController;
 import control.GetJoinedGuestsController;
+import exceptions.DuplicateRecordException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -117,6 +118,10 @@ public class JoinedGuestsListPageController {
 				
 				ViewCommons viewCommons = new ViewCommons();
 				viewCommons.handleButtonShowStage(button, "/standalone_view/JoinedGuestsListPage.fxml", 900, 600);
+			} catch (DuplicateRecordException dre) {
+				Label errorLabel = new Label("You already accepted that user");
+				errorLabel.setId(errorLabelId);
+				centralVBox.getChildren().add(errorLabel);
 			} catch (Exception e) {
 				Label errorLabel = new Label(errorLabelMsg);
 				errorLabel.setId(errorLabelId);

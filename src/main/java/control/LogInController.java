@@ -122,6 +122,7 @@ public class LogInController {
 			sessionBean.setUserBean(userBean);
 			sessionBean.setEventBeanList(eventBeanList);
 		} catch (Exception e) {
+			e.printStackTrace();
 			sessionBean = null;
 		}
 		

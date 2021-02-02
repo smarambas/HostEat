@@ -59,12 +59,7 @@ public class UserPageController {
 		logoutButton.setOnAction((ActionEvent event) -> {
 			try {
 				GUIController.setSessionBean(null);
-				Stage stage = (Stage) logoutButton.getScene().getWindow();
-				Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/FirstScreen.fxml"));
-				Scene scene = new Scene(root, 900, 600);
-				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-				stage.setScene(scene);
-				stage.show();
+				showStage(logoutButton, "/standalone_view/FirstScreen.fxml");
 			} catch(IOException ioe) {
 				Label errorLabel = new Label(errorLabelMsg);
 				errorLabel.setId(errorLabelId);
@@ -97,6 +92,15 @@ public class UserPageController {
 		hBox.getChildren().addAll(label, dataLabel);
 		hBox.setAlignment(Pos.CENTER);
 		return hBox;
+	}
+	
+	private void showStage(Button button, String fxml) throws IOException {
+		Stage stage = (Stage) button.getScene().getWindow();
+		Parent root = FXMLLoader.load(getClass().getResource(fxml));
+		Scene scene = new Scene(root, 900, 600);
+		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
+		stage.setScene(scene);
+		stage.show();
 	}
 	
 }

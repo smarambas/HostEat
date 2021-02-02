@@ -42,14 +42,8 @@ public class SearchEventPageController {
 	
 	@FXML
 	public void handleBackButtonAction(ActionEvent event) throws IOException {
-		Stage stage = new Stage();
-		Parent root = null;
-		
-		if(event.getSource() == btnBack) {
-			stage = (Stage) btnBack.getScene().getWindow();
-			root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestBase.fxml"));
-		}
-		
+		Stage stage = (Stage) btnBack.getScene().getWindow();
+		Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestBase.fxml"));
 		Scene scene = new Scene(root, 900, 600);
 		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
 		stage.setScene(scene);

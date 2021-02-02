@@ -9,20 +9,15 @@ import control.DeleteNotificationController;
 import control.GetNotificationsController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class NotificationPageController {
 	
-	private String appStyle = "NewStyle.css";
 	private String errorLabelMsg = "Ops, something went wrong, please try again";
 	private String errorLabelId = "errorLabel";
 	private String hostPageString = "/standalone_view/HostNotificationsPage.fxml";
@@ -42,20 +37,8 @@ public class NotificationPageController {
 			GetNotificationsController getNotificationsController = new GetNotificationsController();
 			notificationBeans = getNotificationsController.getNotifications(GUIController.getSessionBean().getUserBean());
 			
-			Stage stage = (Stage) btnRefresh.getScene().getWindow();
-			Parent root = null;
-			
-			if(GUIController.getSessionBean().getUserBean().getUserType().equalsIgnoreCase("HOST")) {
-				root = FXMLLoader.load(getClass().getResource(hostPageString));
-			}
-			else {
-				root = FXMLLoader.load(getClass().getResource(guestPageString));
-			}
-			
-			Scene scene = new Scene(root, 900, 600);
-			scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-			stage.setScene(scene);
-			stage.show();
+			ViewCommons viewCommons = new ViewCommons();
+			viewCommons.handleButtonUserDependantShowStage(btnRefresh, hostPageString, guestPageString, 900, 600);
 		} catch (Exception e) {
 			Label errorLabel = new Label(errorLabelMsg);
 			errorLabel.setId(errorLabelId);
@@ -69,20 +52,8 @@ public class NotificationPageController {
 			DeleteAllNotificationsController deleteAllNotificationsController = new DeleteAllNotificationsController();
 			deleteAllNotificationsController.deleteAllNotifications(GUIController.getSessionBean().getUserBean());
 			
-			Stage stage = (Stage) deleteAllButton.getScene().getWindow();
-			Parent root = null;
-			
-			if(GUIController.getSessionBean().getUserBean().getUserType().equalsIgnoreCase("HOST")) {
-				root = FXMLLoader.load(getClass().getResource(hostPageString));
-			}
-			else {
-				root = FXMLLoader.load(getClass().getResource(guestPageString));
-			}
-			
-			Scene scene = new Scene(root, 900, 600);
-			scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-			stage.setScene(scene);
-			stage.show();
+			ViewCommons viewCommons = new ViewCommons();
+			viewCommons.handleButtonUserDependantShowStage(deleteAllButton, hostPageString, guestPageString, 900, 600);
 		} catch (Exception e) {
 			Label errorLabel = new Label(errorLabelMsg);
 			errorLabel.setId(errorLabelId);
@@ -96,20 +67,8 @@ public class NotificationPageController {
 				DeleteNotificationController deleteNotificationController = new DeleteNotificationController();
 				deleteNotificationController.deleteNotification(userBean, notificationBean);
 				
-				Stage stage = (Stage) button.getScene().getWindow();
-				Parent root;
-				
-				if(GUIController.getSessionBean().getUserBean().getUserType().equalsIgnoreCase("HOST")) {
-					root = FXMLLoader.load(getClass().getResource(hostPageString));
-				}
-				else {
-					root = FXMLLoader.load(getClass().getResource(guestPageString));
-				}
-				
-				Scene scene = new Scene(root, 900, 600);
-				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-				stage.setScene(scene);
-				stage.show();
+				ViewCommons viewCommons = new ViewCommons();
+				viewCommons.handleButtonUserDependantShowStage(button, hostPageString, guestPageString, 900, 600);
 			} catch (Exception e) {
 				Label errorLabel = new Label(errorLabelMsg);
 				errorLabel.setId(errorLabelId);

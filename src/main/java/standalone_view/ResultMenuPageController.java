@@ -46,15 +46,15 @@ public class ResultMenuPageController {
 			GetMenuController getMenuController = new GetMenuController();
 			menuBean = getMenuController.getMenu(eventBean);
 			
-			for(CourseBean cb : menuBean.getCoursesList()) {
-				Label courseLabel = new Label(cb.getCourseName());
+			for(CourseBean courseBean : menuBean.getCoursesList()) {
+				Label courseLabel = new Label(courseBean.getCourseName());
 				courseLabel.setId("descriptionLabel");
 				courseLabel.setAlignment(Pos.CENTER);
 				
 				centralVBox.getChildren().add(courseLabel);
 				
-				for(String dish : cb.getDishes()) {
-					Label dishLabel = new Label(dish);
+				for(String dishString : courseBean.getDishes()) {
+					Label dishLabel = new Label(dishString);
 					dishLabel.setId("dishLabel");
 					dishLabel.setAlignment(Pos.CENTER);
 					dishLabel.setWrapText(true);

@@ -9,21 +9,14 @@ import control.DeleteEventController;
 import control.GetMenuController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class HostEventPageController {
 
-	private String appStyle = "NewStyle.css";
-	private String descriptionString = "descriptionLabel";
-	private String dataString = "dataLabel";
 	private String errorLabelMsg = "Ops, something went wrong, please try again";
 	private String errorLabelId = "errorLabel";
 	private String openString = "Open menu";
@@ -39,30 +32,28 @@ public class HostEventPageController {
 	
 	@FXML
 	private void handleBackButtonAction(ActionEvent event) throws IOException {
-		Stage stage = (Stage) btnBack.getScene().getWindow();
-		Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/HostBase.fxml"));
-		Scene scene = new Scene(root, 900, 600);
-		scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-		stage.setScene(scene);
-		stage.show();
+		ViewCommons viewCommons = new ViewCommons();
+		viewCommons.handleButtonShowStage(btnBack, "/standalone_view/HostBase.fxml", 900, 600);
 	}
 	
 	@FXML
 	protected void initialize() {		
 		eventBean = HostBaseController.getSelectedEvent();
 		
+		ViewCommons viewCommons = new ViewCommons();
+		
 		centralVBox.getChildren().addAll(
-			addHBox("Date:", eventBean.getDateTime().substring(0, 10)),
-			addHBox("Time:", eventBean.getDateTime().substring(11)),
-			addHBox("Guests:", eventBean.getActualGuests()),
-			addHBox("Region:", GUIController.getSessionBean().getUserBean().getReg()),
-			addHBox("Province:", GUIController.getSessionBean().getUserBean().getProv()),
-			addHBox("City:", GUIController.getSessionBean().getUserBean().getCity()),
-			addHBox("Address:", GUIController.getSessionBean().getUserBean().getAddr())
+			viewCommons.addHBox("Date:", eventBean.getDateTime().substring(0, 10)),
+			viewCommons.addHBox("Time:", eventBean.getDateTime().substring(11)),
+			viewCommons.addHBox("Guests:", eventBean.getActualGuests()),
+			viewCommons.addHBox("Region:", GUIController.getSessionBean().getUserBean().getReg()),
+			viewCommons.addHBox("Province:", GUIController.getSessionBean().getUserBean().getProv()),
+			viewCommons.addHBox("City:", GUIController.getSessionBean().getUserBean().getCity()),
+			viewCommons.addHBox("Address:", GUIController.getSessionBean().getUserBean().getAddr())
 		);
 		
 		if(eventBean.getBill() > 0) {
-			centralVBox.getChildren().add(addHBox("Bill:", String.valueOf(eventBean.getBill())));
+			centralVBox.getChildren().add(viewCommons.addHBox("Bill:", String.valueOf(eventBean.getBill())));
 		}
 		
 		List<Button> buttonList = new ArrayList<>();
@@ -91,28 +82,13 @@ public class HostEventPageController {
 			buttonList.add(deleteEventButton);
 		}
 		
-		bottomHBox.getChildren().add(addButtons(buttonList));
+		bottomHBox.getChildren().add(addButtonsHBox(buttonList));
 		
 		deleteButtonSetActionHost(deleteEventButton);
 		menuButtonSetAction(openMenuButton);
 	}
 	
-	private HBox addHBox(String s, String data) {
-		HBox hBox = new HBox();
-		
-		Label label = new Label(s);
-		label.setId(descriptionString);
-		
-		Label dataLabel = new Label(data);
-		dataLabel.setId(dataString);
-		
-		hBox.getChildren().addAll(label, dataLabel);
-		hBox.setAlignment(Pos.CENTER);
-		
-		return hBox;
-	}
-	
-	private HBox addButtons(List<Button> buttonsList) {
+	private HBox addButtonsHBox(List<Button> buttonsList) {
 		HBox hBox = new HBox();
 		
 		for(Button b : buttonsList) {
@@ -131,12 +107,8 @@ public class HostEventPageController {
 				DeleteEventController deleteEventController = new DeleteEventController();
 				deleteEventController.deleteEvent(eventBean);
 				
-				Stage stage = (Stage) button.getScene().getWindow();
-				Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/HostBase.fxml"));
-				Scene scene = new Scene(root, 900, 600);
-				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-				stage.setScene(scene);
-				stage.show();
+				ViewCommons viewCommons = new ViewCommons();
+				viewCommons.handleButtonShowStage(button, "/standalone_view/HostBase.fxml", 900, 600);
 			} catch (Exception e) {
 				Label errorLabel = new Label(errorLabelMsg);
 				errorLabel.setId(errorLabelId);
@@ -148,12 +120,8 @@ public class HostEventPageController {
 	private void guestsListButtonSetAction(Button button) {
 		button.setOnAction((ActionEvent event) -> {
 			try {
-				Stage stage = (Stage) button.getScene().getWindow();
-				Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/JoinedGuestsListPage.fxml"));
-				Scene scene = new Scene(root, 900, 600);
-				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-				stage.setScene(scene);
-				stage.show();
+				ViewCommons viewCommons = new ViewCommons();
+				viewCommons.handleButtonShowStage(button, "/standalone_view/JoinedGuestsListPage.fxml", 900, 600);
 			} catch (Exception e) {
 				Label errorLabel = new Label(errorLabelMsg);
 				errorLabel.setId(errorLabelId);
@@ -168,12 +136,8 @@ public class HostEventPageController {
 				GetMenuController getMenuController = new GetMenuController();
 				setMenuBean(getMenuController.getMenu(eventBean));
 				
-				Stage stage = (Stage) button.getScene().getWindow();
-				Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/HostMenuPage.fxml"));
-				Scene scene = new Scene(root, 900, 600);
-				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-				stage.setScene(scene);
-				stage.show();
+				ViewCommons viewCommons = new ViewCommons();
+				viewCommons.handleButtonShowStage(button, "/standalone_view/HostMenuPage.fxml", 900, 600);
 			} catch (Exception e) {
 				Label errorLabel = new Label("No menu found, sorry");
 				errorLabel.setId(errorLabelId);
@@ -182,12 +146,12 @@ public class HostEventPageController {
 		});
 	}
 
-	public static MenuBean getMenuBean() {
-		return menuBean;
-	}
-
 	public static void setMenuBean(MenuBean menuBean) {
 		HostEventPageController.menuBean = menuBean;
+	}
+	
+	public static MenuBean getMenuBean() {
+		return menuBean;
 	}
 	
 }

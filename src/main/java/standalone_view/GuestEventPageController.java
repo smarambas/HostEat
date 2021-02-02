@@ -179,12 +179,8 @@ public class GuestEventPageController {
 			
 			button.setOnAction((ActionEvent event) -> {
 				try {
-					Stage stage = (Stage) button.getScene().getWindow();
-					Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/RateHostPage.fxml"));
-					Scene scene = new Scene(root, 900, 600);
-					scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-					stage.setScene(scene);
-					stage.show();
+					ViewCommons commons = new ViewCommons();
+					commons.handleButtonShowStage(button, "/standalone_view/RateHostPage.fxml", 900, 600);
 				} catch (Exception e) {
 					Label errorLabel = new Label(errorLabelMsg);
 					errorLabel.setId(errorLabelId);
@@ -200,12 +196,8 @@ public class GuestEventPageController {
 				DeleteJoinedEventController deleteJoinedEventController = new DeleteJoinedEventController();
 				deleteJoinedEventController.deleteEvent(eventBean);
 				
-				Stage stage = (Stage) button.getScene().getWindow();
-				Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestBase.fxml"));
-				Scene scene = new Scene(root, 900, 600);
-				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-				stage.setScene(scene);
-				stage.show();
+				ViewCommons commons = new ViewCommons();
+				commons.handleButtonShowStage(button, "/standalone_view/GuestBase.fxml", 900, 600);
 			} catch (Exception e) {
 				Label errorLabel = new Label(errorLabelMsg);
 				errorLabel.setId(errorLabelId);
@@ -220,12 +212,8 @@ public class GuestEventPageController {
 				PayHostController payHostController = new PayHostController();
 				payHostController.payHost(eventBean);
 				
-				Stage stage = (Stage) button.getScene().getWindow();
-				Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestEventPage.fxml"));
-				Scene scene = new Scene(root, 900, 600);
-				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-				stage.setScene(scene);
-				stage.show();
+				ViewCommons commons = new ViewCommons();
+				commons.handleButtonShowStage(button, "/standalone_view/GuestEventPage.fxml", 900, 600);
 			} catch (Exception e) {
 				Label errorLabel = new Label(errorLabelMsg);
 				errorLabel.setId(errorLabelId);
@@ -239,12 +227,8 @@ public class GuestEventPageController {
 			try {
 				HostLocationPageController.setEventBean(eventBean);
 				
-				Stage stage = (Stage) button.getScene().getWindow();
-				Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/HostLocationPage.fxml"));
-				Scene scene = new Scene(root, 900, 600);
-				scene.getStylesheets().add(getClass().getResource(appStyle).toExternalForm());
-				stage.setScene(scene);
-				stage.show();
+				ViewCommons commons = new ViewCommons();
+				commons.handleButtonShowStage(button, "/standalone_view/HostLocationPage.fxml", 900, 600);
 			} catch (Exception e) {
 				Label errorLabel = new Label(errorLabelMsg);
 				errorLabel.setId(errorLabelId);

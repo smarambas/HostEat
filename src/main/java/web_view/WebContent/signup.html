@@ -4,30 +4,112 @@
 	<meta charset="UTF-8">
 	<title>HostEat</title>
 	
-	<style>  
-		.container {  
-			text-align: center;  
-			font-size: 16px;  
-			padding-top: 10px;  
-		}  
-		
-		#btn {  
-			font-size: 14px;  
-			margin: auto;	
-		}  
-		
-		#pagetitle {
-			text-align: center;  
-			font-size: 14px;
-		}
-	</style>  
+	<link rel="stylesheet" type="text/css" href="stylesheet.css" media="screen"/> 
 </head>
 <body>
-	<strong>HostEat</strong>
+	<h2>HostEat</h2>
 	<p>
-	<input type="button" value="Back" onclick="window.location.href='first_page.html'">
+	<input type="button" value="Back" onclick="window.location.href='index.jsp'">
 	<div class="container">
-		
+		<strong id="pagetitle">Sign up</strong>
+		<p>
+		<form action="signup.jsp">
+			<div class="row">
+				<div class="col-lg-4 form-group">
+					<label for="username">Username</label>
+					<input type="text" id="username" name="username" autocomplete="off">
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-lg-4 form-group">
+					<label for="password">Password</label>
+					<input type="password" id="password" name="password">
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-lg-4 form-group">
+					<label for="name">Name</label>
+					<input type="text" id="name" name="name" autocomplete="off">
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-lg-4 form-group">
+					<label for="surnname">Surname</label>
+					<input type="text" id="surname" name="surname" autocomplete="off">
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-lg-4 form-group">
+					<label for="email">Email</label>
+					<input type="text" id="email" name="email" autocomplete="off">
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-lg-4 form-group">
+					<label for="birthday">Birthday</label>
+					<input type="date" id="birthday" name="birthday">
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-lg-4 form-group">
+					<label for="sex">Sex</label>
+					<select id="sex" name="sex">
+						<option value="M">M</option>
+						<option value="F">F</option>
+						<option value="Other">Other</option>
+					</select>
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-lg-4 form-group">
+					<label for="region">Region</label>
+					<input type="text" id="region" name="region" autocomplete="off">
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-lg-4 form-group">
+					<label for="province">Province</label>
+					<input type="text" id="province" name="province" autocomplete="off">
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-lg-4 form-group">
+					<label for="city">City</label>
+					<input type="text" id="city" name="city" autocomplete="off">
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-lg-4 form-group">
+					<label for="address">Address</label>
+					<input type="text" id="address" name="address" autocomplete="off">
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-lg-4 form-group">
+					<label for="host">Host</label>
+					<input type="radio" id="host" value="Host" name="type">
+					<label for="guest">Guest</label>
+					<input type="radio" id="guest" value="Guest" name="type">
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-lg-4 form-group">
+					<input type="submit" name="signup" value="Submit">
+				</div>
+			</div>
+		</form>
 	</div>
 </body>
 </html>

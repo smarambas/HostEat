@@ -3,6 +3,7 @@
 	<name>hosteat_webapp</name>
 	<comment></comment>
 	<projects>
+		<project>hosteat</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

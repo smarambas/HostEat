@@ -12,7 +12,6 @@
 						<Label id="selError" text="Please, check that:"/>
 						<Label id="selError" text="- your name contains only characters"/>
 						<Label id="selError" text="- your surname contains only characters"/>
-						<Label id="selError" text="- your birthday is set correctly (yyyy-mm-dd)"/>
 						<Label id="selError" text="- your email address has the correct format"/>
 						<Label id="selError" text="- the fields region, province and city contain only characters"/>
 					</children>

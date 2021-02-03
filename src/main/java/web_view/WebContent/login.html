@@ -4,30 +4,15 @@
 	<meta charset="UTF-8">
 	<title>HostEat</title>
 	
-	<style>  
-		.container {  
-			text-align: center;  
-			font-size: 16px;  
-			padding-top: 10px;  
-		}  
-		
-		#btn {  
-			font-size: 14px;  
-			margin: auto;	
-		}  
-		
-		#pagetitle {
-			text-align: center;  
-			font-size: 14px;
-		}
-	</style>  
+	<link rel="stylesheet" type="text/css" href="stylesheet.css" media="screen"/>
 </head>
 <body>
-	<strong>HostEat</strong>
+	<h2>HostEat</h2>
 	<p>
-	<input type="button" value="Back" onclick="window.location.href='first_page.html'">
+	<input type="button" value="Back" onclick="window.location.href='index.jsp'">
 	<div class="container">
 		<strong id="pagetitle">Log In</strong>
+		<p>
 		<form action="login.jsp">
 			<div class="row">
 				<div class="col-lg-4 form-group">
@@ -35,14 +20,14 @@
 					<input type="text" id="username" name="username" autocomplete="off">
 				</div>
 			</div>
-			
+			<p>
 			<div class="row">
 				<div class="col-lg-4 form-group">
 					<label for="password">Password</label>
 					<input type="password" id="password" name="password">
 				</div>
 			</div>
-			
+			<p>
 			<div class="row">
 				<div class="col-lg-4 form-group">
 					<input type="submit" name="login" value="Submit">

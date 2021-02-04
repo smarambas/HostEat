@@ -83,7 +83,7 @@ public class JoinedGuestsListPageController {
 		button.setOnAction((ActionEvent event) -> {
 			try {
 				DenyGuestController denyGuestController = new DenyGuestController();
-				GUIController.setSessionBean(denyGuestController.denyGuest(guestBean, eventBean));
+				GUIController.setSessionBean(denyGuestController.denyGuest(GUIController.getSessionBean(), guestBean, eventBean));
 				
 				ViewCommons viewCommons = new ViewCommons();
 				viewCommons.handleButtonShowStage(button, "/standalone_view/JoinedGuestsListPage.fxml", 900, 600);

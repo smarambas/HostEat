@@ -101,7 +101,7 @@ public class NewEventPageController {
 				
 				CreateEventController createEventController = new CreateEventController();
 			
-				GUIController.setSessionBean(createEventController.createEvent(eventBean));
+				GUIController.setSessionBean(createEventController.createEvent(GUIController.getSessionBean(), eventBean));
 				
 				ViewCommons viewCommons = new ViewCommons();
 				viewCommons.handleButtonShowStage(submitButton, "/standalone_view/ProposeMenuPage.fxml", 900, 600);

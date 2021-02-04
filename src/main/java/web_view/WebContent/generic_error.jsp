@@ -1,3 +1,4 @@
+<%@page import="okhttp3.internal.ws.RealWebSocket.Message"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -38,6 +39,7 @@
 	<input type="button" value="Back" onclick="history.back()">
 	<div class="container">
 		<p id="error">Ops, something went wrong, please try again</p>
+		<p>Exception is: <%= exception %>  
 	</div>
 </body>
 </html>

@@ -77,7 +77,7 @@ public class HostProfilePageController {
 			
 			try {
 				SaveHostController saveHostController = new SaveHostController();
-				saveHostController.saveHost(guestBean, favUserBean);
+				saveHostController.saveHost(GUIController.getSessionBean(), guestBean, favUserBean);
 				
 				ViewCommons viewCommons = new ViewCommons();
 				viewCommons.handleButtonShowStage(saveButton, favString, 900, 600);
@@ -93,7 +93,7 @@ public class HostProfilePageController {
 			
 			try {
 				RemoveHostController removeHostController = new RemoveHostController();
-				removeHostController.removeHost(guestBean, favUserBean);
+				removeHostController.removeHost(GUIController.getSessionBean(), guestBean, favUserBean);
 				
 				ViewCommons viewCommons = new ViewCommons();
 				viewCommons.handleButtonShowStage(removeButton, favString, 900, 600);

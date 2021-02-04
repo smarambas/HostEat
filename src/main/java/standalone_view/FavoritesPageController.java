@@ -61,7 +61,7 @@ public class FavoritesPageController {
 				
 				try {
 					GetHostEventsController getHostEventsController = new GetHostEventsController();
-					GUIController.setSessionBean(getHostEventsController.getHostEvents(ub));
+					GUIController.setSessionBean(getHostEventsController.getHostEvents(GUIController.getSessionBean() ,ub));
 					
 					ViewCommons viewCommons = new ViewCommons();
 					viewCommons.handleButtonShowStage(eventsButton, "/standalone_view/SearchResultsPage.fxml", 900, 600);

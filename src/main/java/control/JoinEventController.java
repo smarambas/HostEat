@@ -18,15 +18,14 @@ import model.dao.EventDAO;
 import model.dao.JoinedEventDAO;
 import model.dao.NotificationDAO;
 import model.dao.UserDAO;
-import standalone_view.GUIController;
 
 public class JoinEventController {
 
-	public SessionBean joinEvent(EventBean eventBean) throws ClassNotFoundException, SQLException, IOException, ParseException, DuplicateRecordException {
+	public SessionBean joinEvent(SessionBean session, EventBean eventBean) throws ClassNotFoundException, SQLException, IOException, ParseException, DuplicateRecordException {
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		
-		SessionBean sessionBean = GUIController.getSessionBean();
+		SessionBean sessionBean = session;
 		String username = sessionBean.getUserBean().getUsername();
 		User guest = UserDAO.retrieveUserByUsername(username);
 		

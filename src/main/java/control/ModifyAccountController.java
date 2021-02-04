@@ -7,12 +7,11 @@ import bean.UserBean;
 import exceptions.NoRecordFoundException;
 import model.User;
 import model.dao.UserDAO;
-import standalone_view.GUIController;
 
 public class ModifyAccountController {
 
-	public SessionBean modifyAccount(UserBean userBean) throws ClassNotFoundException, SQLException, NoRecordFoundException, IOException {
-		SessionBean sessionBean = GUIController.getSessionBean();
+	public SessionBean modifyAccount(SessionBean session, UserBean userBean) throws ClassNotFoundException, SQLException, NoRecordFoundException, IOException {
+		SessionBean sessionBean = session;
 		String username = sessionBean.getUserBean().getUsername();
 		User user = UserDAO.retrieveUserByUsername(username);
 				

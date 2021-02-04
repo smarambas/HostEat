@@ -11,15 +11,14 @@ import model.Event;
 import model.User;
 import model.dao.EventDAO;
 import model.dao.UserDAO;
-import standalone_view.GUIController;
 
 public class GetHostEventsController {
 
-	public SessionBean getHostEvents(UserBean hostBean) throws ClassNotFoundException, SQLException, IOException {
+	public SessionBean getHostEvents(SessionBean session, UserBean hostBean) throws ClassNotFoundException, SQLException, IOException {
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		
-		SessionBean sessionBean = GUIController.getSessionBean();
+		SessionBean sessionBean = session;
 		
 		User host = UserDAO.retrieveUserByUsername(hostBean.getUsername());
 		

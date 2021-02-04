@@ -3,18 +3,20 @@ package control;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import bean.SessionBean;
 import bean.UserBean;
 import exceptions.DuplicateRecordException;
 import model.User;
 import model.dao.FavoritesDAO;
 import model.dao.UserDAO;
-import standalone_view.GUIController;
 
 public class SaveHostController {
 
-	public void saveHost(UserBean userBean, UserBean favUserBean) throws ClassNotFoundException, SQLException, IOException, DuplicateRecordException {
+	public SessionBean saveHost(SessionBean session, UserBean userBean, UserBean favUserBean) throws ClassNotFoundException, SQLException, IOException, DuplicateRecordException {
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
+		
+		SessionBean sessionBean = session;
 		
 		User user = UserDAO.retrieveUserByUsername(userBean.getUsername());
 		User favUser = UserDAO.retrieveUserByUsername(favUserBean.getUsername());
@@ -34,7 +36,9 @@ public class SaveHostController {
 		tempUserBean.setCity(favUser.getUserCity());
 		tempUserBean.setRatings(favUser.getRating());
 		
-		GUIController.getSessionBean().getSavedHosts().add(tempUserBean);
+		sessionBean.getSavedHosts().add(tempUserBean);
+		
+		return sessionBean;
 	}
 	
 }

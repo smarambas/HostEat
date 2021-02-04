@@ -85,13 +85,13 @@ public class RateUserPageController {
 				if(GUIController.getSessionBean().getUserBean().getUserType().equalsIgnoreCase("HOST")) {
 					user = JoinedGuestsListPageController.getSelectedGuest();
 					root = FXMLLoader.load(getClass().getResource("/standalone_view/JoinedGuestsListPage.fxml"));
-					rateUserController.rateUser(user, HostBaseController.getSelectedEvent(), vote);
+					rateUserController.rateUser(GUIController.getSessionBean(), user, HostBaseController.getSelectedEvent(), vote);
 				}
 				else {
 					user = new UserBean();
 					user.setUsername(GuestBaseController.getSelectedEvent().getEventOwner());
 					root = FXMLLoader.load(getClass().getResource("/standalone_view/GuestEventPage.fxml"));
-					rateUserController.rateUser(user, GuestBaseController.getSelectedEvent(), vote);
+					rateUserController.rateUser(GUIController.getSessionBean(), user, GuestBaseController.getSelectedEvent(), vote);
 				}
 				
 				Scene scene = new Scene(root, 900, 600);

@@ -2,7 +2,6 @@ package control;
 
 import java.io.IOException;
 import java.sql.SQLException;
-
 import bean.NotificationBean;
 import bean.UserBean;
 import exceptions.NoRecordFoundException;

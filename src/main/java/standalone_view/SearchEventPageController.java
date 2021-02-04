@@ -64,7 +64,7 @@ public class SearchEventPageController {
 					  			  minutesChoiceBox.getValue());
 			
 			SearchEventController searchEventController = new SearchEventController();
-			GUIController.setSessionBean(searchEventController.searchEvent(eventBean));
+			GUIController.setSessionBean(searchEventController.searchEvent(GUIController.getSessionBean(), eventBean));
 			
 			Parent root = FXMLLoader.load(getClass().getResource("/standalone_view/SearchResultsPage.fxml"));
 			Scene scene = new Scene(root, 900, 600);

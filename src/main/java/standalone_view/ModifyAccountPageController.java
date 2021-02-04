@@ -88,7 +88,7 @@ public class ModifyAccountPageController {
 			
 			ModifyAccountController modifyAccountController = new ModifyAccountController();
 			try {
-				GUIController.setSessionBean(modifyAccountController.modifyAccount(userBean));
+				GUIController.setSessionBean(modifyAccountController.modifyAccount(GUIController.getSessionBean(), userBean));
 				
 				if(GUIController.getSessionBean().getUserBean().getUserType().equalsIgnoreCase("HOST")) {
 					root = FXMLLoader.load(getClass().getResource("/standalone_view/HostUserPage.fxml"));

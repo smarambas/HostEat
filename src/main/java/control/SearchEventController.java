@@ -12,15 +12,14 @@ import exceptions.NoRecordFoundException;
 import exceptions.WrongDateException;
 import model.Event;
 import model.dao.EventDAO;
-import standalone_view.GUIController;
 
 public class SearchEventController {
 
-	public SessionBean searchEvent(EventBean eventBean) throws ClassNotFoundException, SQLException, NoRecordFoundException, IOException, ParseException, WrongDateException {
+	public SessionBean searchEvent(SessionBean session, EventBean eventBean) throws ClassNotFoundException, SQLException, NoRecordFoundException, IOException, ParseException, WrongDateException {
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		
-		SessionBean sessionBean = GUIController.getSessionBean();
+		SessionBean sessionBean = session;
 		
 		GregorianCalendar dateTime = new GregorianCalendar();
 		dateTime.setTime(sdf.parse(eventBean.getDateTime()));

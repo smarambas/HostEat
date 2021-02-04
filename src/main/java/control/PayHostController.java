@@ -18,15 +18,14 @@ import model.dao.EventDAO;
 import model.dao.JoinedEventDAO;
 import model.dao.NotificationDAO;
 import model.dao.UserDAO;
-import standalone_view.GUIController;
 
 public class PayHostController {
 
-	public SessionBean payHost(EventBean eventBean) throws ClassNotFoundException, SQLException, NoRecordFoundException, IOException, ParseException, DuplicateRecordException {
+	public SessionBean payHost(SessionBean session, EventBean eventBean) throws ClassNotFoundException, SQLException, NoRecordFoundException, IOException, ParseException, DuplicateRecordException {
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		
-		SessionBean sessionBean = GUIController.getSessionBean();
+		SessionBean sessionBean = session;
 		String username = sessionBean.getUserBean().getUsername();
 		User user = UserDAO.retrieveUserByUsername(username);
 		

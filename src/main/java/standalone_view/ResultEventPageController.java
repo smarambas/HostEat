@@ -45,7 +45,7 @@ public class ResultEventPageController {
 			if(eventBean.getGuestsNumber() < eventBean.getMaxGuestsNumber()) {
 				JoinEventController joinEventController = new JoinEventController();
 				try {
-					GUIController.setSessionBean(joinEventController.joinEvent(eventBean));
+					GUIController.setSessionBean(joinEventController.joinEvent(GUIController.getSessionBean(), eventBean));
 				} catch (Exception e) {
 					Label errorLabel = new Label(errorLabelMsg);
 					errorLabel.setId(errorLabelId);

@@ -1,3 +1,5 @@
+<%@page import="bean.EventBean"%>
+<%@page import="java.util.List"%>
 <%@page import="bean.SessionBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -30,6 +32,27 @@ if(sessionBean.getUserBean().getUserType().equalsIgnoreCase("HOST")) {
 	<div class="container">
 		<strong id="pagetitle">Homepage</strong>
 		<p>
+		<input type="button" id="btn" value="New event" onclick="">
+		<p>
+		<strong id="pagetitle">Events created</strong>
+		<p>
+<%
+		List<EventBean> eventBeanList = sessionBean.getEventBeanList();
+		
+		if(eventBeanList != null && !(eventBeanList.isEmpty())) {
+			for(EventBean eb : eventBeanList) {
+				out.println(eb.getDateTime());
+				out.println("<p>Guests: " + eb.getActualGuests());
+				out.println("<p>");
+				
+				session.setAttribute("selectedEvent", eb);
+%>
+				<input type="button" id="btn" value="Open event" onclick="window.location.href='host_event_page.jsp'">
+				<hr>
+<%
+			}
+		}
+%>
 	</div>
 <%
 }
@@ -47,10 +70,13 @@ else {
 	<div class="container">
 		<strong id="pagetitle">Homepage</strong>
 		<p>
+		<input type="button" id="btn" value="Search event" onclick="">
+		<p>
+		<strong id="pagetitle">Events joined</strong>
+		<p>
 	</div>
 <%
 }
-
 %>
 	
 </body>

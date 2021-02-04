@@ -14,15 +14,14 @@ import model.User;
 import model.dao.EventDAO;
 import model.dao.JoinedEventDAO;
 import model.dao.UserDAO;
-import standalone_view.GUIController;
 
 public class DenyGuestController {
 
-	public SessionBean denyGuest(UserBean userBean, EventBean eventBean) throws ClassNotFoundException, SQLException, NoRecordFoundException, IOException, ParseException {
+	public SessionBean denyGuest(SessionBean session, UserBean userBean, EventBean eventBean) throws ClassNotFoundException, SQLException, NoRecordFoundException, IOException, ParseException {
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		
-		SessionBean sessionBean = GUIController.getSessionBean();
+		SessionBean sessionBean = session;
 		
 		GregorianCalendar dateTime = new GregorianCalendar();
 		dateTime.setTime(sdf.parse(eventBean.getDateTime()));

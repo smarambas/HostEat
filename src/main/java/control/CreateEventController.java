@@ -13,15 +13,14 @@ import model.Event;
 import model.User;
 import model.dao.EventDAO;
 import model.dao.UserDAO;
-import standalone_view.GUIController;
 
 public class CreateEventController {
 
-	public SessionBean createEvent(EventBean eventBean) throws ClassNotFoundException, SQLException, IOException, ParseException, DuplicateRecordException, WrongDateException {
+	public SessionBean createEvent(SessionBean session, EventBean eventBean) throws ClassNotFoundException, SQLException, IOException, ParseException, DuplicateRecordException, WrongDateException {
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		
-		SessionBean sessionBean = GUIController.getSessionBean();
+		SessionBean sessionBean = session;
 		String username = sessionBean.getUserBean().getUsername();
 		User user = UserDAO.retrieveUserByUsername(username);
 		

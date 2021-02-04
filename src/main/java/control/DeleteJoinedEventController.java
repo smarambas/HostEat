@@ -13,15 +13,14 @@ import model.User;
 import model.dao.EventDAO;
 import model.dao.JoinedEventDAO;
 import model.dao.UserDAO;
-import standalone_view.GUIController;
 
 public class DeleteJoinedEventController {
 
-	public SessionBean deleteEvent(EventBean eventBean) throws ClassNotFoundException, SQLException, NoRecordFoundException, IOException, ParseException {
+	public SessionBean deleteEvent(SessionBean session, EventBean eventBean) throws ClassNotFoundException, SQLException, NoRecordFoundException, IOException, ParseException {
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		
-		SessionBean sessionBean = GUIController.getSessionBean();
+		SessionBean sessionBean = session;
 		String username = sessionBean.getUserBean().getUsername();
 		User user = UserDAO.retrieveUserByUsername(username);
 				

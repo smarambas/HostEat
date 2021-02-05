@@ -20,6 +20,7 @@
 		<input type="button" id="btn" value="Homepage" onclick="window.location.href='homepage.jsp'">
 		<input type="button" id="btn" value="Userpage" onclick="window.location.href='userpage.jsp'">
 		<input type="button" id="btn" value="Notifications" onclick="window.location.href='notifications.jsp'">
+		<input type="button" id="btn" value="Favorites" onclick="">
 		<p>
 		<input type="button" id="btn" value="Refresh" onclick="">
 	</div>

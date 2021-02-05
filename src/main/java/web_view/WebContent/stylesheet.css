@@ -11,10 +11,26 @@
 	font-size: 16px;  
 }
 
+.footer {
+	text-align: center;  
+	font-size: 16px;  
+}
+
 #pagetitle {
 	text-align: center;  
 	font-size: 24px;
 	font-weight: bold;
+}
+
+#label {
+	text-align: center;  
+	font-size: 20px;
+	font-weight: bold;
+}
+
+#data {
+	text-align: center;  
+	font-size: 20px;
 }
 
 #btn {  

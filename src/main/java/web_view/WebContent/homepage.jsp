@@ -17,66 +17,112 @@
 <body>
 	<h2>HostEat</h2>
 <%
-SessionBean sessionBean = (SessionBean) session.getAttribute("sessionBean");
+	SessionBean sessionBean = (SessionBean) session.getAttribute("sessionBean");
 
-if(sessionBean.getUserBean().getUserType().equalsIgnoreCase("HOST")) {
+	if(sessionBean.getUserBean().getUserType().equalsIgnoreCase("HOST")) {
 %>
-	<div class="header">
-		<input type="button" id="btn" value="Homepage" onclick="window.location.href='homepage.jsp'">
-		<input type="button" id="btn" value="Userpage" onclick="">
-		<input type="button" id="btn" value="Notifications" onclick="">
+		<div class="header">
+			<input type="button" id="btn" value="Homepage" onclick="window.location.href='homepage.jsp'">
+			<input type="button" id="btn" value="Userpage" onclick="window.location.href='userpage.jsp'">
+			<input type="button" id="btn" value="Notifications" onclick="window.location.href='notifications.jsp'">
+			<p>
+			<input type="button" id="btn" value="Refresh" onclick="">
+		</div>
 		<p>
-		<input type="button" id="btn" value="Refresh" onclick="">
-	</div>
-	<p>
-	<div class="container">
-		<strong id="pagetitle">Homepage</strong>
-		<p>
-		<input type="button" id="btn" value="New event" onclick="">
-		<p>
-		<strong id="pagetitle">Events created</strong>
-		<p>
-<%
-		List<EventBean> eventBeanList = sessionBean.getEventBeanList();
 		
-		if(eventBeanList != null && !(eventBeanList.isEmpty())) {
-			for(EventBean eb : eventBeanList) {
-				out.println(eb.getDateTime());
-				out.println("<p>Guests: " + eb.getActualGuests());
-				out.println("<p>");
-				
-				session.setAttribute("selectedEvent", eb);
-%>
-				<input type="button" id="btn" value="Open event" onclick="window.location.href='host_event_page.jsp'">
-				<hr>
+		<div class="container">
+			<strong id="pagetitle">Homepage</strong>
+			<p>
+			<input type="button" id="btn" value="New event" onclick="">
+			<p>
+			<strong id="pagetitle">Events created</strong>
+			<p>
 <%
+			List<EventBean> eventBeanList = sessionBean.getEventBeanList();
+			
+			if(eventBeanList != null && !(eventBeanList.isEmpty())) {
+				int i = 0;
+				for(EventBean eb : eventBeanList) {
+					out.println(eb.getDateTime());
+					out.println("<p>Guests: " + eb.getActualGuests());
+					out.println("<p>");				
+%>
+					<form action="homepage.jsp">
+						<input type="submit" id="btn" value="Open event" name="open<%=i%>">
+<%
+						if(request.getParameter("open" + i) != null) {
+							session.setAttribute("selectedEvent", eb);
+%>
+							<jsp:forward page="host_event_page.jsp"></jsp:forward>
+<%
+						}
+%>
+					</form>
+					<hr>
+<%
+					i++;
+				}
 			}
-		}
 %>
-	</div>
+		</div>
 <%
-}
-else {
+	}
+	else {
 %>
-	<div class="header">
-		<input type="button" id="btn" value="Homepage" onclick="window.location.href='homepage.jsp'">
-		<input type="button" id="btn" value="Userpage" onclick="">
-		<input type="button" id="btn" value="Notifications" onclick="">
-		<input type="button" id="btn" value="Favorites" onclick="">
+		<div class="header">
+			<input type="button" id="btn" value="Homepage" onclick="window.location.href='homepage.jsp'">
+			<input type="button" id="btn" value="Userpage" onclick="window.location.href='userpage.jsp'">
+			<input type="button" id="btn" value="Notifications" onclick="window.location.href='notifications.jsp'">
+			<input type="button" id="btn" value="Favorites" onclick="">
+			<p>
+			<input type="button" id="btn" value="Refresh" onclick="">
+		</div>
 		<p>
-		<input type="button" id="btn" value="Refresh" onclick="">
-	</div>
-	<p>
-	<div class="container">
-		<strong id="pagetitle">Homepage</strong>
-		<p>
-		<input type="button" id="btn" value="Search event" onclick="">
-		<p>
-		<strong id="pagetitle">Events joined</strong>
-		<p>
-	</div>
+		
+		<div class="container">
+			<strong id="pagetitle">Homepage</strong>
+			<p>
+			<input type="button" id="btn" value="Search event" onclick="">
+			<p>
+			<strong id="pagetitle">Events joined</strong>
+			<p>
+			
 <%
-}
+			List<EventBean> eventBeanList = sessionBean.getEventBeanList();
+			
+			if(eventBeanList != null && !(eventBeanList.isEmpty())) {
+				int i = 0;
+				for(EventBean eb : eventBeanList) {
+					out.println(eb.getDateTime());
+					out.println("<p>Guests: " + eb.getActualGuests());
+					out.println("<p>Status: " + eb.getGuestStatus());	
+					
+					if(eb.getBill() > 0) {
+						out.println("<p>Payment status: " + eb.getPayStatus());	
+					}
+					
+					out.println("<p>");
+%>
+					<form action="homepage.jsp">
+						<input type="submit" id="btn" value="Open event" name="open<%=i%>">
+<%
+						if(request.getParameter("open" + i) != null) {
+							session.setAttribute("selectedEvent", eb);
+%>
+							<jsp:forward page="guest_event_page.jsp"></jsp:forward>
+<%
+						}
+%>
+					</form>
+					<hr>
+<%
+					i++;
+				}
+			}
+%>
+		</div>
+<%
+	}
 %>
 	
 </body>

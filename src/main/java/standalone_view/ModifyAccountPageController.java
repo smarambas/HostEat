@@ -11,7 +11,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -64,7 +63,6 @@ public class ModifyAccountPageController {
 		addressField.setPromptText("address");
 		
 		centralVBox.getChildren().addAll(
-			new Separator(),
 			addHBox("New email:", emailField),
 			addHBox("New password:", passwField),
 			addHBox("New region:", regionField),

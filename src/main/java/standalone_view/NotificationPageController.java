@@ -7,6 +7,7 @@ import bean.UserBean;
 import control.DeleteAllNotificationsController;
 import control.DeleteNotificationController;
 import control.GetNotificationsController;
+import exceptions.NoRecordFoundException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -54,6 +55,10 @@ public class NotificationPageController {
 			
 			ViewCommons viewCommons = new ViewCommons();
 			viewCommons.handleButtonUserDependantShowStage(deleteAllButton, hostPageString, guestPageString, 900, 600);
+		} catch (NoRecordFoundException nrfe) {
+			Label errorLabel = new Label("There are no notifications to delete");
+			errorLabel.setId(errorLabelId);
+			centralVBox.getChildren().add(errorLabel);
 		} catch (Exception e) {
 			Label errorLabel = new Label(errorLabelMsg);
 			errorLabel.setId(errorLabelId);

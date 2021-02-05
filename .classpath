@@ -26,6 +26,12 @@
 			<attribute name="gradle_used_by_scope" value="test"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre">
+		<attributes>
+			<attribute name="module" value="true"/>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
 	<classpathentry kind="lib" path="/home/marco/workspace/lib/mysql-connector-java-8.0.22/mysql-connector-java-8.0.22.jar"/>
 	<classpathentry kind="lib" path="/home/marco/workspace/lib/kotlin-stdlib-1.4.10.jar"/>
@@ -42,10 +48,6 @@
 			<attribute name="owner.project.facets" value="jst.utility"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre">
-		<attributes>
-			<attribute name="owner.project.facets" value="java"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="lib" path="/home/marco/workspace/lib/jstl-1.2-sources.jar"/>
 	<classpathentry kind="output" path="bin/default"/>
 </classpath>

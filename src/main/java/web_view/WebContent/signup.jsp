@@ -37,13 +37,16 @@ if(request.getParameter("signup") != null) {
 		userBean.setAddr(request.getParameter("address"));
 	}
 		
-	if(request.getParameter("type").equalsIgnoreCase("host")) {
+	if(request.getParameter("type") != null && request.getParameter("type").equalsIgnoreCase("host")) {
 		userBean.setUserType("HOST");
 		checktype = true;
 	}
-	else if(request.getParameter("type").equalsIgnoreCase("guest")) {
+	else if(request.getParameter("type") != null && request.getParameter("type").equalsIgnoreCase("guest")) {
 		userBean.setUserType("GUEST");
 		checktype = true;
+	}
+	else {
+		checktype = false;
 	}
 	
 	if(checkinput) {

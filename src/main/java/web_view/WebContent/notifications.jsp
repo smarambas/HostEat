@@ -68,20 +68,11 @@
 					out.println(nb.getDate());
 					out.println("<br>");
 					out.println(nb.getText());
+					session.setAttribute("notification" + i, nb);
 %>
-					<form action="notifications.jsp">
+					<form action="delete_notification.jsp">
 						<br>
 						<input type="submit" id="btn" value="Delete" name="del<%=i%>">
-<%
-						if(request.getParameter("del" + i) != null) {
-							DeleteNotificationController deleteNotificationController = new DeleteNotificationController();
-							deleteNotificationController.deleteNotification(userBean, nb);
-%>
-<%-- 							<jsp:forward page="notifications.jsp"></jsp:forward> --%>
-								<jsp:forward page="homepage.jsp"></jsp:forward> 
-<%									
-						}
-%>
 					</form>
 					<hr>
 <%
@@ -103,7 +94,6 @@
 					DeleteAllNotificationsController deleteAllNotificationsController = new DeleteAllNotificationsController();
 					deleteAllNotificationsController.deleteAllNotifications(userBean);
 %>
-<%-- 					<jsp:forward page="notifications.jsp"></jsp:forward> --%>
 					<jsp:forward page="homepage.jsp"></jsp:forward> 
 <%
 				}

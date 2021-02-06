@@ -4,7 +4,7 @@
 <%@page import="bean.SessionBean"%>
 <%@page import="bean.UserBean"%>
     
-<%@ page errorPage = "generic_error.jsp" %>
+<%@ page errorPage = "error_page.jsp" %>
 
 <!DOCTYPE html>
 <html lang="">
@@ -17,7 +17,6 @@
 <body>
 	<h2>HostEat</h2>
 	<p>
-	<input type="button" id="btn" value="Back" onclick="window.location.href='userpage.jsp'">
 <%
 	SessionBean sessionBean = (SessionBean) session.getAttribute("sessionBean");
 	UserBean userBean = sessionBean.getUserBean();
@@ -39,14 +38,14 @@
 		<input type="button" id="btn" value="Homepage" onclick="window.location.href='homepage.jsp'">
 		<input type="button" id="btn" value="Userpage" onclick="window.location.href='userpage.jsp'">
 		<input type="button" id="btn" value="Notifications" onclick="window.location.href='notifications.jsp'">
-		<input type="button" id="btn" value="Favorites" onclick="">
+		<input type="button" id="btn" value="Favorites" onclick="window.location.href='favorites.jsp'">
 		<p>
 	</div>
 	<p>
 <%
 	}
 %>
-
+	<input type="button" id="btn" value="Back" onclick="window.location.href='userpage.jsp'">
 	<div class="container">
 		<strong id="pagetitle">Modify account</strong>
 		<br><br>
@@ -87,7 +86,7 @@
 					session.setAttribute("sessionBean", newSessionBean);
 				} catch(Exception e) {
 %>
-					<jsp:forward page="generic_error.jsp"></jsp:forward>
+					<jsp:forward page="error_page.jsp"></jsp:forward>
 <%
 				}
 %>

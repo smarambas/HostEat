@@ -1,9 +1,10 @@
 <%@page import="bean.EventBean"%>
+<%@page import="bean.SessionBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+
 <%@ page errorPage = "error_page.jsp" %>
-    
+
 <!DOCTYPE html>
 <html lang="">
 <head>
@@ -21,15 +22,31 @@
 		<input type="button" id="btn" value="Notifications" onclick="window.location.href='notifications.jsp'">
 		<input type="button" id="btn" value="Favorites" onclick="window.location.href='favorites.jsp'">
 	</div>
-	<input type="button" id="btn" value="Back" onclick="window.location.href='homepage.jsp'">
-	<p>
-
-<%
-	EventBean eventBean = (EventBean) session.getAttribute("selectedEvent");
-%>
-	
+	<input type="button" id="btn" value="Back" onclick="window.location.href='search_results.jsp'">
 	<div class="container">
 		<strong id="pagetitle">Event page</strong>
+		<br><br>
+<%
+		SessionBean sessionBean = (SessionBean) session.getAttribute("sessionBean");
+		
+		int i = 0;
+		boolean end = false;
+		
+		while(!end) {
+			if(request.getParameter("open" + i) != null) {
+				end = true;
+				break;
+			}
+			
+			i++;
+		}
+		
+		EventBean eventBean = (EventBean) session.getAttribute("result" + i);
+%>
+		<strong id="label">Owner:</strong>
+<%
+		out.println(eventBean.getEventOwner());
+%>
 		<br><br>
 		<strong id="label">Date:</strong>
 <%
@@ -44,6 +61,11 @@
 		<strong id="label">Guests:</strong>
 <%
 		out.println(eventBean.getActualGuests());
+%>
+		<br><br>
+		<strong id="label">Bill:</strong>
+<%
+		out.println(eventBean.getBill());
 %>
 		<br><br>
 		<strong id="label">Region:</strong>
@@ -61,22 +83,7 @@
 		out.println(eventBean.getCityString());
 %>
 		<br><br>
-		<strong id="label">Address:</strong>
-<%
-		out.println(eventBean.getAddressString());
-%>
-		<br><br>
-		<strong id="label">Bill:</strong>
-<%
-		out.println(eventBean.getBill());
-%>
-		<br><br><br>
-		<div class="footer">
-			<input type="button" id="btn" value="View guests" onclick="">
-			<input type="button" id="btn" value="Open menu" onclick="">
-			<input type="button" id="btn" value="Remove event" onclick="">
-		</div>
+		
 	</div>
-	
 </body>
 </html>

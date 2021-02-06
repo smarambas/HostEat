@@ -4,7 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<%@ page errorPage = "generic_error.jsp" %>
+<%@ page errorPage = "error_page.jsp" %>
     
 <!DOCTYPE html>
 <html lang="">
@@ -26,14 +26,14 @@
 			<input type="button" id="btn" value="Userpage" onclick="window.location.href='userpage.jsp'">
 			<input type="button" id="btn" value="Notifications" onclick="window.location.href='notifications.jsp'">
 			<p>
-			<input type="button" id="btn" value="Refresh" onclick="">
+			<input type="button" id="btn" value="Refresh" onclick="window.location.href='homepage_refresh.jsp'">
 		</div>
 		<p>
 		
 		<div class="container">
 			<strong id="pagetitle">Homepage</strong>
 			<p>
-			<input type="button" id="btn" value="New event" onclick="">
+			<input type="button" id="btn" value="New event" onclick="window.location.href='new_event.jsp'">
 			<p>
 			<strong id="pagetitle">Events created</strong>
 			<p>
@@ -73,16 +73,16 @@
 			<input type="button" id="btn" value="Homepage" onclick="window.location.href='homepage.jsp'">
 			<input type="button" id="btn" value="Userpage" onclick="window.location.href='userpage.jsp'">
 			<input type="button" id="btn" value="Notifications" onclick="window.location.href='notifications.jsp'">
-			<input type="button" id="btn" value="Favorites" onclick="">
+			<input type="button" id="btn" value="Favorites" onclick="window.location.href='favorites.jsp'">
 			<p>
-			<input type="button" id="btn" value="Refresh" onclick="">
+			<input type="button" id="btn" value="Refresh" onclick="window.location.href='homepage_refresh.jsp'">
 		</div>
 		<p>
 		
 		<div class="container">
 			<strong id="pagetitle">Homepage</strong>
 			<p>
-			<input type="button" id="btn" value="Search event" onclick="">
+			<input type="button" id="btn" value="Search event" onclick="window.location.href='search_event.jsp'">
 			<p>
 			<strong id="pagetitle">Events joined</strong>
 			<p>

@@ -15,7 +15,7 @@
 </head>
 <body>
 <%
-	session.removeAttribute("sessionBean");
+	session.invalidate();
 %>
 	<jsp:forward page="index.jsp"></jsp:forward>
 </body>

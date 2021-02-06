@@ -3,7 +3,7 @@
     pageEncoding="UTF-8"%>
 <%@page import="bean.SessionBean"%>
     
-<%@ page errorPage = "generic_error.jsp" %>
+<%@ page errorPage = "error_page.jsp" %>
     
 <!DOCTYPE html>
 <html lang="">
@@ -38,7 +38,7 @@
 		<input type="button" id="btn" value="Homepage" onclick="window.location.href='homepage.jsp'">
 		<input type="button" id="btn" value="Userpage" onclick="window.location.href='userpage.jsp'">
 		<input type="button" id="btn" value="Notifications" onclick="window.location.href='notifications.jsp'">
-		<input type="button" id="btn" value="Favorites" onclick="">
+		<input type="button" id="btn" value="Favorites" onclick="window.location.href='favorites.jsp'">
 		<p>
 	</div>
 	<p>

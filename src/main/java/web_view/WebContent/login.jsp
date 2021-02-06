@@ -8,7 +8,7 @@
 <jsp:useBean id="loginBean" scope="request" class="bean.UserBean"/>
 <jsp:setProperty property="*" name="loginBean"/>
 
-<%@ page errorPage = "generic_error.jsp" %>
+<%@ page errorPage = "error_page.jsp" %>
 
 <html lang="it">
 <head>

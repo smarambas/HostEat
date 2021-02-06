@@ -9,7 +9,7 @@
 <%@page import="bean.SessionBean"%>
 <%@page import="bean.UserBean"%>
     
-<%@ page errorPage = "generic_error.jsp" %>
+<%@ page errorPage = "error_page.jsp" %>
 
 <!DOCTYPE html>
 <html lang="">
@@ -44,7 +44,7 @@
 			<input type="button" id="btn" value="Homepage" onclick="window.location.href='homepage.jsp'">
 			<input type="button" id="btn" value="Userpage" onclick="window.location.href='userpage.jsp'">
 			<input type="button" id="btn" value="Notifications" onclick="window.location.href='notifications.jsp'">
-			<input type="button" id="btn" value="Favorites" onclick="">
+			<input type="button" id="btn" value="Favorites" onclick="window.location.href='favorites.jsp'">
 			<p>
 			<input type="button" id="btn" value="Refresh" onclick="window.location.href='notifications.jsp'">
 		</div>
@@ -81,25 +81,30 @@
 			}
 		} catch(Exception e) {
 %>
-			<jsp:forward page="generic_error.jsp"></jsp:forward>
+			<jsp:forward page="error_page.jsp"></jsp:forward>
+<%
+		}
+		
+		if(notificationBeans.size() > 0) {
+%>
+			<br><br><br>
+			<div class="footer">
+				<form action="notifications.jsp">
+					<input type="submit" id="btn" value="Delete all" name="deleteall">
+<%
+					if(request.getParameter("deleteall") != null) {
+						DeleteAllNotificationsController deleteAllNotificationsController = new DeleteAllNotificationsController();
+						deleteAllNotificationsController.deleteAllNotifications(userBean);
+%>
+						<jsp:forward page="homepage.jsp"></jsp:forward> 
+<%
+					}
+%>
+				</form>
+			</div>
 <%
 		}
 %>
-		<br><br><br>
-		<div class="footer">
-			<form action="notifications.jsp">
-				<input type="submit" id="btn" value="Delete all" name="deleteall">
-<%
-				if(request.getParameter("deleteall") != null) {
-					DeleteAllNotificationsController deleteAllNotificationsController = new DeleteAllNotificationsController();
-					deleteAllNotificationsController.deleteAllNotifications(userBean);
-%>
-					<jsp:forward page="homepage.jsp"></jsp:forward> 
-<%
-				}
-%>
-			</form>
-		</div>
 	</div>
 </body>
 </html>

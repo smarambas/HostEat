@@ -6,7 +6,7 @@
 <jsp:useBean id="userBean" scope="request" class="bean.UserBean"/>
 <jsp:setProperty property="*" name="userBean"/>
 
-<%@ page errorPage = "generic_error.jsp" %>
+<%@ page errorPage = "error_page.jsp" %>
 
 <!DOCTYPE html>
 <html lang="">
@@ -62,18 +62,14 @@ if(request.getParameter("signup") != null) {
 			}
 			else {
 %>
-				<jsp:forward page="generic_error.jsp"></jsp:forward>
+				<jsp:forward page="error_page.jsp"></jsp:forward>
 <%
 			}
 		}
 		else {
+			session.setAttribute("errormsg", "Please, select the type of user (Host/Guest)");
 %>
-			<h2>HostEat</h2>
-			<p>
-			<input type="button" value="Back" onclick="window.location.href='signup.html'">
-			<div class="container">
-				<p id="error">Please, select the type of user (Host/Guest)</p>
-			</div>
+			<jsp:forward page="error_page.jsp"></jsp:forward>
 <%
 		}
 	}

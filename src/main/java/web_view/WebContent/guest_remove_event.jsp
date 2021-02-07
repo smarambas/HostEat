@@ -1,3 +1,6 @@
+<%@page import="control.DeleteJoinedEventController"%>
+<%@page import="bean.SessionBean"%>
+<%@page import="bean.EventBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -15,9 +18,14 @@
 	<h2>HostEat</h2>
 	<p>
 <%
+	SessionBean sessionBean = (SessionBean) session.getAttribute("sessionBean");
+	EventBean eventBean = (EventBean) session.getAttribute("selectedEvent");
 	
-
+	DeleteJoinedEventController deleteJoinedEventController = new DeleteJoinedEventController();
+	SessionBean newSessionBean = deleteJoinedEventController.deleteEvent(sessionBean, eventBean);
+	
+	session.setAttribute("sessionBean", newSessionBean);
 %>
-	<jsp:forward page="guest_event_page.jsp"></jsp:forward>
+	<jsp:forward page="homepage.jsp"></jsp:forward>
 </body>
 </html>

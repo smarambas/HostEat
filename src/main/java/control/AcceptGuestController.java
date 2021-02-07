@@ -33,14 +33,21 @@ public class AcceptGuestController {
 		
 		Event event = EventDAO.retrieveEventByUsernameDateTime(host, dateTime);
 		
-		event.setGuestStatus(GuestStatus.ACCEPTED);
+		Event joinedEvent = JoinedEventDAO.retrieveJoinedEvent(guest, event);
 		
-		JoinedEventDAO.updateJoinedEventGuestStatus(guest, event);		
-		
-		String text = "Host " + host.getUsername() + " accepted you for the event on " + eventBean.getDateTime();
-		Notification notification = new Notification(guest, text, NotificationType.ACCEPT);
-		
-		NotificationDAO.saveNotification(guest, notification);
+		if(joinedEvent.getGuestStatus().equals(GuestStatus.ACCEPTED)) {
+			throw new DuplicateRecordException("ERROR: the record already exists");
+		}
+		else {
+			event.setGuestStatus(GuestStatus.ACCEPTED);
+			
+			JoinedEventDAO.updateJoinedEventGuestStatus(guest, event);		
+			
+			String text = "Host " + host.getUsername() + " accepted you for the event on " + eventBean.getDateTime();
+			Notification notification = new Notification(guest, text, NotificationType.ACCEPT);
+			
+			NotificationDAO.saveNotification(guest, notification);
+		}
 	}
 	
 }

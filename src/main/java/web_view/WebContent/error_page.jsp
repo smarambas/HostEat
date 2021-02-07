@@ -13,7 +13,7 @@
 	<link rel="stylesheet" type="text/css" href="stylesheet.css" media="screen"/>
 </head>
 <body>
-	<strong>HostEat</strong>
+	<h2>HostEat</h2>
 	<p>
 	<input type="button" id="btn" value="Back" onclick="history.back()">
 	<div class="container">

@@ -194,7 +194,7 @@ public class GuestEventPageController {
 		button.setOnAction((ActionEvent event) -> {
 			try {
 				DeleteJoinedEventController deleteJoinedEventController = new DeleteJoinedEventController();
-				deleteJoinedEventController.deleteEvent(GUIController.getSessionBean(), eventBean);
+				GUIController.setSessionBean(deleteJoinedEventController.deleteEvent(GUIController.getSessionBean(), eventBean));
 				
 				ViewCommons commons = new ViewCommons();
 				commons.handleButtonShowStage(button, "/standalone_view/GuestBase.fxml", 900, 600);
@@ -210,7 +210,7 @@ public class GuestEventPageController {
 		button.setOnAction((ActionEvent event) -> {
 			try {
 				PayHostController payHostController = new PayHostController();
-				payHostController.payHost(GUIController.getSessionBean(), eventBean);
+				GUIController.setSessionBean(payHostController.payHost(GUIController.getSessionBean(), eventBean));
 				
 				ViewCommons commons = new ViewCommons();
 				commons.handleButtonShowStage(button, "/standalone_view/GuestEventPage.fxml", 900, 600);

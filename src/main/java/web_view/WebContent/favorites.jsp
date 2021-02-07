@@ -37,23 +37,38 @@
 			out.println("<br><br>");
 %>
 			<table class="footer">
-				<tr><td>
-						<form action="favorites.jsp">
-							<input type="submit" id="btn" value="View profile" name="profile<%=i%>">
+				<caption></caption>
+				<tr>
+				<th id="dummy"></th>
+				</tr>
+				<tr>
+				<td>
+					<form action="favorites.jsp">
+						<input type="submit" id="btn" value="View profile" name="profile<%=i%>">
 <%
-							if(request.getParameter("profile" + i) != null) {
-								session.setAttribute("selectedHost", ub);
+						if(request.getParameter("profile" + i) != null) {
+							session.setAttribute("selectedHost", ub);
 %>
-								<jsp:forward page="host_profile.jsp"></jsp:forward>
+							<jsp:forward page="host_profile.jsp"></jsp:forward>
 <%
-							}
+						}
 %>
-						</form>
-					</td><td>
-						<form action="host_events.jsp">
-							<input type="submit" id="btn" value="View events" name="events<%=i%>">
-						</form>
-				</td></tr>
+					</form>
+				</td>
+				<td>
+					<form action="favorites.jsp">
+						<input type="submit" id="btn" value="View events" name="events<%=i%>">
+<%						
+						if(request.getParameter("events" + i) != null) {
+							session.setAttribute("selectedHost", ub);
+%>
+							<jsp:forward page="host_events.jsp"></jsp:forward>
+<%
+						}
+%>
+					</form>
+				</td>
+				</tr>
 			</table>
 			<hr>
 <%

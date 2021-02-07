@@ -9,7 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
-import exceptions.DuplicateRecordException;
 import exceptions.NoRecordFoundException;
 import model.Notification;
 import model.NotificationType;
@@ -57,34 +56,20 @@ public class NotificationDAO {
 		return notifications;
 	}
 	
-	public static void saveNotification(User user, Notification notification) throws ClassNotFoundException, SQLException, IOException, DuplicateRecordException {
+	public static void saveNotification(User user, Notification notification) throws ClassNotFoundException, SQLException, IOException {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		
 		cs = ConnectionSingleton.createConnection();
 		
-		String query = "SELECT * FROM notification WHERE user = ? AND text = ?;";
-
-		try(PreparedStatement preparedStatement = cs.getConnection().prepareStatement(query)) {
-			preparedStatement.setString(1, user.getUsername());
-			preparedStatement.setString(2, notification.getText());
-			ResultSet rs = preparedStatement.executeQuery();
-			
-			if(!rs.next()) {
-				query = "INSERT INTO notification (user, text, date, type) VALUES (?, ?, ?, ?);";
-				
-				try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
-					ps.setString(1, user.getUsername());
-					ps.setString(2, notification.getText());
-					ps.setString(3, sdf.format(notification.getDate().getTime()));
-					ps.setString(4, notification.getType().toString().toUpperCase());
-					
-					ps.executeUpdate();
-				}
-			}
-			else {
-				throw new DuplicateRecordException("ERROR: the record already exists");
-			}
+		String query = "INSERT IGNORE INTO notification (user, text, date, type) VALUES (?, ?, ?, ?);";
 		
+		try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
+			ps.setString(1, user.getUsername());
+			ps.setString(2, notification.getText());
+			ps.setString(3, sdf.format(notification.getDate().getTime()));
+			ps.setString(4, notification.getType().toString().toUpperCase());
+			
+			ps.executeUpdate();
 		}
 	}
 	

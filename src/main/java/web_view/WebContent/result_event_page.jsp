@@ -96,21 +96,27 @@
 	</div>
 	<div class="footer">
 		<table class="footer">
-			<tr><td>
-					<form action="join_event.jsp">
-						<input type="submit" id="btn" value="Join event" name="join">
-					</form>
-				</td>
-				<td>
-					<form action="result_host_profile.jsp">
-						<input type="submit" id="btn" value="Open host profile" name="open">
-					</form>
-				</td>
-				<td>
-					<form action="result_menu_page.jsp">
-						<input type="submit" id="btn" value="Open menu" name="menu">
-					</form>
-			</td></tr>
+			<caption></caption>
+			<tr>
+			<th id="dummy"></th>
+			</tr>
+			<tr>
+			<td>
+				<form action="join_event.jsp">
+					<input type="submit" id="btn" value="Join event" name="join">
+				</form>
+			</td>
+			<td>
+				<form action="result_host_profile.jsp">
+					<input type="submit" id="btn" value="Open host profile" name="open">
+				</form>
+			</td>
+			<td>
+				<form action="result_menu_page.jsp">
+					<input type="submit" id="btn" value="Open menu" name="menu">
+				</form>
+			</td>
+			</tr>
 		</table>
 	</div>		
 </body>

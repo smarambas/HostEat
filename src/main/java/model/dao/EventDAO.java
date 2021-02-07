@@ -20,7 +20,7 @@ public class EventDAO {
 	private static String format = "yyyy-MM-dd HH:mm";
 	private static String maxGuestsString = "max_num_guests";
 	private static String billString = "payment_bill";
-	private static String selectString = "SELECT * FROM event WHERE owner = ? AND date = ?;";
+	private static String selectString = "SELECT * FROM event WHERE owner = ? AND date = ? ORDER BY date;";
 	private static String countString = "SELECT COUNT(*) FROM joined_event WHERE event_owner = ? AND event_date = ?;";
 	
 	private EventDAO() {}
@@ -31,7 +31,7 @@ public class EventDAO {
 		
 		cs = ConnectionSingleton.createConnection();
 		
-		String query = "SELECT * FROM event WHERE owner = ?;";
+		String query = "SELECT * FROM event WHERE owner = ? ORDER BY date;";
 		
 		try(PreparedStatement preparedStatement = cs.getConnection().prepareStatement(query)) {
 			preparedStatement.setString(1, user.getUsername());
@@ -204,7 +204,7 @@ public class EventDAO {
 				
 		switch (searchType) {
 		case 0: 
-			query = "SELECT * FROM event WHERE date > ?;";
+			query = "SELECT * FROM event WHERE date > ? ORDER BY date;";
 			
 			try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
 				ps.setString(1, sdf.format(dateTime.getTime()));
@@ -216,7 +216,7 @@ public class EventDAO {
 			
 			break;
 		case 1:
-			query = "SELECT * FROM event WHERE owner = any (SELECT username FROM user WHERE city = ?) AND date > ?;";
+			query = "SELECT * FROM event WHERE owner = any (SELECT username FROM user WHERE city = ?) AND date > ? ORDER BY date;";
 			
 			try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
 				ps.setString(1, city);
@@ -229,7 +229,7 @@ public class EventDAO {
 			
 			break;
 		case 10:
-			query = "SELECT * FROM event WHERE owner = any (SELECT username FROM user WHERE province = ?) AND date > ?;";
+			query = "SELECT * FROM event WHERE owner = any (SELECT username FROM user WHERE province = ?) AND date > ? ORDER BY date;";
 			
 			try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
 				ps.setString(1, province);
@@ -242,7 +242,7 @@ public class EventDAO {
 
 			break;
 		case 11:
-			query = "SELECT * FROM event WHERE owner = any (SELECT username FROM user WHERE province = ? AND city = ?) AND date > ?;";
+			query = "SELECT * FROM event WHERE owner = any (SELECT username FROM user WHERE province = ? AND city = ?) AND date > ? ORDER BY date;";
 			
 			try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
 				ps.setString(1, province);
@@ -256,7 +256,7 @@ public class EventDAO {
 
 			break;
 		case 100:
-			query = "SELECT * FROM event WHERE owner = any (SELECT username FROM user WHERE region = ?) AND date > ?;";
+			query = "SELECT * FROM event WHERE owner = any (SELECT username FROM user WHERE region = ?) AND date > ? ORDER BY date;";
 			
 			try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
 				ps.setString(1, region);
@@ -269,7 +269,7 @@ public class EventDAO {
 
 			break;
 		case 101:
-			query = "SELECT * FROM event WHERE owner = any (SELECT username FROM user WHERE region = ? AND city = ?) AND date > ?;";
+			query = "SELECT * FROM event WHERE owner = any (SELECT username FROM user WHERE region = ? AND city = ?) AND date > ? ORDER BY date;";
 			
 			try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
 				ps.setString(1, region);
@@ -283,7 +283,7 @@ public class EventDAO {
 
 			break;
 		case 110:
-			query = "SELECT * FROM event WHERE owner = any (SELECT username FROM user WHERE region = ? AND province = ?) AND date > ?;";
+			query = "SELECT * FROM event WHERE owner = any (SELECT username FROM user WHERE region = ? AND province = ?) AND date > ? ORDER BY date;";
 			
 			try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
 				ps.setString(1, region);
@@ -297,7 +297,7 @@ public class EventDAO {
 
 			break;
 		case 111:
-			query = "SELECT * FROM event WHERE owner = any (SELECT username FROM user WHERE region = ? AND province = ? AND city = ?) AND date > ?;";
+			query = "SELECT * FROM event WHERE owner = any (SELECT username FROM user WHERE region = ? AND province = ? AND city = ?) AND date > ? ORDER BY date;";
 			
 			try(PreparedStatement ps = cs.getConnection().prepareStatement(query)) {
 				ps.setString(1, region);

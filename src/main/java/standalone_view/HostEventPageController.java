@@ -116,7 +116,7 @@ public class HostEventPageController {
 		button.setOnAction((ActionEvent event) -> {
 			try {
 				DeleteEventController deleteEventController = new DeleteEventController();
-				deleteEventController.deleteEvent(GUIController.getSessionBean(), eventBean);
+				GUIController.setSessionBean(deleteEventController.deleteEvent(GUIController.getSessionBean(), eventBean));
 				
 				ViewCommons viewCommons = new ViewCommons();
 				viewCommons.handleButtonShowStage(button, "/standalone_view/HostBase.fxml", 900, 600);

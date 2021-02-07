@@ -23,11 +23,9 @@
 	</div>
 	<input type="button" id="btn" value="Back" onclick="window.location.href='homepage.jsp'">
 	<p>
-
 <%
 	EventBean eventBean = (EventBean) session.getAttribute("selectedEvent");
 %>
-	
 	<div class="container">
 		<strong id="pagetitle">Event page</strong>
 		<br><br>
@@ -61,22 +59,124 @@
 		out.println(eventBean.getCityString());
 %>
 		<br><br>
-		<strong id="label">Address:</strong>
 <%
-		out.println(eventBean.getAddressString());
+		boolean isAccepted = eventBean.getGuestStatus().equalsIgnoreCase("ACCEPTED");
+
+		if(isAccepted) {
+%>
+			<strong id="label">Address:</strong>
+<%
+			out.println(eventBean.getAddressString());
+%>
+			<br><br>
+<%
+		}
+%>
+		<strong id="label">Status:</strong>
+<%
+		out.println(eventBean.getGuestStatus());
 %>
 		<br><br>
-		<strong id="label">Bill:</strong>
 <%
-		out.println(eventBean.getBill());
+		if(!(eventBean.getPayStatus().equalsIgnoreCase("NOSET"))) {
+%>
+			<strong id="label">Payment:</strong>
+<%
+			out.println(eventBean.getPayStatus());
+%>
+			<br><br>
+			<strong id="label">Bill:</strong>
+<%
+			out.println(eventBean.getBill());
+%>
+			<br><br>
+<%
+		}
+
+		boolean isPaymentRequired = !(eventBean.getPayStatus().equalsIgnoreCase("NOSET") || 
+	  			  					  eventBean.getPayStatus().equalsIgnoreCase("PAID"));
 %>
 		<br><br><br>
-		<div class="footer">
-			
-		</div>
 	</div>
-	
-	
-	
+	<div class="footer">
+<%
+		if(isPaymentRequired && !isAccepted) {
+%>
+			<table class="footer">
+				<caption></caption>
+				<tr>
+				<th id="dummy"></th>
+				</tr>
+				<tr>
+				<td>
+					<form action="pay_host.jsp">
+						<input type="submit" id="btn" value="Pay host" name="pay">
+					</form>				
+				</td>
+				<td>
+					<form action="menu_page.jsp">
+						<input type="submit" id="btn" value="Open menu" name="menu">
+					</form>				
+				</td>
+				<td>
+					<form action="guest_remove_event.jsp">
+						<input type="submit" id="btn" value="Remove event" name="remove">
+					</form>				
+				</td>
+				</tr>
+			</table>
+<%
+		}
+		else if(!isPaymentRequired && !isAccepted) {
+%>
+			<table class="footer">
+				<caption></caption>
+				<tr>
+				<th id="dummy"></th>
+				</tr>
+				<tr>
+				<td>
+					<form action="menu_page.jsp">
+						<input type="submit" id="btn" value="Open menu" name="menu">
+					</form>				
+				</td>
+				<td>
+					<form action="guest_remove_event.jsp">
+						<input type="submit" id="btn" value="Remove event" name="remove">
+					</form>				
+				</td>
+				</tr>
+			</table>
+<%
+		}
+		else {
+%>
+			<table class="footer">
+				<caption></caption>
+				<tr>
+				<th id="dummy"></th>
+				</tr>
+				<tr>
+				<td>
+					<form action="view_host_location.jsp">
+						<input type="submit" id="btn" value="View location" name="location">
+					</form>				
+				</td>
+				<td>
+					<form action="menu_page.jsp">
+						<input type="submit" id="btn" value="Open menu" name="menu">
+					</form>				
+				</td>
+				<td>
+					<form action="guest_remove_event.jsp">
+						<input type="submit" id="btn" value="Remove event" name="remove">
+					</form>				
+				</td>
+				</tr>
+			</table>
+<%
+		}
+%>
+	</div>
 </body>
 </html>

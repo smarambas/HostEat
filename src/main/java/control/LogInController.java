@@ -9,7 +9,6 @@ import java.util.List;
 import bean.EventBean;
 import bean.SessionBean;
 import bean.UserBean;
-import exceptions.DuplicateRecordException;
 import exceptions.WrongPasswordException;
 import model.Event;
 import model.Notification;
@@ -128,7 +127,7 @@ public class LogInController {
 		return sessionBean;
 	}
 	
-	private int sendReminder(User user, GregorianCalendar date) throws ClassNotFoundException, SQLException, IOException, DuplicateRecordException {
+	private int sendReminder(User user, GregorianCalendar date) throws ClassNotFoundException, SQLException, IOException {
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		
 		GregorianCalendar nowCalendar = new GregorianCalendar();
@@ -141,21 +140,13 @@ public class LogInController {
 			String text = "Don''t forget the event on " + sdf.format(date.getTime()) + ", less than one day left!";
 			Notification notification = new Notification(user, text, NotificationType.REMINDER);
 			
-			try {
-				NotificationDAO.saveNotification(user, notification);
-			} catch(DuplicateRecordException dre) {
-				return 1;
-			}
+			NotificationDAO.saveNotification(user, notification);
 		}
 		else if(dateInMillis - nowInMillis < 0) {
 			String text = "Don''t forget to leave a review for the event on " + sdf.format(date.getTime());
 			Notification notification = new Notification(user, text, NotificationType.RATING);
 			
-			try {
-				NotificationDAO.saveNotification(user, notification);
-			} catch(DuplicateRecordException dre) {
-				return 1;
-			}
+			NotificationDAO.saveNotification(user, notification);
 		}
 		
 		return 0;

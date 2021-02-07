@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import bean.EventBean;
 import bean.SessionBean;
-import exceptions.DuplicateRecordException;
 import exceptions.NoRecordFoundException;
 import model.Event;
 import model.Notification;
@@ -21,7 +20,7 @@ import model.dao.UserDAO;
 
 public class PayHostController {
 
-	public SessionBean payHost(SessionBean session, EventBean eventBean) throws ClassNotFoundException, SQLException, NoRecordFoundException, IOException, ParseException, DuplicateRecordException {
+	public SessionBean payHost(SessionBean session, EventBean eventBean) throws ClassNotFoundException, SQLException, NoRecordFoundException, IOException, ParseException {
 		String format = "yyyy-MM-dd HH:mm";
 		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		

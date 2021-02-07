@@ -36,23 +36,25 @@
 			out.println(ub.getReg() + " (" + ub.getProv() + ")");
 			out.println("<br><br>");
 %>
-			<div class="row">
-				<form action="favorites.jsp">
-					<input type="submit" id="btn" value="View profile" name="profile<%=i%>">
+			<table class="footer">
+				<tr><td>
+						<form action="favorites.jsp">
+							<input type="submit" id="btn" value="View profile" name="profile<%=i%>">
 <%
-					if(request.getParameter("profile" + i) != null) {
-						session.setAttribute("selectedHost", ub);
+							if(request.getParameter("profile" + i) != null) {
+								session.setAttribute("selectedHost", ub);
 %>
-						<jsp:forward page="host_profile.jsp"></jsp:forward>
+								<jsp:forward page="host_profile.jsp"></jsp:forward>
 <%
-					}
+							}
 %>
-				</form>
-				<br>
-				<form action="host_events.jsp">
-					<input type="submit" id="btn" value="View events" name="events<%=i%>">
-				</form>
-			</div>
+						</form>
+					</td><td>
+						<form action="host_events.jsp">
+							<input type="submit" id="btn" value="View events" name="events<%=i%>">
+						</form>
+				</td></tr>
+			</table>
 			<hr>
 <%
 			i++;

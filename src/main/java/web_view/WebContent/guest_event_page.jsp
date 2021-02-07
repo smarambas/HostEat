@@ -72,11 +72,11 @@
 %>
 		<br><br><br>
 		<div class="footer">
-			<input type="button" id="btn" value="View guests" onclick="">
-			<input type="button" id="btn" value="Open menu" onclick="">
-			<input type="button" id="btn" value="Remove event" onclick="">
+			
 		</div>
 	</div>
+	
+	
 	
 </body>
 </html>

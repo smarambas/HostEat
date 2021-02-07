@@ -33,6 +33,8 @@
 		SessionBean sessionBean = (SessionBean) session.getAttribute("sessionBean");
 		EventBean eventBean = new EventBean();
 		
+		session.removeAttribute("index");
+		
 		if(sessionBean.getSearchedList().isEmpty()) {
 			if(request.getParameter("region") != null) {
 				eventBean.setRegionString(request.getParameter("region"));
@@ -74,7 +76,7 @@
 				for(EventBean eb : newSessionBean.getSearchedList()) {
 					out.println(eb.getDateTime());
 					out.println("<br>");
-					out.println(eb.getRegionString() + "(" + eb.getProvinceString() + ")");
+					out.println(eb.getRegionString() + " (" + eb.getProvinceString() + ")");
 					out.println("<br>");
 					out.println(eb.getCityString());
 					out.println("<br><br>");
@@ -114,7 +116,7 @@
 			for(EventBean eb : sessionBean.getSearchedList()) {
 				out.println(eb.getDateTime());
 				out.println("<br>");
-				out.println(eb.getRegionString() + "(" + eb.getProvinceString() + ")");
+				out.println(eb.getRegionString() + " (" + eb.getProvinceString() + ")");
 				out.println("<br>");
 				out.println(eb.getCityString());
 				out.println("<br><br>");

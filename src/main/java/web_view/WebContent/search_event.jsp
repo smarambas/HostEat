@@ -3,7 +3,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<%@ page errorPage = "generic_error.jsp" %>
+<%@ page errorPage = "error_page.jsp" %>
 
 <!DOCTYPE html>
 <html lang="">
@@ -88,7 +88,9 @@
 				<option value="55">55</option>
 			</select>
 			<br><br><br>
-			<input type="submit" id="submit" name="submit" value="Search">
+			<div class="footer">
+				<input type="submit" id="submit" name="submit" value="Search">
+			</div>
 		</form>
 	</div>
 </body>

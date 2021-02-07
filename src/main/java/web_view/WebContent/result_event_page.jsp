@@ -1,3 +1,5 @@
+<%@page import="bean.UserBean"%>
+<%@page import="control.GetUserController"%>
 <%@page import="bean.EventBean"%>
 <%@page import="bean.SessionBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -30,18 +32,26 @@
 		SessionBean sessionBean = (SessionBean) session.getAttribute("sessionBean");
 		
 		int i = 0;
-		boolean end = false;
-		
-		while(!end) {
-			if(request.getParameter("open" + i) != null) {
-				end = true;
-				break;
-			}
+
+		if(session.getAttribute("index") != null) {
+			i = (int) session.getAttribute("index");
+		}
+		else {
+			boolean end = false;
 			
-			i++;
+			while(!end) {
+				if(request.getParameter("open" + i) != null) {
+					end = true;
+					session.setAttribute("index", i);
+					break;
+				}
+				
+				i++;
+			}
 		}
 		
 		EventBean eventBean = (EventBean) session.getAttribute("result" + i);
+		session.setAttribute("selectedEvent", eventBean);
 %>
 		<strong id="label">Owner:</strong>
 <%
@@ -82,8 +92,26 @@
 <%
 		out.println(eventBean.getCityString());
 %>
-		<br><br>
-		
+		<br><br><br>
 	</div>
+	<div class="footer">
+		<table class="footer">
+			<tr><td>
+					<form action="join_event.jsp">
+						<input type="submit" id="btn" value="Join event" name="join">
+					</form>
+				</td>
+				<td>
+					<form action="result_host_profile.jsp">
+						<input type="submit" id="btn" value="Open host profile" name="open">
+					</form>
+				</td>
+				<td>
+					<form action="result_menu_page.jsp">
+						<input type="submit" id="btn" value="Open menu" name="menu">
+					</form>
+			</td></tr>
+		</table>
+	</div>		
 </body>
 </html>

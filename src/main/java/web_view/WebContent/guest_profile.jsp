@@ -1,3 +1,5 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.GregorianCalendar"%>
 <%@page import="bean.UserBean"%>
 <%@page import="bean.EventBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -24,6 +26,8 @@
 	<input type="button" id="btn" value="Back" onclick="window.location.href='view_guests.jsp'">
 	<p>
 <%
+	EventBean eventBean = (EventBean) session.getAttribute("selectedEvent");
+
 	int i = 0;
 	boolean end = false;
 	
@@ -96,6 +100,30 @@
 		}
 %>
 		<br><br>
+	</div>
+	<div class="footer">
+<%
+		if(guestBean.getGuestStatus().equalsIgnoreCase("ACCEPTED")) {
+			String format = "yyyy-MM-dd HH:mm";
+			SimpleDateFormat sdf = new SimpleDateFormat(format);
+			
+			GregorianCalendar now = new GregorianCalendar();
+			GregorianCalendar dateCal = new GregorianCalendar();
+			dateCal.setTime(sdf.parse(eventBean.getDateTime()));
+			
+			long dateInMillis = dateCal.getTimeInMillis();
+			long nowInMillis = now.getTimeInMillis();
+			
+			if(dateInMillis - nowInMillis < 0) {
+				session.setAttribute("userToRate", guestBean.getUsername());
+%>
+				<form action="rate_user.jsp">
+					<input type="submit" id="btn" value="Rate guest" name="rate">
+				</form>	
+<%
+			}
+		}
+%>
 	</div>
 </body>
 </html>

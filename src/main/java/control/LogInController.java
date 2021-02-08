@@ -100,6 +100,7 @@ public class LogInController {
 					tempUserBean.setProv(tempUser.getUserProvince());
 					tempUserBean.setCity(tempUser.getUserCity());
 					tempUserBean.setRatings(tempUser.getRating());
+					tempUserBean.setRatingsNum(tempUser.getRatingsNum());
 					
 					sessionBean.getSavedHosts().add(tempUserBean);
 				}

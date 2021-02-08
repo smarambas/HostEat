@@ -77,9 +77,15 @@ public class UserPageController {
 			addHBox("Region:", userBean.getReg()),
 			addHBox("Province", userBean.getProv()),
 			addHBox("City:", userBean.getCity()),
-			addHBox("Address:", userBean.getAddr()),
-			addHBox("Rating:", String.valueOf((double) userBean.getRatings() / userBean.getRatingsNum()))
+			addHBox("Address:", userBean.getAddr())
 		);
+		
+		if(userBean.getRatingsNum() > 0) {
+			centralVBox.getChildren().add(addHBox("Rating:", String.valueOf((double) userBean.getRatings() / userBean.getRatingsNum())));
+		}
+		else {
+			centralVBox.getChildren().add(addHBox("Rating:", "0.0"));
+		}
 		
 		bottomHBox.getChildren().addAll(modifyButton, logoutButton);
 	}

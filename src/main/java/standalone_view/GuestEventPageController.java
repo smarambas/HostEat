@@ -131,11 +131,11 @@ public class GuestEventPageController {
 			bottomHBox.getChildren().add(addButtons(buttonList));
 			
 			viewLocationButtonSetAction(viewLocationButton);
+			rateButtonSetAction(rateButton, eventBean);
 		}
 		
 		deleteButtonSetActionGuest(deleteEventButton);
 		menuButtonSetAction(openMenuButton);
-		rateButtonSetAction(rateButton, eventBean);
 	}
 	
 	

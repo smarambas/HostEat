@@ -22,7 +22,7 @@ public class JoinedEventDAO {
 	private static String format = "yyyy-MM-dd HH:mm";
 	private static String guestStatusString = "guest_status";
 	private static String paymentStatusString = "payment_status";
-	private static String selectString = "SELECT * FROM joined_event WHERE guest = ? AND event_owner = ? AND event_date = ?;";
+	private static String selectString = "SELECT * FROM joined_event WHERE guest = ? AND event_owner = ? AND event_date = ? ORDER BY event_date;";
 	
 	private JoinedEventDAO() {}
 	
@@ -31,7 +31,7 @@ public class JoinedEventDAO {
 		
 		cs = ConnectionSingleton.createConnection();
 		
-		String query = "SELECT * FROM joined_event WHERE guest = ?;";
+		String query = "SELECT * FROM joined_event WHERE guest = ? ORDER BY event_date;";
 		
 		try(PreparedStatement preparedStatement = cs.getConnection().prepareStatement(query)) {
 			preparedStatement.setString(1, user.getUsername());

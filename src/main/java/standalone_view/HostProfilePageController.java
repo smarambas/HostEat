@@ -58,9 +58,15 @@ public class HostProfilePageController {
 			addHBox("Email:", userBean.getEmailAddr()),
 			addHBox("Region:", userBean.getReg()),
 			addHBox("Province:", userBean.getProv()),
-			addHBox("City:", userBean.getCity()),
-			addHBox("Rating:", String.valueOf((double) userBean.getRatings() / userBean.getRatingsNum()))
+			addHBox("City:", userBean.getCity())
 		);
+		
+		if(userBean.getRatingsNum() > 0) {
+			centralVBox.getChildren().add(addHBox("Rating:", String.valueOf((double) userBean.getRatings() / userBean.getRatingsNum())));
+		}
+		else {
+			centralVBox.getChildren().add(addHBox("Rating:", "0.0"));
+		}
 		
 		if(GUIController.getSessionBean().containsSavedUser(userBean.getUsername())) {
 			bottomHBox.getChildren().add(removeButton);

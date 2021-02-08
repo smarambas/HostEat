@@ -27,6 +27,7 @@ public class GetUserController {
 		result.setProv(user.getUserProvince());
 		result.setCity(user.getUserCity());
 		result.setRatings(user.getRating());
+		result.setRatingsNum(user.getRatingsNum());
 		result.setSex(user.getSex());
 		
 		return result;

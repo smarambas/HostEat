@@ -1,3 +1,5 @@
+<%@page import="java.util.GregorianCalendar"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="bean.EventBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -25,9 +27,24 @@
 	<p>
 <%
 	EventBean eventBean = (EventBean) session.getAttribute("selectedEvent");
+
+	String format = "yyyy-MM-dd HH:mm";
+	SimpleDateFormat sdf = new SimpleDateFormat(format);
+	
+	GregorianCalendar now = new GregorianCalendar();
+	GregorianCalendar dateCal = new GregorianCalendar();
+	dateCal.setTime(sdf.parse(eventBean.getDateTime()));
+	
+	long dateInMillis = dateCal.getTimeInMillis();
+	long nowInMillis = now.getTimeInMillis();
 %>
 	<div class="container">
 		<strong id="pagetitle">Event page</strong>
+		<br><br>
+		<strong id="label">Event owner:</strong>
+<%
+		out.println(eventBean.getEventOwner());
+%>
 		<br><br>
 		<strong id="label">Date:</strong>
 <%
@@ -144,7 +161,7 @@
 					<form action="guest_remove_event.jsp">
 						<input type="submit" id="btn" value="Remove event" name="remove">
 					</form>				
-				</td>
+				</td>			
 				</tr>
 			</table>
 <%
@@ -172,6 +189,18 @@
 						<input type="submit" id="btn" value="Remove event" name="remove">
 					</form>				
 				</td>
+<%				
+				if(dateInMillis - nowInMillis < 0) {
+					session.setAttribute("userToRate", eventBean.getEventOwner());
+				%>
+					<td>
+						<form action="rate_user.jsp">
+							<input type="submit" id="btn" value="Rate host" name="rate">
+						</form>	
+					</td>
+				<%
+				}
+%>				
 				</tr>
 			</table>
 <%

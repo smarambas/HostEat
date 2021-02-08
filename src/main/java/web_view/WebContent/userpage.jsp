@@ -61,7 +61,7 @@
 		<br><br>
 		<strong id="label">Birthday:</strong>
 <%
-		out.println(userBean.getBirthday());
+		out.println(userBean.getBirthday().substring(0, 10));
 %>
 		<br><br>
 		<strong id="label">Sex:</strong>
@@ -97,7 +97,7 @@
 		<strong id="label">Rating:</strong>
 <%
 		if(userBean.getRatingsNum() > 0) {
-			out.println(userBean.getRatings() / userBean.getRatingsNum());
+			out.println((double) userBean.getRatings() / userBean.getRatingsNum());
 		}
 		else {
 			out.println(0.0);

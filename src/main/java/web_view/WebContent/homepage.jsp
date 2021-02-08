@@ -16,6 +16,7 @@
 </head>
 <body>
 	<h2>HostEat</h2>
+	<p>
 <%
 	SessionBean sessionBean = (SessionBean) session.getAttribute("sessionBean");
 
@@ -35,12 +36,14 @@
 			<p>
 			<input type="button" id="btn" value="New event" onclick="window.location.href='new_event.html'">
 			<p>
-			<strong id="pagetitle">Events created</strong>
-			<p>
 <%
 			List<EventBean> eventBeanList = sessionBean.getEventBeanList();
 			
 			if(eventBeanList != null && !(eventBeanList.isEmpty())) {
+%>
+				<strong id="pagetitle">Events created</strong>
+				<br><br>
+<%
 				int i = 0;
 				for(EventBean eb : eventBeanList) {
 					out.println(eb.getDateTime());
@@ -83,14 +86,15 @@
 			<strong id="pagetitle">Homepage</strong>
 			<p>
 			<input type="button" id="btn" value="Search event" onclick="window.location.href='search_event.html'">
-			<p>
-			<strong id="pagetitle">Events joined</strong>
-			<p>
-			
+			<p>			
 <%
 			List<EventBean> eventBeanList = sessionBean.getEventBeanList();
 			
 			if(eventBeanList != null && !(eventBeanList.isEmpty())) {
+%>
+				<strong id="pagetitle">Events joined</strong>
+				<br><br>
+<%
 				int i = 0;
 				for(EventBean eb : eventBeanList) {
 					out.println(eb.getDateTime());

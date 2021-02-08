@@ -41,11 +41,19 @@ public class GuestProfilePageController {
 			addHBox("Email:", guestBean.getEmailAddr()),
 			addHBox("Region:", guestBean.getReg()),
 			addHBox("Province:", guestBean.getProv()),
-			addHBox("City:", guestBean.getCity()),
-			addHBox("Rating:", String.valueOf((double) guestBean.getRatings() / guestBean.getRatingsNum()))
+			addHBox("City:", guestBean.getCity())
 		);
 		
-		rateButtonSetAction(rateButton);
+		if(guestBean.getRatingsNum() > 0) {
+			centralVBox.getChildren().add(addHBox("Rating:", String.valueOf((double) guestBean.getRatings() / guestBean.getRatingsNum())));
+		}
+		else {
+			centralVBox.getChildren().add(addHBox("Rating:", "0.0"));
+		}
+		
+		if(guestBean.getGuestStatus().equalsIgnoreCase("ACCEPTED")) {
+			rateButtonSetAction(rateButton);
+		}
 	}
 	
 	@FXML

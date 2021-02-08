@@ -57,7 +57,17 @@ public class ProposeMenuPageController {
 			
 			newCourseBean = new CourseBean();
 			newCourseBean.setCourseName(addCourseField.getText());
-			if(!(newMenu.getCoursesList().contains(newCourseBean))) {
+			
+			boolean contains = false;
+			
+			for(CourseBean cb : newMenu.getCoursesList()) {
+				if(cb.getCourseName().equalsIgnoreCase(newCourseBean.getCourseName())) {
+					contains = true;
+					break;
+				}
+			}
+			
+			if(!contains) {
 				newMenu.getCoursesList().add(newCourseBean);
 			}
 			

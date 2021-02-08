@@ -25,7 +25,7 @@
 		<input type="button" id="btn" value="Notifications" onclick="window.location.href='notifications.jsp'">
 		<input type="button" id="btn" value="Favorites" onclick="window.location.href='favorites.jsp'">
 	</div>
-	<input type="button" id="btn" value="Back" onclick="window.location.href='search_event.jsp'">
+	<input type="button" id="btn" value="Back" onclick="window.location.href='search_event.html'">
 	<div class="container">
 		<strong id="pagetitle">Search results</strong>
 		<br><br>

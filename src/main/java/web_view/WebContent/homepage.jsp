@@ -33,7 +33,7 @@
 		<div class="container">
 			<strong id="pagetitle">Homepage</strong>
 			<p>
-			<input type="button" id="btn" value="New event" onclick="window.location.href='new_event.jsp'">
+			<input type="button" id="btn" value="New event" onclick="window.location.href='new_event.html'">
 			<p>
 			<strong id="pagetitle">Events created</strong>
 			<p>
@@ -82,7 +82,7 @@
 		<div class="container">
 			<strong id="pagetitle">Homepage</strong>
 			<p>
-			<input type="button" id="btn" value="Search event" onclick="window.location.href='search_event.jsp'">
+			<input type="button" id="btn" value="Search event" onclick="window.location.href='search_event.html'">
 			<p>
 			<strong id="pagetitle">Events joined</strong>
 			<p>

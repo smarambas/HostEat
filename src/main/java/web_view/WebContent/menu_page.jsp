@@ -1,3 +1,4 @@
+<%@page import="bean.SessionBean"%>
 <%@page import="exceptions.NoRecordFoundException"%>
 <%@page import="bean.CourseBean"%>
 <%@page import="bean.MenuBean"%>
@@ -23,9 +24,16 @@
 		<input type="button" id="btn" value="Homepage" onclick="window.location.href='homepage.jsp'">
 		<input type="button" id="btn" value="Userpage" onclick="window.location.href='userpage.jsp'">
 		<input type="button" id="btn" value="Notifications" onclick="window.location.href='notifications.jsp'">
-		<input type="button" id="btn" value="Favorites" onclick="window.location.href='favorites.jsp'">
+<%
+		SessionBean sessionBean = (SessionBean) session.getAttribute("sessionBean");
+		if(sessionBean.getUserBean().getUserType().equalsIgnoreCase("GUEST")) {
+%>
+			<input type="button" id="btn" value="Favorites" onclick="window.location.href='favorites.jsp'">
+<%
+		}
+%>
 	</div>
-	<input type="button" id="btn" value="Back" onclick="window.location.href='guest_event_page.jsp'">
+	<input type="button" id="btn" value="Back" onclick="history.back()">
 	<div class="container">
 		<strong id="pagetitle">Menu</strong>
 		<br><br>

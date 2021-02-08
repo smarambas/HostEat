@@ -71,9 +71,29 @@
 %>
 		<br><br><br>
 		<div class="footer">
-			<input type="button" id="btn" value="View guests" onclick="">
-			<input type="button" id="btn" value="Open menu" onclick="">
-			<input type="button" id="btn" value="Remove event" onclick="">
+			<table class="footer">
+				<caption></caption>
+				<tr>
+				<th id="dummy"></th>
+				</tr>
+				<tr>
+				<td>
+					<form action="view_guests.jsp">
+						<input type="submit" id="btn" value="View guests" name="view">
+					</form>				
+				</td>
+				<td>
+					<form action="menu_page.jsp">
+						<input type="submit" id="btn" value="Open menu" name="menu">
+					</form>				
+				</td>
+				<td>
+					<form action="host_remove_event.jsp">
+						<input type="submit" id="btn" value="Remove event" name="remove">
+					</form>				
+				</td>
+				</tr>
+			</table>
 		</div>
 	</div>
 	

@@ -31,10 +31,10 @@
 		
 		int i = 0;
 		for(UserBean ub : sessionBean.getSavedHosts()) {
-			out.println(ub.getName() + " " + ub.getSurname());
+			out.println("<p class=\"hostname\">" + ub.getName() + " " + ub.getSurname());
+// 			out.println("<br>");
+			out.println("<p>" + ub.getReg() + " (" + ub.getProv() + ")");
 			out.println("<br>");
-			out.println(ub.getReg() + " (" + ub.getProv() + ")");
-			out.println("<br><br>");
 %>
 			<table class="footer">
 				<caption></caption>

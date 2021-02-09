@@ -41,8 +41,7 @@
 		for(UserBean ub : guestsList) {
 			out.println(ub.getName() + " " + ub.getSurname());
 			out.println("<br>");
-			out.println(ub.getGuestStatus());
-			out.println("<br>");
+			out.println("<p class=\"status\">" + ub.getGuestStatus());
 			
 			if(!(ub.getPayStatus().equalsIgnoreCase("NOSET"))) {
 				out.println(ub.getPayStatus());

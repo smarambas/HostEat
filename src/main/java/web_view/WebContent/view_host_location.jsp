@@ -26,7 +26,7 @@
 	</div>
 	<input type="button" id="btn" value="Back" onclick="window.location.href='guest_event_page.jsp'">
 	<div class="container">
-		<strong id="pagetitle">Menu</strong>
+		<strong id="pagetitle">Host location</strong>
 		<br><br>
 	</div>
 	<div class="map">

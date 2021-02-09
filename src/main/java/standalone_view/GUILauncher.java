@@ -21,4 +21,5 @@ public class GUILauncher extends Application{
         stage.setScene(scene);
         stage.show();          
 	}
+	
 }

@@ -42,6 +42,9 @@ dependencies {
     // Use JUnit test framework
     testImplementation 'junit:junit:4.12'
     
+    // selenium
+    implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+    
 	// https://mvnrepository.com/artifact/com.google.maps/google-maps-services
 	compile group: 'com.google.maps', name: 'google-maps-services', version: '0.15.4'
 	

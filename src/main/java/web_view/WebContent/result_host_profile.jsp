@@ -89,7 +89,7 @@
 		<strong id="label">Rating:</strong>
 <%
 		if(hostBean.getRatingsNum() > 0) {
-			out.println(hostBean.getRatings() / hostBean.getRatingsNum());
+			out.println((double) hostBean.getRatings() / hostBean.getRatingsNum());
 		}
 		else {
 			out.println(0.0);
